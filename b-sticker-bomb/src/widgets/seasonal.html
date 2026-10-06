@@ -1,0 +1,168 @@
+<section class="widget slot-W w-seasonal" data-widget="seasonal" data-slot="z2-1" data-skin="halloween" aria-labelledby="w-seasonal-title"
+         style="--tilt:-0.9deg;--accent:var(--orange);--tape:rgba(124,196,68,.72);--tape-tilt:3deg">
+  <header class="widget-head">
+    <span class="widget-icon" aria-hidden="true">🎃</span>
+    <h2 class="widget-title" id="w-seasonal-title">Halloween HQ</h2>
+    <span class="widget-kicker">spooky-ooky!</span>
+  </header>
+
+  <div class="widget-body ss-body">
+    <!-- ===== Activity area (tabs) ===== -->
+    <div class="ss-main">
+      <div class="ss-tabs" role="tablist" aria-label="Halloween activities">
+        <button type="button" class="ss-tab" role="tab" id="ss-tab-carver" aria-controls="ss-panel-carver" aria-selected="true">
+          <span aria-hidden="true">🎃</span> <span class="ss-long">Pumpkin Carver</span><span class="ss-short">Carve</span>
+        </button>
+        <button type="button" class="ss-tab" role="tab" id="ss-tab-door" aria-controls="ss-panel-door" aria-selected="false" tabindex="-1">
+          <span aria-hidden="true">🚪</span> <span class="ss-long">Trick-or-Treat Door</span><span class="ss-short">Knock!</span>
+        </button>
+      </div>
+
+      <!-- Pumpkin Carver -->
+      <div class="ss-panel ss-carver" id="ss-panel-carver" role="tabpanel" aria-labelledby="ss-tab-carver" tabindex="-1">
+        <div class="ss-pk-wrap">
+          <svg class="ss-pk" viewBox="0 0 200 200" role="img" aria-labelledby="ss-pk-label">
+            <title id="ss-pk-label">Your jack-o'-lantern</title>
+            <defs>
+              <radialGradient id="ss-glow" cx="50%" cy="70%" r="75%">
+                <stop offset="0" style="stop-color:#FFFFFF"/>
+                <stop offset=".35" style="stop-color:#FFF3C4"/>
+                <stop offset=".8" style="stop-color:var(--sunny)"/>
+                <stop offset="1" style="stop-color:var(--sunny)"/>
+              </radialGradient>
+              <clipPath id="ss-cut" class="ss-cut-clip">
+                <polygon points="55,104 85,104 70,78"/><polygon points="115,104 145,104 130,78"/>
+                <polygon points="88,132 112,132 100,112"/>
+                <path d="M56 140 Q100 184 144 140 Q100 160 56 140Z"/>
+              </clipPath>
+            </defs>
+            <g class="ss-pk-hop">
+              <path class="ss-pk-vine" d="M112 34 q14 -10 22 -2 q6 8 -4 12" />
+              <path class="ss-pk-stem" d="M93 46 C92 32 96 20 106 12 L116 19 C108 26 106 34 108 47 Z"/>
+              <g class="ss-pk-body">
+                <ellipse cx="100" cy="116" rx="88" ry="70"/>
+                <ellipse cx="66" cy="116" rx="50" ry="68"/>
+                <ellipse cx="134" cy="116" rx="50" ry="68"/>
+                <ellipse cx="100" cy="116" rx="34" ry="71"/>
+              </g>
+              <g class="ss-pk-inside" clip-path="url(#ss-cut)">
+                <rect class="ss-in-dark" x="0" y="40" width="200" height="160"/>
+                <g class="ss-in-lit">
+                  <rect x="0" y="40" width="200" height="160" fill="url(#ss-glow)"/>
+                  <rect class="ss-candle" x="90" y="156" width="20" height="34" rx="3"/>
+                  <path class="ss-flame" d="M100 116 C110 132 112 145 100 156 C88 145 90 132 100 116 Z"/>
+                  <path class="ss-flame-core" d="M100 134 C105 142 105 149 100 154 C95 149 95 142 100 134 Z"/>
+                </g>
+              </g>
+              <g class="ss-cut-edge">
+                <polygon points="55,104 85,104 70,78"/><polygon points="115,104 145,104 130,78"/>
+                <polygon points="88,132 112,132 100,112"/>
+                <path d="M56 140 Q100 184 144 140 Q100 160 56 140Z"/>
+              </g>
+              <g class="ss-pupils" aria-hidden="true">
+                <g transform="translate(70 93)"><circle class="ss-pupil" cx="0" cy="0" r="4.6"/></g>
+                <g transform="translate(130 93)"><circle class="ss-pupil" cx="0" cy="0" r="4.6"/></g>
+              </g>
+            </g>
+          </svg>
+          <a class="ss-real" href="https://scoutlife.org/hobbies-projects/projects/182598/how-to-make-a-faux-stained-glass-pumpkin/">Carve it for real →</a>
+        </div>
+
+        <div class="ss-opts" aria-label="Pick your pumpkin's face">
+          <p class="ss-nojs-note">Design a face for your jack-o'-lantern, then make a real one!</p>
+          <div class="ss-opt-row" role="group" aria-labelledby="ss-lbl-eyes" data-part="eyes">
+            <span class="ss-opt-lbl" id="ss-lbl-eyes">Eyes</span>
+          </div>
+          <div class="ss-opt-row" role="group" aria-labelledby="ss-lbl-nose" data-part="nose">
+            <span class="ss-opt-lbl" id="ss-lbl-nose">Nose</span>
+          </div>
+          <div class="ss-opt-row" role="group" aria-labelledby="ss-lbl-mouth" data-part="mouth">
+            <span class="ss-opt-lbl" id="ss-lbl-mouth">Mouth</span>
+          </div>
+          <p class="ss-carve-status" aria-live="polite"></p>
+        </div>
+
+        <!-- hint doodle: the secret face (star eyes, triangle nose, zigzag mouth) -->
+        <div class="ss-hint" aria-hidden="true">
+          <svg viewBox="0 0 60 50"><path d="M30 6c-16 0-26 9-26 21s10 20 26 20 26-8 26-20S46 6 30 6z"/><path d="M28 6c0-3 1-5 4-6"/>
+            <path d="M17 18l1.6 3.4 3.6.4-2.7 2.4.8 3.6-3.3-1.9-3.3 1.9.8-3.6-2.7-2.4 3.6-.4z"/>
+            <path d="M43 18l1.6 3.4 3.6.4-2.7 2.4.8 3.6-3.3-1.9-3.3 1.9.8-3.6-2.7-2.4 3.6-.4z"/>
+            <path d="M27 31l3-5 3 5z"/><path d="M15 35l4 4 4-4 4 4 4-4 4 4 4-4 4 4"/></svg>
+          <span>my best one ever!</span>
+        </div>
+      </div>
+
+      <!-- Trick-or-Treat Door -->
+      <div class="ss-panel ss-doorpanel" id="ss-panel-door" role="tabpanel" aria-labelledby="ss-tab-door" tabindex="-1" hidden>
+        <div class="ss-porch">
+          <div class="ss-doorway">
+            <div class="ss-inside" aria-hidden="true"></div>
+            <button type="button" class="ss-door" aria-label="Knock on the door" aria-describedby="ss-door-tip">
+              <svg viewBox="0 0 120 190" aria-hidden="true" focusable="false">
+                <path class="ss-door-slab" d="M5 187 L5 58 Q5 5 60 5 Q115 5 115 58 L115 187 Z"/>
+                <path class="ss-door-planks" d="M33 14 V186 M60 6 V186 M87 14 V186"/>
+                <circle class="ss-door-win" cx="60" cy="50" r="17"/>
+                <path class="ss-door-winbars" d="M60 33 V67 M43 50 H77"/>
+                <circle class="ss-door-plate" cx="60" cy="100" r="7"/>
+                <circle class="ss-door-ring" cx="60" cy="112" r="10"/>
+                <circle class="ss-door-knob" cx="96" cy="124" r="6"/>
+                <path class="ss-door-web" d="M5 58 Q5 28 22 14 M5 40 Q14 36 16 22 M5 50 Q20 44 24 26"/>
+              </svg>
+            </button>
+          </div>
+          <span class="ss-step" aria-hidden="true"></span>
+          <span class="ss-porch-pk" aria-hidden="true">🎃</span>
+          <span class="ss-knock-pop" aria-hidden="true">KNOCK!</span>
+          <span class="ss-knock-dots" aria-hidden="true"></span>
+        </div>
+        <div class="ss-result" aria-live="polite">
+          <div class="ss-result-idle">
+            <p class="ss-idle-big">Knock, knock!</p>
+            <p class="ss-idle-sub" id="ss-door-tip">Tap the door (or press Enter) to knock. Will you get a treat… or a trick?</p>
+            <p class="ss-idle-doodle" aria-hidden="true">♪ shave and a haircut… ♪</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== Countdown + picks ===== -->
+    <aside class="ss-side" aria-label="Halloween countdown and picks">
+      <p class="ss-count"><span class="ss-count-num" aria-hidden="true">🎃</span><span class="ss-count-txt">Halloween is Oct. 31!</span></p>
+      <div class="ss-picks-wrap">
+        <h3 class="ss-picks-title">Spooky picks</h3>
+        <ul class="ss-picks">
+          <li><a class="ss-pick" href="https://scoutlife.org/hobbies-projects/projects/192234/how-to-make-a-ghost-decoration-using-a-cardboard-tube/"><img src="assets/img/seasonal-ghost.jpg" alt="" width="56" height="40" loading="lazy"><span class="ss-pick-t">How to Make a Ghost Decoration Using a Cardboard Tube</span><span class="ss-pick-s" aria-hidden="true">👻 Ghost craft</span></a></li>
+          <li><a class="ss-pick" href="https://scoutlife.org/hobbies-projects/projects/182598/how-to-make-a-faux-stained-glass-pumpkin/"><img src="assets/img/seasonal-pumpkin.jpg" alt="" width="56" height="40" loading="lazy"><span class="ss-pick-t">How to Make Faux Stained-Glass Art for Halloween</span><span class="ss-pick-s" aria-hidden="true">🎃 Glass pumpkin</span></a></li>
+          <li><a class="ss-pick" href="https://scoutlife.org/features/23079/funny-halloween-jokes/"><img src="assets/img/seasonal-jokes.jpg" alt="" width="56" height="40" loading="lazy"><span class="ss-pick-t">101 Funny Halloween Jokes and Comics</span><span class="ss-pick-s" aria-hidden="true">😂 101 jokes</span></a></li>
+          <li><a class="ss-pick" href="https://scoutlife.org/outdoors/animals-and-nature/192183/creepy-but-cool-these-5-critters-are-more-helpful-than-scary/"><img src="assets/img/seasonal-critters.jpg" alt="" width="56" height="40" loading="lazy"><span class="ss-pick-t">Creepy But Cool: These 5 Critters Are More Helpful Than Scary</span><span class="ss-pick-s" aria-hidden="true">🕷️ Creepy critters</span></a></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+
+  <!-- hidden critter: the bat -->
+  <button type="button" class="ss-bat" aria-label="A sleeping bat. Tap to wake it up!">
+    <svg class="ss-bat-hang" viewBox="0 0 34 44" aria-hidden="true" focusable="false">
+      <path class="ss-bat-feet" d="M13 1v5M21 1v5"/>
+      <path class="ss-bat-wrap" d="M17 5c-9 0-13 8-12 17 1 9 6 16 12 20 6-4 11-11 12-20 1-9-3-17-12-17z"/>
+      <path class="ss-bat-fold" d="M10 12c2 8 2 17 7 27M24 12c-2 8-2 17-7 27"/>
+      <path class="ss-bat-ears" d="M12 39l-3 4 6-2zM22 39l3 4-6-2z"/>
+      <path class="ss-bat-zz" d="M10 32q3 2 6 0M18 32q3 2 6 0"/>
+    </svg>
+    <svg class="ss-bat-fly" viewBox="0 0 64 36" aria-hidden="true" focusable="false">
+      <g class="ss-bat-wingL"><path d="M28 16C20 6 9 4 1 9c5 1 7 5 6 9 4-2 8-1 9 3 3-3 8-3 12-5z"/></g>
+      <g class="ss-bat-wingR"><path d="M36 16c8-10 19-12 27-7-5 1-7 5-6 9-4-2-8-1-9 3-3-3-8-3-12-5z"/></g>
+      <path class="ss-bat-bod" d="M32 8c-5 0-7 4-7 9s3 10 7 10 7-5 7-10-2-9-7-9z"/>
+      <path class="ss-bat-ears2" d="M27 10l-1-6 4 4zM37 10l1-6-4 4z"/>
+      <circle class="ss-bat-eye" cx="29.5" cy="15" r="2"/><circle class="ss-bat-eye" cx="34.5" cy="15" r="2"/>
+      <path class="ss-bat-fang" d="M30.5 20.5l1 2 1-2"/>
+    </svg>
+  </button>
+
+  <div class="ss-fx" aria-hidden="true"></div>
+
+  <footer class="widget-foot">
+    <a class="more-link" href="https://scoutlife.org/?s=halloween">More Halloween fun</a>
+    <span class="ss-foot-doodle" aria-hidden="true">boo! ✎</span>
+  </footer>
+</section>

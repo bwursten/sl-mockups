@@ -1,0 +1,67 @@
+/* ============ Pinewood Derby mini-race — Direction A: wooden track at the pack meeting ============ */
+.w-pinewood .widget-body{padding:8px 14px 10px;display:flex;flex-direction:column;gap:8px}
+.w-pinewood .widget-title{white-space:nowrap}
+.w-pinewood .pw-sprite{position:absolute;width:0;height:0;overflow:hidden}
+
+.w-pinewood .pw-trackwrap{position:relative;flex:0 0 122px;border:2.5px solid var(--ink);border-radius:10px;overflow:hidden;
+  background:linear-gradient(180deg, #DCEFF6 0%, #EEF4E6 58%, var(--paper) 58.5%, var(--paper-2) 100%)}
+.w-pinewood .pw-track{display:block;width:100%;height:100%}
+.w-pinewood .pw-track text{font-family:var(--f-doodle);font-weight:700}
+.w-pinewood .pw-note{font-size:12.5px;fill:var(--ink)}
+.w-pinewood .pw-vroom{font-size:15px;fill:var(--tomato-dk)}
+.w-pinewood .pw-lanenums text{font-family:var(--f-display);font-weight:400;font-size:11px}
+.w-pinewood .pw-you text{font-family:var(--f-sub);font-weight:700;font-size:8.5px}
+.w-pinewood .pw-you{opacity:0;transition:opacity .2s}
+.w-pinewood .pw-car.is-mine .pw-you{opacity:1}
+
+/* result = prize ribbon rosette */
+.w-pinewood .pw-place{position:absolute;left:42%;top:3px;z-index:2;width:66px;height:92px}
+.w-pinewood .pw-place[hidden]{display:none}
+.w-pinewood .pw-rosette{position:absolute;left:0;top:0;width:66px;height:66px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  border-radius:50%;border:2.5px solid var(--ink);box-shadow:0 3px 0 var(--ink);
+  background:repeating-conic-gradient(var(--pw-rb) 0 12deg, var(--pw-rb2) 12deg 24deg)}
+.w-pinewood .pw-rosette::before{content:"";position:absolute;inset:9px;border-radius:50%;background:var(--card);border:2px solid var(--ink);
+  box-shadow:inset 0 0 0 2px var(--card), inset 0 0 0 3.5px var(--pw-rb)}
+.w-pinewood .pw-place-n{position:relative;font-family:var(--f-display);font-size:17px;line-height:1;color:var(--ink)}
+.w-pinewood .pw-place-s{position:relative;font-family:var(--f-doodle);font-weight:700;font-size:11px;line-height:1;color:var(--ink-soft)}
+.w-pinewood .pw-tails::before,.w-pinewood .pw-tails::after{content:"";position:absolute;top:50px;width:20px;height:40px;background:var(--pw-rb);
+  border:2.5px solid var(--ink);clip-path:polygon(0 0,100% 0,100% 100%,50% 78%,0 100%)}
+.w-pinewood .pw-tails::before{left:12px;transform:rotate(14deg)}
+.w-pinewood .pw-tails::after{right:12px;transform:rotate(-14deg)}
+.w-pinewood .pw-place,.w-pinewood .pw-place.p1{--pw-rb:var(--cobalt);--pw-rb2:var(--cobalt-dk)}
+.w-pinewood .pw-place.p2{--pw-rb:var(--tomato);--pw-rb2:var(--tomato-dk)}
+.w-pinewood .pw-place.p3{--pw-rb:var(--sunny);--pw-rb2:var(--orange)}
+
+/* car picker: field-guide ID cards with stitched borders */
+.w-pinewood .pw-pick{flex:0 0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.w-pinewood .pw-pickbtn{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:66px;padding:5px 4px 4px;
+  font-family:var(--f-sub);font-weight:700;font-size:15px;line-height:1.05;color:var(--ink);background:var(--card);
+  border:2.5px solid var(--ink);border-radius:10px;box-shadow:0 3px 0 var(--ink);transition:transform .15s var(--ease-bounce), background-color .15s}
+.w-pinewood .pw-pickbtn::before{content:"";position:absolute;inset:3px;border:1.5px dashed rgba(31,42,34,.28);border-radius:7px;pointer-events:none}
+.w-pinewood .pw-pickbtn:hover{transform:translateY(-3px)}
+.w-pinewood .pw-pickbtn svg{width:64px;height:32px}
+.w-pinewood .pw-pickbtn[aria-pressed="true"]{background:var(--sunny);transform:translateY(-3px);box-shadow:0 5px 0 var(--ink)}
+.w-pinewood .pw-pickbtn[aria-pressed="true"]::after{content:"✓";position:absolute;top:-10px;right:-8px;width:24px;height:24px;display:grid;place-items:center;
+  font:900 14px/1 var(--f-body);color:#fff;background:var(--forest);border:2.5px solid var(--ink);border-radius:50%}
+.w-pinewood .pw-pick.is-nudge .pw-pickbtn{animation:pw-nudge .4s ease-in-out}
+@keyframes pw-nudge{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+
+/* race button + result */
+.w-pinewood .pw-go{flex:0 0 54px;display:flex;align-items:center;gap:10px;min-height:0}
+.w-pinewood .pw-race{flex:0 0 auto;min-width:104px;padding:8px 14px;font-family:var(--f-display);font-weight:400;font-size:17px;white-space:nowrap}
+.w-pinewood .pw-race[aria-disabled="true"]{filter:saturate(.5);cursor:progress}
+.w-pinewood .pw-result{margin:0;flex:1 1 auto;min-width:0;font-family:var(--f-doodle);font-weight:700;font-size:16px;line-height:1.1;color:var(--ink)}
+.w-pinewood .pw-result{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+
+/* article links: little trail-sign planks */
+.w-pinewood .pw-links{margin-top:auto;display:flex;gap:8px;flex-wrap:nowrap}
+.w-pinewood .pw-link{flex:1 1 0;min-width:0;display:flex;align-items:center;gap:7px;min-height:40px;padding:2px 8px 2px 3px;
+  font-family:var(--f-sub);font-weight:700;font-size:14.5px;line-height:1.05;text-decoration:none;color:var(--ink);
+  background:var(--paper-2);border:2px solid var(--ink);border-radius:8px;box-shadow:0 2px 0 var(--ink);transition:transform .15s var(--ease-bounce)}
+.w-pinewood .pw-link:hover{transform:translateY(-2px);background:var(--sand)}
+.w-pinewood .pw-link img{flex:0 0 auto;width:42px;height:32px;object-fit:cover;border-radius:5px;border:1.5px solid var(--ink)}
+
+.no-js .w-pinewood .pw-pick,.no-js .w-pinewood .pw-go{display:none}
+
+.w-pinewood .pw-track .pw-vroom{transition:opacity .2s}
+.w-pinewood .pw-trackwrap.has-place .pw-vroom{opacity:0}

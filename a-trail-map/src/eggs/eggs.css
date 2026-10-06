@@ -1,0 +1,277 @@
+/* ============================================================
+   EGGS — page-level Easter eggs (Agent EGGS). All classes prefixed .egg-
+   z-index map:  perched critters/acorns/landed plane 40–45 · squirrel 1200 · plane in flight 1400
+                 be-prepared 9000 · flyby/feather 9200 · search gags + effects layer 9300
+                 retro canvas 9350 · scanlines 9400 · retro HUD 9450 · flashlight 9500
+   ============================================================ */
+
+/* ---------- shared ---------- */
+.egg-layer{position:fixed;inset:0;z-index:9300;pointer-events:none;overflow:hidden}
+.egg-sparkle{position:absolute;line-height:1;pointer-events:none;transform:translate(-50%,-50%);text-shadow:0 0 6px rgba(255,255,255,.6);will-change:transform,opacity}
+.egg-fade-in{animation:egg-fade-in .45s ease-out both}
+.egg-fade-out{animation:egg-fade-out .45s ease-in forwards!important;pointer-events:none!important}
+@keyframes egg-fade-in{from{opacity:0}to{opacity:1}}
+@keyframes egg-fade-out{from{opacity:1}to{opacity:0}}
+
+/* ---------- 1–3. logo ---------- */
+.egg-logo{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+.egg-logo-img{transform-origin:50% 62%;position:relative;z-index:1}
+.egg-jiggle{animation:egg-jelly .75s cubic-bezier(.3,.7,.4,1)}
+@keyframes egg-jelly{
+  0%{scale:1 1} 14%{scale:1.13 .84} 28%{scale:.9 1.12} 42%{scale:1.07 .94} 56%{scale:.96 1.05} 72%{scale:1.02 .98} 100%{scale:1 1}}
+.egg-splat{position:absolute;top:50%;width:120px;height:120px;z-index:-1;pointer-events:none;transform:translate(-50%,-50%)}
+.egg-splat svg{display:block;overflow:visible}
+.egg-boing{position:absolute;font-family:var(--f-display);font-size:22px;color:var(--sunny);-webkit-text-stroke:1.5px var(--ink);
+  text-shadow:2px 2px 0 var(--ink);white-space:nowrap;pointer-events:none}
+
+.egg-scout{position:fixed;left:0;top:0;z-index:9200;pointer-events:none;will-change:transform}
+.egg-scout-btn{pointer-events:auto;display:block;position:relative;padding:0;margin:0;border:0;background:none;cursor:pointer;transform-origin:50% -40px}
+.egg-scout-btn img{display:block;height:140px;width:auto;filter:drop-shadow(4px 5px 0 rgba(31,42,34,.3));-webkit-user-drag:none}
+.egg-scout-lines{position:absolute;left:-54px;top:46%;width:48px;height:30px;opacity:.45;
+  background:linear-gradient(var(--ink),var(--ink)) 8px 0/40px 3px no-repeat,linear-gradient(var(--ink),var(--ink)) 0 13px/46px 3px no-repeat,linear-gradient(var(--ink),var(--ink)) 14px 26px/32px 3px no-repeat}
+.egg-scout-still{animation:egg-fade-in .4s ease-out both}
+.egg-scout-still .egg-scout-lines{display:none}
+.egg-feather{position:fixed;left:0;top:0;z-index:9200;width:30px;height:80px;pointer-events:none;filter:drop-shadow(2px 2px 0 rgba(31,42,34,.25))}
+.egg-feather svg{display:block}
+.egg-feather-still{animation:egg-fade-in .5s ease-out both}
+
+/* ---------- 4. Retro Mode ---------- */
+html.retro-mode{
+  --paper:#FCE0A8;--paper-2:#F8D878;--kraft:#C84C0C;--ink:#000000;--ink-soft:#383838;--white:#FCFCFC;
+  --tomato:#F83800;--tomato-dk:#A81000;--orange:#E45C10;--sunny:#F8B800;--lime:#58D854;--green-dk:#007800;
+  --teal:#00B8A8;--teal-dk:#008888;--sky:#3CBCFC;--cobalt:#0058F8;--cobalt-dk:#0000BC;
+  --radius:0px;--radius-sm:0px;--shadow:8px 8px 0 #000;--shadow-sm:4px 4px 0 #000;--line:4px}
+html.retro-mode body{background-color:var(--paper);
+  background-image:linear-gradient(rgba(0,0,0,.07) 2px,transparent 2px),linear-gradient(90deg,rgba(0,0,0,.07) 2px,transparent 2px);background-size:16px 16px;
+  -webkit-font-smoothing:none}
+html.retro-mode body *:not(.ad-slot,.ad-slot *){border-radius:0!important}
+html.retro-mode :is(h1,h2,h3,h4,h5,.widget-title,.display){font-family:var(--f-pixel)!important;letter-spacing:0!important;line-height:1.4!important;font-weight:400!important}
+html.retro-mode :is(h1,.display){font-size:clamp(16px,2.2vw,24px)!important}
+html.retro-mode h2{font-size:16px!important}
+html.retro-mode :is(h3,h4,h5,.widget-title){font-size:13px!important}
+html.retro-mode :is(.btn,.chip,.sticker,.more-link,.widget-kicker){font-family:var(--f-pixel)!important;font-size:11px!important;letter-spacing:0!important}
+html.retro-mode img:not(.ad-slot img){image-rendering:pixelated;filter:url(#egg-retro-posterize) contrast(1.08) saturate(1.3)}
+html.retro-mode :is(.widget,.hero-card){box-shadow:8px 8px 0 #000!important}
+.egg-scanlines{position:fixed;inset:0;z-index:9400;pointer-events:none;
+  background:repeating-linear-gradient(to bottom,rgba(0,0,0,.09) 0 1px,rgba(0,0,0,0) 1px 3px),radial-gradient(ellipse at center,rgba(0,0,0,0) 60%,rgba(0,0,0,.18) 100%)}
+.egg-retro-canvas{position:fixed;left:0;top:0;z-index:9350;pointer-events:none;image-rendering:pixelated;image-rendering:crisp-edges}
+.egg-retro-hud{position:fixed;left:16px;bottom:16px;z-index:9450;display:flex;flex-wrap:wrap;align-items:center;gap:10px;max-width:calc(100vw - 48px);
+  padding:10px 12px;background:#000;color:#FCFCFC;font-family:var(--f-pixel);font-size:11px;line-height:1.4;
+  box-shadow:0 0 0 4px #FCFCFC,0 0 0 8px #000}
+.egg-retro-title{color:#F8B800}
+.egg-retro-score{white-space:nowrap}
+.egg-retro-btn{min-height:44px;min-width:44px;padding:0 12px;font-family:var(--f-pixel);font-size:11px;color:#000;background:#F8B800;border:0;
+  box-shadow:inset -4px -4px 0 rgba(0,0,0,.35),0 0 0 3px #FCFCFC;cursor:pointer}
+.egg-retro-btn:active{box-shadow:inset 4px 4px 0 rgba(0,0,0,.35),0 0 0 3px #FCFCFC}
+.egg-retro-btn:focus-visible{outline:3px solid #3CBCFC;outline-offset:4px}
+.egg-retro-exit{background:#F83800}
+@media (max-width:639px){ .egg-retro-hud{left:12px;right:12px;bottom:12px;max-width:none;justify-content:center} }
+
+/* ---------- 5. Be Prepared ---------- */
+.egg-bp-layer{position:fixed;inset:0;z-index:9000;pointer-events:none;overflow:hidden}
+.egg-bp-item{position:absolute;left:0;top:0;pointer-events:auto;touch-action:none;cursor:grab;will-change:transform;
+  filter:drop-shadow(2px 3px 0 rgba(31,42,34,.3))}
+.egg-bp-item svg{display:block;width:100%;height:100%}
+.egg-bp-item.is-grabbed{cursor:grabbing;filter:drop-shadow(5px 7px 0 rgba(31,42,34,.3))}
+.egg-hint-press{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;touch-action:manipulation}
+.egg-hint-press.egg-holding{background-image:linear-gradient(rgba(255,198,41,.55),rgba(255,198,41,.55));background-repeat:no-repeat;background-position:0 0;
+  animation:egg-hold 1.5s linear forwards}
+@keyframes egg-hold{from{background-size:0% 100%}to{background-size:100% 100%}}
+
+/* ---------- 6. Flashlight hunt ---------- */
+.egg-fl{position:fixed;inset:0;z-index:9500;opacity:0;transition:opacity .4s ease}
+.egg-fl.is-on{opacity:1}
+.egg-fl-stage{position:absolute;inset:0;pointer-events:none}
+.egg-fl-critter{position:absolute;z-index:1;width:58px;height:58px;transform:translate(-50%,-50%) rotate(var(--tilt,0deg))}
+.egg-fl-critter svg{display:block;width:100%;height:100%}
+.egg-fl-critter:not(.is-found){opacity:0;transition:opacity .2s ease}
+.egg-fl-critter.is-lit{opacity:1}
+.egg-fl-critter.is-found{z-index:4;filter:drop-shadow(0 0 10px rgba(255,198,41,.95));animation:egg-found .5s var(--ease-bounce) both}
+@keyframes egg-found{0%{scale:.6}60%{scale:1.35}100%{scale:1.15}}
+.egg-fl-dark{position:absolute;inset:0;z-index:2;touch-action:none;cursor:crosshair;--bx:50vw;--by:50vh;--br:100px;
+  background:radial-gradient(circle var(--br) at var(--bx) var(--by),rgba(8,10,24,0) 0,rgba(8,10,24,0) 58%,rgba(8,10,24,.55) 80%,rgba(8,10,24,.95) 100%)}
+.egg-fl-dark:focus{outline:none}
+.egg-fl-dark:focus-visible{box-shadow:inset 0 0 0 4px var(--sky)}
+.egg-fl-glows{position:absolute;inset:0;z-index:3;pointer-events:none}
+.egg-fl-glow{position:absolute;width:7px;height:7px;border-radius:50%;background:var(--glow);box-shadow:0 0 10px 3px var(--glow);
+  transform:translate(-50%,-50%);opacity:.3;animation:egg-glowpulse 3s ease-in-out infinite alternate}
+@keyframes egg-glowpulse{from{opacity:.12}to{opacity:.42}}
+.egg-fl-hud{position:absolute;z-index:5;top:12px;left:50%;transform:translateX(-50%);display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px 14px;
+  width:max-content;max-width:calc(100vw - 24px);padding:8px 10px 8px 14px;background:var(--card);border:3px solid var(--ink);border-radius:10px;box-shadow:var(--shadow-sm);
+  outline:1.5px dashed rgba(31,42,34,.3);outline-offset:-7px;font-family:var(--f-sub);font-weight:700;font-size:17px;color:var(--ink)}
+.egg-fl-count{font-family:var(--f-doodle);font-weight:700;font-size:17px;color:var(--bark)}
+.egg-fl-btn{min-height:44px;padding:6px 14px;font-family:var(--f-sub);font-weight:700;font-size:17px;color:var(--ink);background:var(--sunny);border:3px solid var(--ink);border-radius:10px;box-shadow:0 3px 0 var(--ink);cursor:pointer}
+.egg-fl-btn:active{transform:translateY(3px);box-shadow:none}
+
+/* ---------- 7. Ladybug ---------- */
+.egg-ladybug{position:absolute;z-index:40;width:44px;height:44px;padding:0;margin:0;border:0;background:none;cursor:pointer;display:block;-webkit-tap-highlight-color:transparent}
+.egg-lb-walker{display:grid;place-items:center;width:44px;height:44px;animation:egg-lb-walk 16s ease-in-out infinite}
+.egg-lb-body{display:block;width:34px;height:29px;animation:egg-lb-bob .35s ease-in-out infinite alternate}
+.egg-lb-body svg{display:block;overflow:visible;filter:drop-shadow(1px 2px 0 rgba(31,42,34,.3))}
+.egg-lb-wings{opacity:0;transform-box:fill-box;transform-origin:50% 100%}
+.egg-ladybug.is-flying .egg-lb-walker{animation:none}
+.egg-ladybug.is-flying .egg-lb-wings{opacity:1;animation:egg-flap .12s ease-in-out infinite alternate}
+.egg-ladybug:focus-visible{outline:3px solid var(--cobalt);outline-offset:0;border-radius:50%}
+@keyframes egg-lb-walk{
+  0%{transform:translateX(calc(var(--walk,30px) * -1)) scaleX(1)}
+  46%{transform:translateX(var(--walk,30px)) scaleX(1)}
+  50%{transform:translateX(var(--walk,30px)) scaleX(-1)}
+  96%{transform:translateX(calc(var(--walk,30px) * -1)) scaleX(-1)}
+  100%{transform:translateX(calc(var(--walk,30px) * -1)) scaleX(1)}}
+@keyframes egg-lb-bob{from{transform:translateY(0)}to{transform:translateY(-1px) rotate(-2deg)}}
+@keyframes egg-flap{from{transform:scaleY(1)}to{transform:scaleY(.35)}}
+
+/* ---------- 8. Squirrel ---------- */
+.egg-sq-win{position:fixed;left:0;top:0;z-index:1200;width:80px;height:72px;pointer-events:none;visibility:hidden;clip-path:inset(-400px -400px 0 -400px)}
+.egg-sq-win.is-down{clip-path:inset(0 -400px -400px -400px)}
+.egg-sq-win.is-shown{visibility:visible}
+.egg-sq{position:absolute;left:0;top:0;width:80px;height:72px;padding:0;margin:0;border:0;background:none;cursor:pointer;pointer-events:auto;
+  transform:translateY(100%);transition:transform .45s var(--ease-bounce);-webkit-tap-highlight-color:transparent}
+.egg-sq-win:not(.is-shown) .egg-sq{pointer-events:none}
+.egg-sq-win.is-tail .egg-sq{transform:translateY(76%)}
+.egg-sq-win.is-up .egg-sq{transform:translateY(3%)}
+.egg-sq-win.is-down .egg-sq{transform:translateY(-100%) rotate(180deg)}
+.egg-sq-win.is-down.is-tail .egg-sq{transform:translateY(-76%) rotate(180deg)}
+.egg-sq-win.is-down.is-up .egg-sq{transform:translateY(-3%) rotate(180deg)}
+.egg-sq-flip{display:block;transform-origin:50% 60%}
+.egg-sq svg,.egg-sq-runner svg{display:block;overflow:visible;filter:drop-shadow(2px 2px 0 rgba(31,42,34,.25))}
+.egg-sq-tail{transform-box:fill-box;transform-origin:70% 100%}
+.egg-sq-win.is-tail .egg-sq-tail{animation:egg-tailwag .35s ease-in-out infinite alternate}
+.egg-sq-acorn{display:none}
+.egg-sq.has-acorn .egg-sq-acorn{display:inline}
+.egg-sq:focus-visible{outline:3px solid var(--cobalt);outline-offset:2px;border-radius:12px}
+@keyframes egg-tailwag{from{transform:rotate(-8deg)}to{transform:rotate(8deg)}}
+.egg-sq-runner{position:fixed;z-index:1200;width:80px;height:72px;pointer-events:none}
+.egg-acorn{position:absolute;z-index:45;width:44px;height:44px;padding:0;margin:0;border:0;background:none;cursor:pointer;display:grid;place-items:center;
+  filter:drop-shadow(2px 2px 0 rgba(31,42,34,.3));-webkit-tap-highlight-color:transparent}
+.egg-acorn svg{display:block}
+.egg-acorn:hover svg{animation:egg-wiggle .4s ease-in-out}
+.egg-acorn:focus-visible{outline:3px solid var(--cobalt);outline-offset:0;border-radius:50%}
+.egg-acorn-fly{position:fixed;left:0;top:0;z-index:1201;width:26px;height:30px;pointer-events:none}
+@keyframes egg-wiggle{0%,100%{transform:rotate(0)}30%{transform:rotate(-14deg)}70%{transform:rotate(12deg)}}
+
+/* ---------- 9. Search gags ---------- */
+.egg-gag{position:fixed;inset:0;z-index:9300;pointer-events:none;overflow:hidden}
+.egg-pizza{position:absolute;top:0;width:60px;height:72px;pointer-events:auto;cursor:pointer;touch-action:none;filter:drop-shadow(3px 3px 0 rgba(31,42,34,.3))}
+.egg-pizza svg{display:block;overflow:visible}
+.egg-pizza.is-eaten{pointer-events:none;animation:egg-eaten .35s ease-in forwards}
+@keyframes egg-eaten{0%{scale:1;opacity:1}40%{scale:1.25;opacity:1}100%{scale:0;opacity:0}}
+.egg-derby{position:absolute;overflow:visible;filter:drop-shadow(3px 3px 0 rgba(31,42,34,.25))}
+.egg-derby-tag{position:absolute;padding:6px 10px 5px;font-family:var(--f-display);font-size:16px;letter-spacing:.1em;color:var(--forest);background:rgba(255,253,246,.95);
+  border:3px double currentColor;border-radius:6px;transform:rotate(-7deg);animation:egg-pop .4s var(--ease-bounce) both}
+@keyframes egg-pop{from{scale:.2;opacity:0}to{scale:1;opacity:1}}
+.egg-foot{position:absolute;width:80px;height:120px;opacity:.88}
+.egg-foot svg{display:block}
+.egg-knot{position:absolute;padding:0;margin:0;border:0;background:none;cursor:pointer;pointer-events:auto;overflow:visible}
+.egg-knot svg{display:block;overflow:visible;filter:drop-shadow(3px 3px 0 rgba(31,42,34,.25))}
+.egg-knot-hint{position:absolute;left:50%;top:100%;margin-top:6px;transform:translateX(-50%);white-space:nowrap;
+  padding:2px 10px;font-family:var(--f-doodle);font-weight:700;font-size:17px;color:var(--bark);background:var(--card);border:2px solid var(--ink);border-radius:8px;box-shadow:0 2px 0 var(--ink)}
+.egg-knot.is-untied .egg-knot-hint{opacity:0}
+.egg-knot:focus-visible{outline:4px solid var(--cobalt);outline-offset:4px}
+
+/* ---------- 10–11. Campfire band ---------- */
+.egg-camp{position:absolute;inset:0;z-index:1;overflow:hidden;pointer-events:none}
+.egg-sky{position:absolute;left:0;top:0;width:100%;height:62%;pointer-events:auto;touch-action:manipulation;overflow:visible}
+.egg-sky:focus{outline:none}
+.egg-sky:focus-visible{outline:3px dashed var(--sky);outline-offset:-6px}
+.egg-fstar{fill:#FFFFFF;opacity:.75}
+.egg-fstar.tw{animation:egg-twinkle 3.2s ease-in-out infinite}
+@keyframes egg-twinkle{0%,100%{opacity:.25}50%{opacity:1}}
+.egg-star{cursor:pointer}
+.egg-star-halo{fill:transparent;stroke:transparent}
+.egg-star-shape{fill:#FFF6CF;stroke:#FFC629;stroke-width:1;transform-box:fill-box;transform-origin:center;filter:drop-shadow(0 0 3px rgba(255,220,120,.9))}
+.egg-star:hover .egg-star-shape{scale:1.3}
+.egg-star.is-sel .egg-star-halo{fill:rgba(255,198,41,.22);stroke:#FFC629;stroke-width:2}
+.egg-star.is-cursor .egg-star-halo{stroke:var(--sky);stroke-width:3;stroke-dasharray:4 3}
+.egg-star.is-hint .egg-star-shape{animation:egg-starhint 1.2s ease-in-out infinite}
+.egg-star.is-done .egg-star-shape{fill:#FFC629;stroke:#FFFFFF;animation:egg-stardone 2.4s ease-in-out infinite;animation-delay:var(--d,0s)}
+@keyframes egg-starhint{0%,100%{scale:1}50%{scale:1.5}}
+@keyframes egg-stardone{0%,100%{scale:1.15}50%{scale:1.5}}
+.egg-cline{stroke:#FFF6CF;stroke-width:2.5;stroke-linecap:round;opacity:.85}
+.egg-cline.is-done{stroke:#FFC629;stroke-width:3.5;opacity:1;filter:drop-shadow(0 0 4px rgba(255,198,41,.9))}
+.egg-cline-wrong{stroke:#F7A531;stroke-width:2;stroke-dasharray:5 5;opacity:.8}
+.egg-cname{fill:#FFC629;font-family:var(--f-doodle);font-weight:700;font-size:18px;animation:egg-fade-in .6s ease-out both}
+.egg-pour{fill:#FFE27A}
+.egg-shoot{stroke:#FFFFFF;stroke-width:2.5;stroke-linecap:round}
+
+.egg-fireflies{position:absolute;inset:0;pointer-events:none}
+.egg-firefly{position:absolute;left:0;top:0;width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:50%;background:#E6FF7A;
+  box-shadow:0 0 10px 4px rgba(214,255,90,.55);animation:egg-blink 3s ease-in-out infinite;will-change:transform}
+@keyframes egg-blink{0%,100%{opacity:.15}45%,60%{opacity:1}}
+
+.egg-fire{position:absolute;left:50%;bottom:4px;width:300px;height:190px;transform:translateX(-62%);pointer-events:none}
+.egg-fire-svg{display:block;width:100%;height:100%;overflow:visible}
+.egg-flame{transform-box:fill-box;transform-origin:50% 100%;animation:egg-flick .9s ease-in-out infinite alternate}
+.egg-flame.f2{animation-duration:.7s;animation-delay:-.3s}
+.egg-flame.f3{animation-duration:.55s;animation-delay:-.1s}
+@keyframes egg-flick{0%{transform:scale(1,1) skewX(0)}50%{transform:scale(.96,1.06) skewX(-3deg)}100%{transform:scale(1.03,.95) skewX(3deg)}}
+.egg-fire-glow{animation:egg-firelight 2.2s ease-in-out infinite alternate}
+@keyframes egg-firelight{from{opacity:.25}to{opacity:.45}}
+.egg-embers{position:absolute;left:22%;width:24%;top:22%;height:50%;pointer-events:none}
+.egg-ember{position:absolute;bottom:0;width:4px;height:4px;border-radius:50%;background:#FFC629;box-shadow:0 0 6px 1px #F7A531;opacity:0;animation:egg-ember 2.4s linear infinite}
+@keyframes egg-ember{0%{transform:translate(0,0);opacity:0}10%{opacity:1}100%{transform:translate(var(--dx,10px),-120px);opacity:0}}
+.egg-mallow{pointer-events:auto;cursor:pointer;transform-box:fill-box;transform-origin:50% 50%}
+.egg-mallow-body{transition:fill .1s linear}
+.egg-mallow-fire{transform-box:fill-box;transform-origin:50% 100%;transform:scale(var(--fire,0));transition:transform .15s ease-out}
+.egg-fire.is-burning .egg-mallow-fire path:first-child{animation:egg-flick .5s ease-in-out infinite alternate;transform-box:fill-box;transform-origin:50% 100%}
+.egg-mouth-worried{display:none}
+.egg-fire.is-worried .egg-mouth-happy{display:none}
+.egg-fire.is-worried .egg-mouth-worried{display:inline}
+.egg-fire.is-toasting .egg-mallow{animation:egg-sizzle .18s ease-in-out infinite alternate}
+.egg-fire.is-happy .egg-mallow{animation:egg-dance .45s ease-in-out 5}
+@keyframes egg-sizzle{from{transform:translate(0,0)}to{transform:translate(.6px,-.6px)}}
+@keyframes egg-dance{0%,100%{transform:rotate(0) translateY(0)}25%{transform:rotate(-12deg) translateY(-6px)}75%{transform:rotate(12deg) translateY(-6px)}}
+
+.egg-smores-ui{position:absolute;left:calc(50% + 110px);bottom:34px;width:200px;display:flex;flex-direction:column;gap:8px;pointer-events:auto}
+.egg-toast-btn{min-height:48px;padding:8px 14px;font-family:var(--f-sub);font-weight:700;font-size:18px;line-height:1.1;color:var(--ink);background:var(--sunny);
+  border:3px solid var(--ink);border-radius:10px;box-shadow:var(--shadow-sm);cursor:pointer;touch-action:none;-webkit-user-select:none;user-select:none;
+  -webkit-touch-callout:none;transition:transform .12s var(--ease-bounce),box-shadow .12s}
+.egg-toast-btn:hover{transform:translateY(-2px)}
+.egg-toast-btn.is-holding{transform:translateY(3px);box-shadow:0 0 0 var(--ink);background:var(--orange)}
+.egg-toast-btn:focus-visible{outline:4px solid var(--sky);outline-offset:3px}
+.egg-toast-meter{position:relative;height:12px;border:2.5px solid var(--ink);border-radius:99px;overflow:hidden;box-shadow:0 0 0 1.5px rgba(255,232,176,.45);
+  background:linear-gradient(90deg,#FFFDF5 0%,#F6E3A8 30%,#E8B460 55%,#C98A3E 70%,#8A5426 85%,#3A2416 100%)}
+.egg-toast-meter::after{content:"";position:absolute;left:55%;width:23%;top:0;bottom:0;border-left:2px dashed #fff;border-right:2px dashed #fff}
+.egg-toast-meter span{position:absolute;right:0;top:0;bottom:0;width:100%;background:#22302A}
+.egg-toast-status{margin:0;font-family:var(--f-doodle);font-weight:700;font-size:18px;line-height:1.15;color:#FFFFFF;text-shadow:0 1px 0 #000}
+@media (max-width:639px){
+  .egg-fire{left:0;transform:scale(.78);transform-origin:0 100%}
+  .egg-smores-ui{left:auto;right:10px;width:150px;bottom:18px}
+  .egg-toast-btn{font-size:16px}
+  .egg-toast-status{font-size:16px}
+}
+
+/* ---------- 12. Paper airplane ---------- */
+.egg-plane{position:absolute;left:0;top:0;z-index:45;pointer-events:auto;width:60px;height:44px;padding:6px 3px;margin:0;border:0;background:none;cursor:grab;
+  touch-action:none;-webkit-tap-highlight-color:transparent;filter:drop-shadow(2px 3px 0 rgba(31,42,34,.3))}
+.egg-plane-inner{display:block;transform-origin:50% 50%}
+.egg-plane-inner svg{display:block;overflow:visible}
+.egg-plane:not(.is-free):not(.is-doc) .egg-plane-inner{animation:egg-plane-idle 5s ease-in-out infinite}
+.egg-plane.is-free{z-index:1400}
+.egg-plane.is-doc{z-index:45}
+.egg-plane.is-held{cursor:grabbing}
+.egg-plane.is-flying{cursor:default}
+.egg-plane:focus-visible{outline:3px solid var(--cobalt);outline-offset:2px;border-radius:8px}
+@keyframes egg-plane-idle{0%,84%,100%{transform:rotate(0)}88%{transform:rotate(-10deg)}92%{transform:rotate(6deg)}96%{transform:rotate(-3deg)}}
+
+/* ---------- 13. Stone skipping ---------- */
+.egg-pond{position:absolute;inset:0;z-index:2;border-radius:inherit}
+.egg-pond-water{position:absolute;inset:0;border-radius:inherit;cursor:grab;touch-action:pan-y;-webkit-user-select:none;user-select:none}
+.egg-stone{position:absolute;left:0;top:0;width:14px;height:10px;border-radius:50%;background:#8F8A7C;border:2px solid var(--ink);pointer-events:none}
+.egg-ripple{position:absolute;left:0;top:0;width:12px;height:6px;border:2px solid rgba(255,255,255,.95);border-radius:50%;pointer-events:none;
+  transform:translate(-50%,-50%);animation:egg-ripple 1.2s ease-out forwards}
+.egg-ripple.is-last{border-color:#FFFFFF;animation-duration:1.3s}
+@keyframes egg-ripple{from{transform:translate(-50%,-50%) scale(1);opacity:1}to{transform:translate(-50%,-50%) scale(5);opacity:0}}
+html.motion-off .egg-ripple{animation:egg-fade-out 1.6s ease-in forwards!important;animation-duration:1.6s!important;width:34px;height:14px}
+@media (prefers-reduced-motion:reduce){ .egg-ripple{animation:none!important;width:34px;height:14px;opacity:.85} }
+.egg-splash{position:absolute;left:0;top:0;width:5px;height:5px;margin:-2px;border-radius:50%;background:#fff;pointer-events:none;
+  box-shadow:-8px -4px 0 #fff,8px -5px 0 #fff,-3px -9px 0 #fff,4px -11px 0 #fff;animation:egg-splash .6s ease-out forwards}
+@keyframes egg-splash{from{transform:translateY(0) scale(.6);opacity:1}to{transform:translateY(-12px) scale(1.2);opacity:0}}
+.egg-pond-count{position:absolute;left:50%;top:10px;margin:0;padding:0 8px;font-family:var(--f-doodle);font-weight:700;font-size:16px;line-height:1.35;color:var(--ink);white-space:nowrap;
+  background:var(--card);border:2px solid var(--ink);border-radius:8px;box-shadow:0 2px 0 var(--ink);pointer-events:none;transform:translateX(-50%)}
+.egg-pond-count:empty{display:none}
+.egg-pond-count.pop{animation:egg-pop .35s var(--ease-bounce)}
+.egg-pond-btn{position:absolute;left:50%;bottom:0;transform:translateX(-50%);white-space:nowrap;min-height:44px;min-width:44px;padding:0 8px;margin:0;border:0;background:none;cursor:pointer;
+  font-family:var(--f-doodle);font-size:15px;color:var(--ink);text-decoration:underline dotted;text-underline-offset:3px}
+.egg-pond-btn:hover{text-decoration-style:solid}
+.egg-pond-btn:focus-visible{outline:3px solid var(--cobalt);outline-offset:-3px;border-radius:8px}

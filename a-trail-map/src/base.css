@@ -1,0 +1,192 @@
+/* ============================================================
+   Scout Life — Direction A: Trail Map / Field Guide
+   base.css — design tokens, reset, shared components
+   Token NAMES match Direction B so all modules work; VALUES and
+   component styling are re-themed for the outdoors / field guide look.
+   ============================================================ */
+@font-face{font-family:'Alfa Slab One';font-weight:400;font-display:swap;src:url('assets/fonts/AlfaSlabOne-400.woff2') format('woff2');}
+/* Zilla Slab: "normal" maps to SemiBold so subheads stay punchy */
+@font-face{font-family:'Zilla Slab';font-weight:400 600;font-display:swap;src:url('assets/fonts/ZillaSlab-600.woff2') format('woff2');}
+@font-face{font-family:'Zilla Slab';font-weight:700 900;font-display:swap;src:url('assets/fonts/ZillaSlab-700.woff2') format('woff2');}
+@font-face{font-family:'Atkinson Hyperlegible';font-weight:400 500;font-display:swap;src:url('assets/fonts/AtkinsonHyperlegible-400.woff2') format('woff2');}
+@font-face{font-family:'Atkinson Hyperlegible';font-weight:600 900;font-display:swap;src:url('assets/fonts/AtkinsonHyperlegible-700.woff2') format('woff2');}
+@font-face{font-family:'Kalam';font-weight:400;font-display:swap;src:url('assets/fonts/Kalam-400.woff2') format('woff2');}
+@font-face{font-family:'Kalam';font-weight:700;font-display:swap;src:url('assets/fonts/Kalam-700.woff2') format('woff2');}
+@font-face{font-family:'Press Start 2P';font-weight:400;font-display:swap;src:url('assets/fonts/PressStart2P-400.woff2') format('woff2');}
+
+:root{
+  /* Palette — outdoors / field guide (gender-neutral) */
+  --paper:#F6EEDC;      /* topo cream */
+  --paper-2:#EFE3C8;    /* map paper */
+  --kraft:#D8C29A;      /* trail dust */
+  --sand:#E9D8B4;
+  --card:#FFFDF6;       /* field-guide page */
+  --ink:#1F2A22;        /* deep forest ink */
+  --ink-soft:#4B5A4E;
+  --white:#FFFFFF;
+  --tomato:#F26B21;     /* TRAIL ORANGE (blaze) */
+  --tomato-dk:#B9480C;
+  --orange:#F7A531;     /* amber / campfire */
+  --sunny:#FFC629;      /* sunshine */
+  --lime:#8DBF4A;       /* meadow */
+  --green-dk:#1F5C3A;   /* FOREST */
+  --forest:#1F5C3A;
+  --pine:#2E7550;
+  --moss:#5E8C3A;
+  --teal:#3E9C8A;       /* pine lake */
+  --teal-dk:#1E6B5C;
+  --sky:#3FA9F5;        /* sky */
+  --cobalt:#1F64B0;     /* deep lake */
+  --cobalt-dk:#154A85;
+  --bark:#7A4E2D;       /* wood signs */
+  --bark-dk:#553419;
+
+  /* Section colors */
+  --c-games:var(--cobalt);
+  --c-jokes:var(--sunny);
+  --c-outdoors:var(--lime);
+  --c-hobbies:var(--tomato);
+  --c-scouts:var(--teal);
+  --c-features:var(--orange);
+  --c-quizzes:var(--sky);
+
+  /* Type */
+  --f-display:'Alfa Slab One', 'Rockwell Extra Bold', Rockwell, Georgia, serif;
+  --f-sub:'Zilla Slab', Rockwell, Georgia, serif;
+  --f-body:'Atkinson Hyperlegible', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --f-doodle:'Kalam', 'Comic Sans MS', cursive;   /* field-notes handwriting */
+  --f-pixel:'Press Start 2P', monospace;
+
+  /* Shape */
+  --line:3px;
+  --radius:12px;
+  --radius-sm:8px;
+  --shadow:0 5px 0 var(--ink);
+  --shadow-sm:0 3px 0 var(--ink);
+  --slot-h:460px;
+  --gap:28px;
+  --container:1240px;
+  --ease-bounce:cubic-bezier(.34,1.56,.64,1);
+
+  /* Topographic contour textures (inline SVG) */
+  --topo:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600' viewBox='0 0 600 600'%3E%3Cg fill='none' stroke='%237A4E2D' stroke-opacity='.13' stroke-width='1.6'%3E%3Cpath d='M-20 120C80 60 160 150 260 110S420 20 520 80 640 60 640 60'/%3E%3Cpath d='M-20 150C90 95 170 185 270 140S430 55 530 115 640 95 640 95'/%3E%3Cpath d='M-20 185C95 135 180 220 280 175S440 95 540 150 640 135 640 135'/%3E%3Cpath d='M300 330c60-40 150-30 170 30s-40 110-120 105-120-40-110-80 20-40 60-55z'/%3E%3Cpath d='M318 345c45-28 115-20 128 25s-30 80-90 76-90-30-82-60 14-28 44-41z'/%3E%3Cpath d='M338 360c30-16 75-10 84 18s-20 50-58 47-58-18-52-38 8-17 26-27z'/%3E%3Cpath d='M-20 470C70 430 150 520 250 480S400 400 500 450 640 430 640 430'/%3E%3Cpath d='M-20 505C80 470 160 555 260 515S410 440 510 485 640 470 640 470'/%3E%3Cpath d='M-20 545C85 510 170 590 270 552S420 480 520 522 640 510 640 510'/%3E%3Cpath d='M60 300c30-30 90-25 100 10s-25 60-65 55-60-35-35-65z'/%3E%3Cpath d='M78 308c20-18 58-14 64 8s-16 38-42 35-38-22-22-43z'/%3E%3C/g%3E%3C/svg%3E");
+  --topo-light:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='120' viewBox='0 0 320 120'%3E%3Cg fill='none' stroke='%23fff' stroke-opacity='.22' stroke-width='1.5'%3E%3Cpath d='M-10 30C40 10 80 50 130 30S210 0 260 20 330 10 330 10'/%3E%3Cpath d='M-10 55C45 35 85 75 135 55S215 25 265 45 330 35 330 35'/%3E%3Cpath d='M-10 80C50 60 90 100 140 80S220 50 270 70 330 60 330 60'/%3E%3Cpath d='M-10 105C55 85 95 125 145 105S225 75 275 95 330 85 330 85'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background-color:var(--paper);background-image:var(--topo);background-size:600px 600px;color:var(--ink);
+  font-family:var(--f-body);font-size:18px;line-height:1.5;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+button{font:inherit;color:inherit;cursor:pointer}
+h1,h2,h3,h4{margin:0;line-height:1.08}
+p{margin:0 0 .6em}
+:focus-visible{outline:4px solid var(--tomato);outline-offset:3px;border-radius:6px}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.container{max-width:var(--container);margin:0 auto;padding:0 24px}
+@media (max-width:639px){ body{font-size:16px} .container{padding:0 16px} :root{--gap:22px} }
+
+.display{font-family:var(--f-display);font-weight:400;letter-spacing:.2px}
+.sub{font-family:var(--f-sub);font-weight:700}
+.doodle{font-family:var(--f-doodle);font-weight:400}
+
+/* ---------- Buttons: chunky "trail sign" buttons that press down ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:10px 20px;
+  font-family:var(--f-sub);font-weight:700;font-size:19px;line-height:1;text-decoration:none;color:var(--ink);
+  background:var(--sunny);border:var(--line) solid var(--ink);border-radius:10px;box-shadow:var(--shadow-sm);
+  transition:transform .15s var(--ease-bounce), box-shadow .15s;user-select:none}
+.btn:hover{transform:translateY(-2px);box-shadow:0 5px 0 var(--ink)}
+.btn:active{transform:translateY(3px);box-shadow:0 0 0 var(--ink)}
+.btn-tomato{background:var(--tomato)}
+.btn-orange{background:var(--orange)}
+.btn-teal{background:var(--teal)}
+.btn-lime{background:var(--lime)}
+.btn-sky{background:var(--sky)}
+.btn-white{background:var(--card)}
+.btn-cobalt{background:var(--cobalt);color:#fff}
+.btn-forest{background:var(--forest);color:#fff}
+.btn-sm{min-height:40px;padding:7px 14px;font-size:16px;border-radius:8px}
+.btn-pill{border-radius:999px}
+
+.chip{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:6px 14px;font-family:var(--f-sub);font-weight:700;font-size:16px;
+  background:var(--card);border:2.5px solid var(--ink);border-radius:999px;box-shadow:0 2px 0 var(--ink);text-decoration:none;
+  transition:transform .15s var(--ease-bounce)}
+.chip:hover{transform:translateY(-2px)}
+.chip[aria-pressed="true"],.chip.is-active{background:var(--sunny)}
+
+/* ---------- Labels = embroidered PATCHES; flags = passport STAMPS ---------- */
+.sticker{display:inline-block;font-family:var(--f-sub);font-weight:700;font-size:15px;line-height:1;padding:6px 11px 5px;color:var(--ink);
+  background:var(--sunny);border:2.5px solid var(--ink);border-radius:8px;box-shadow:0 2px 0 var(--ink);
+  outline:1.5px dashed rgba(31,42,34,.45);outline-offset:-6px;transform:none;text-decoration:none;white-space:nowrap}
+.sticker.round{border-radius:999px}
+.label-games{background:var(--c-games);color:#fff;outline-color:rgba(255,255,255,.7)}
+.label-jokes{background:var(--c-jokes)}
+.label-outdoors{background:var(--c-outdoors)}
+.label-hobbies{background:var(--c-hobbies)}
+.label-scouts{background:var(--c-scouts)}
+.label-features{background:var(--c-features)}
+.label-quizzes{background:var(--c-quizzes)}
+/* passport stamps */
+.sticker.flag-new,.sticker.flag-hot,.sticker.flag-seasonal{background:rgba(255,253,246,.92);box-shadow:none;outline:none;
+  font-family:var(--f-display);font-size:13px;letter-spacing:.12em;text-transform:uppercase;padding:7px 10px 6px;
+  border:3px double currentColor;border-radius:6px;transform:rotate(-7deg)}
+.sticker.flag-new{color:var(--forest)}
+.sticker.flag-hot{color:var(--tomato-dk)}
+.sticker.flag-seasonal{color:var(--bark)}
+
+/* "taped" in this direction = brass map pin */
+.taped::before{content:"";position:absolute;top:-9px;left:50%;width:18px;height:18px;margin-left:-9px;z-index:3;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%, #FFD98A 0 22%, var(--tomato) 24% 100%);border:2.5px solid var(--ink);
+  box-shadow:0 2px 0 var(--ink);pointer-events:none}
+
+/* ---------- Widget frame = field-guide card ---------- */
+.widget{position:relative;display:flex;flex-direction:column;height:var(--slot-h);background:var(--card);
+  border:var(--line) solid var(--ink);border-radius:var(--radius);box-shadow:var(--shadow), 0 14px 28px -12px rgba(31,42,34,.35);
+  transform:none;transition:transform .25s var(--ease-bounce), box-shadow .25s;--accent:var(--sunny)}
+.widget:hover{transform:translateY(-4px);box-shadow:0 9px 0 var(--ink), 0 22px 30px -14px rgba(31,42,34,.4)}
+/* stitched inner border */
+.widget::after{content:"";position:absolute;inset:5px;border:2px dashed rgba(31,42,34,.22);border-radius:8px;pointer-events:none;z-index:2}
+/* brass map pin instead of tape */
+.widget::before{content:"";position:absolute;top:-10px;left:50%;width:20px;height:20px;margin-left:-10px;z-index:4;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%, #FFE3A3 0 20%, var(--pin,var(--tomato)) 22% 100%);border:2.5px solid var(--ink);
+  box-shadow:0 3px 0 var(--ink);pointer-events:none}
+.widget-head{position:relative;display:flex;align-items:center;gap:10px;padding:14px 18px 12px;border-bottom:var(--line) solid var(--ink);
+  background-color:var(--accent);background-image:var(--topo-light);background-size:320px 120px;
+  border-radius:calc(var(--radius) - 3px) calc(var(--radius) - 3px) 0 0}
+/* round embroidered patch icon */
+.widget-icon{position:relative;flex:0 0 auto;width:44px;height:44px;display:grid;place-items:center;font-size:23px;background:var(--card);
+  border:3px solid var(--ink);border-radius:50%;box-shadow:0 2px 0 var(--ink)}
+.widget-icon::after{content:"";position:absolute;inset:3px;border:1.5px dashed rgba(31,42,34,.5);border-radius:50%;pointer-events:none}
+.widget-title{font-family:var(--f-display);font-size:23px;line-height:1.05;font-weight:400}
+.widget-kicker{font-family:var(--f-doodle);font-weight:700;font-size:17px;line-height:1;margin-left:auto;transform:rotate(-3deg)}
+.widget-body{position:relative;flex:1 1 auto;min-height:0;padding:14px 18px;overflow:hidden}
+.widget-foot{position:relative;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 18px 14px;border-top:2px dotted rgba(31,42,34,.35)}
+.more-link{font-family:var(--f-sub);font-weight:700;font-size:17px;text-decoration:none;border-bottom:3px solid var(--accent);padding-bottom:1px}
+.more-link:hover{border-bottom-color:var(--ink)}
+.more-link::after{content:" →"}
+@media (max-width:639px){ .widget-title{font-size:21px} }
+
+/* ---------- Ads (deliberately plain, NOT themed) ---------- */
+.ad-slot{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+.ad-label{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#6B6B78}
+.ad-box{display:grid;place-items:center;background:#E6E6EA repeating-linear-gradient(45deg,#E6E6EA 0 12px,#DDDDE2 12px 24px);
+  border:1px solid #BDBDC6;color:#6B6B78;font:600 13px/1.3 system-ui,sans-serif;text-align:center}
+.ad-728x90{width:728px;height:90px}
+.ad-320x50{width:320px;height:50px}
+.ad-300x250{width:300px;height:250px}
+.ad-300x600{width:300px;height:600px}
+
+/* ---------- Shared confetti / toast ---------- */
+.sl-confetti{position:fixed;z-index:9999;pointer-events:none;font-size:22px;line-height:1;will-change:transform,opacity}
+.sl-toast{position:fixed;left:50%;bottom:24px;z-index:9998;transform:translateX(-50%) translateY(20px);opacity:0;
+  font-family:var(--f-sub);font-weight:700;font-size:18px;padding:10px 18px;background:var(--card);border:3px solid var(--ink);border-radius:10px;
+  box-shadow:var(--shadow-sm);transition:all .3s var(--ease-bounce);pointer-events:none}
+.sl-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ---------- Motion controls ---------- */
+html.motion-off *, html.motion-off *::before, html.motion-off *::after{
+  animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+}

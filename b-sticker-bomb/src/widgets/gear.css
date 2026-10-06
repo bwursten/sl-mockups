@@ -1,0 +1,98 @@
+/* ============================================================
+   Gear Guide widget (W) — swipeable card carousel
+   ============================================================ */
+.w-gear{container:gcw / inline-size}
+.w-gear .gc-body{padding:10px 16px 8px;background:
+  repeating-linear-gradient(90deg, rgba(30,30,42,.045) 0 1px, transparent 1px 22px),
+  repeating-linear-gradient(0deg, rgba(30,30,42,.045) 0 1px, transparent 1px 22px), var(--paper-2)}
+.w-gear .gc-car{position:relative;height:100%;display:flex;flex-direction:column;--gc-per:2;--gc-gap:22px}
+
+/* viewport + track (no-JS: native horizontal scroll) */
+.w-gear .gc-viewport{position:relative;flex:1 1 auto;min-height:0;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;padding:12px 4px 10px;margin:0 -4px;scrollbar-width:thin}
+.w-gear .gc-track{list-style:none;margin:0;padding:0;display:flex;gap:var(--gc-gap);height:100%}
+.w-gear .gc-slide{flex:0 0 calc((100% - (var(--gc-per) - 1) * var(--gc-gap)) / var(--gc-per));min-width:0;height:100%;scroll-snap-align:start}
+.w-gear.gc-js .gc-viewport{overflow:hidden;touch-action:pan-y;cursor:grab;scroll-snap-type:none}
+.w-gear.gc-js .gc-viewport.is-dragging{cursor:grabbing}
+.w-gear.gc-js .gc-track{transition:transform .45s cubic-bezier(.25,1.2,.4,1);will-change:transform}
+.w-gear .gc-slide[inert]{opacity:.55}
+.w-gear.gc-js .gc-slide{transition:opacity .3s}
+
+/* card */
+.w-gear .gc-card{position:relative;display:flex;flex-direction:column;height:100%;text-decoration:none;color:var(--ink);background:var(--white);
+  border:3px solid var(--ink);border-radius:14px;box-shadow:5px 5px 0 var(--ink);transform:rotate(-1deg);
+  transition:transform .2s var(--ease-bounce),box-shadow .2s;-webkit-user-drag:none;user-select:none}
+.w-gear .gc-slide:nth-child(even) .gc-card{transform:rotate(1deg)}
+.w-gear .gc-card:hover{transform:rotate(0) translateY(-3px);box-shadow:7px 8px 0 var(--ink)}
+.w-gear .gc-card::before{content:"";position:absolute;top:-12px;left:50%;width:70px;height:22px;margin-left:-35px;z-index:3;background:rgba(108,200,240,.7);
+  border-left:2px dashed rgba(30,30,42,.18);border-right:2px dashed rgba(30,30,42,.18);transform:rotate(3deg);pointer-events:none}
+.w-gear .gc-slide:nth-child(even) .gc-card::before{background:rgba(255,200,61,.75);transform:rotate(-4deg)}
+.w-gear .gc-img{display:block;flex:0 0 auto;height:132px;overflow:hidden;border-radius:11px 11px 0 0;border-bottom:3px solid var(--ink);background:var(--kraft)}
+.w-gear .gc-img img{width:100%;height:100%;object-fit:cover;-webkit-user-drag:none;pointer-events:none}
+.w-gear .gc-label{position:absolute;left:10px;top:114px;z-index:2;font-family:var(--f-sub);font-size:14px;line-height:1;padding:5px 9px 4px;
+  border:2.5px solid var(--ink);border-radius:9px;box-shadow:2px 2px 0 var(--ink);transform:rotate(-4deg);background:var(--sunny);white-space:nowrap}
+.w-gear .gc-agg .gc-label{background:var(--teal)}
+.w-gear .gc-swl .gc-label{background:var(--orange)}
+.w-gear .gc-bg .gc-label::before{content:"🛒 "}
+.w-gear .gc-agg .gc-label::before{content:"❓ "}
+.w-gear .gc-swl .gc-label::before{content:"👍 "}
+.w-gear .gc-title{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin:18px 12px 4px;font-family:var(--f-sub);font-size:18px;line-height:1.15}
+.w-gear .gc-teaser{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin:0 12px;font-size:14.5px;line-height:1.35;color:var(--ink-soft);font-weight:600}
+.w-gear .gc-q{font-family:var(--f-display);font-weight:400;color:var(--teal-dk)}
+.w-gear .gc-card:focus-visible{outline-offset:4px}
+
+/* arrows */
+.w-gear .gc-arrow{position:absolute;top:64px;z-index:4;width:46px;height:46px;display:grid;place-items:center;padding:0;background:var(--lime);
+  border:3px solid var(--ink);border-radius:50%;box-shadow:var(--shadow-sm);transition:transform .15s var(--ease-bounce)}
+.w-gear .gc-arrow svg{width:24px;height:24px;fill:none;stroke:var(--ink);stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round}
+.w-gear .gc-arrow:hover{transform:scale(1.08) rotate(-6deg)}
+.w-gear .gc-arrow:active{transform:translate(2px,2px);box-shadow:0 0 0 var(--ink)}
+.w-gear .gc-prev{left:-12px}
+.w-gear .gc-next{right:-12px}
+.w-gear .gc-arrow[aria-disabled="true"]{background:var(--white);opacity:.75}
+.w-gear .gc-arrow.is-bump{animation:gc-bump .35s ease}
+@keyframes gc-bump{30%{transform:translateX(-5px)}60%{transform:translateX(4px)}}
+html.no-js .w-gear .gc-arrow, html.no-js .w-gear .gc-doodle{display:none}
+
+/* dots */
+.w-gear .gc-bar{position:relative;flex:0 0 auto;display:flex;align-items:center;justify-content:center;min-height:40px}
+.w-gear .gc-dots{display:flex;justify-content:center}
+.w-gear .gc-dot{width:26px;height:40px;padding:0;display:grid;place-items:center;background:none;border:0}
+.w-gear .gc-dot::before{content:"";width:12px;height:12px;border-radius:999px;background:var(--white);border:2.5px solid var(--ink);transition:width .2s var(--ease-bounce),background .2s}
+.w-gear .gc-dot[aria-current="true"]::before{width:22px;background:var(--lime)}
+.w-gear .gc-dot:hover::before{background:var(--sunny)}
+.w-gear .gc-doodle{position:absolute;right:2px;top:50%;margin-top:-11px;font-family:var(--f-doodle);font-size:18px;line-height:1;color:var(--ink-soft);transform:rotate(-4deg)}
+.w-gear .gc-foot2{font-family:var(--f-sub);font-size:16px;text-decoration:none;border-bottom:3px dotted var(--teal);padding-bottom:1px}
+.w-gear .gc-foot2::after{content:" →"}
+.w-gear .gc-foot2:hover{border-bottom-style:solid}
+
+/* ---------- Backpack burst egg ---------- */
+.w-gear .gc-burst{position:absolute;inset:0;z-index:6;pointer-events:none;overflow:hidden}
+.w-gear .gc-burst.is-on{background:rgba(253,239,211,.55)}
+.w-gear .gc-pack{position:absolute;left:50%;bottom:4px;width:116px;height:126px;margin-left:-58px}
+.w-gear .gc-pack svg{display:block;width:100%;height:100%;overflow:visible}
+.w-gear .gc-flap{transform-box:view-box;transform-origin:18px 44px;transition:transform .35s var(--ease-bounce)}
+.w-gear .gc-pack.is-open .gc-flap{transform:rotate(-128deg)}
+.w-gear .gc-mouth{opacity:0;transition:opacity .2s}
+.w-gear .gc-pack.is-open .gc-mouth{opacity:1}
+.w-gear .gc-pack.is-shake{animation:gc-shake .32s ease-in-out}
+@keyframes gc-shake{0%,100%{transform:none}25%{transform:rotate(-6deg) scale(1.05,.95)}50%{transform:rotate(5deg) scale(.96,1.06)}75%{transform:rotate(-3deg)}}
+.w-gear .gc-item{position:absolute;left:0;top:0;width:46px;height:46px}
+.w-gear .gc-item svg{display:block;width:100%;height:100%;filter:drop-shadow(2px 2px 0 rgba(30,30,42,.35))}
+.w-gear .gc-whoa{position:absolute;left:50%;bottom:136px;margin-left:-74px;font-family:var(--f-display);font-size:18px;line-height:1;white-space:nowrap;
+  background:var(--white);border:3px solid var(--ink);border-radius:12px;padding:5px 9px 4px;box-shadow:var(--shadow-sm);transform:rotate(-5deg)}
+
+/* ---------- Narrow: 1 card ---------- */
+@container gcw (max-width: 560px){
+  .w-gear .gc-body{padding:8px 12px 6px}
+  .w-gear .gc-car{--gc-per:1}
+  .w-gear .gc-img{height:122px}
+  .w-gear .gc-label{top:104px}
+  .w-gear .gc-arrow{width:44px;height:44px;top:50px}
+  .w-gear .gc-prev{left:-8px}
+  .w-gear .gc-next{right:-8px}
+  .w-gear .gc-doodle{display:none}
+  .w-gear .gc-dot{width:26px}
+  .w-gear .widget-kicker{display:none}
+  .w-gear .gc-foot2{font-size:15px}
+  .w-gear .more-link{font-size:16px}
+}

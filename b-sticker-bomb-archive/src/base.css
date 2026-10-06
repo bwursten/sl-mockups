@@ -1,0 +1,168 @@
+/* ============================================================
+   Scout Life — Direction B: Sticker-Bomb Scrapbook
+   base.css — design tokens, reset, shared components
+   (Owned by lead. Other modules USE these; don't edit.)
+   ============================================================ */
+@font-face{font-family:'Ultra';font-weight:400;font-display:swap;src:url('assets/fonts/Ultra-400.woff2') format('woff2');}
+@font-face{font-family:'Patua One';font-weight:400;font-display:swap;src:url('assets/fonts/PatuaOne-400.woff2') format('woff2');}
+@font-face{font-family:'Nunito';font-weight:400 900;font-display:swap;src:url('assets/fonts/Nunito-400.woff2') format('woff2');}
+@font-face{font-family:'Gochi Hand';font-weight:400;font-display:swap;src:url('assets/fonts/GochiHand-400.woff2') format('woff2');}
+@font-face{font-family:'Press Start 2P';font-weight:400;font-display:swap;src:url('assets/fonts/PressStart2P-400.woff2') format('woff2');}
+
+:root{
+  /* Palette — bright, balanced, gender-neutral (no pinks/pastels, no camo) */
+  --paper:#FFF8EC;      /* page background */
+  --paper-2:#FDEFD3;    /* alt paper */
+  --kraft:#E8D2A6;      /* kraft paper */
+  --ink:#1E1E2A;        /* outlines + text */
+  --ink-soft:#4A4A5C;   /* secondary text */
+  --white:#FFFFFF;
+  --tomato:#FF5A36;
+  --tomato-dk:#D93A17;  /* white text OK on this */
+  --orange:#FF8A1F;
+  --sunny:#FFC83D;
+  --lime:#7CC444;
+  --green-dk:#2E7D32;   /* white text OK */
+  --teal:#12B5A5;
+  --teal-dk:#0B7D72;    /* white text OK */
+  --sky:#6CC8F0;
+  --cobalt:#2D6BEA;     /* white text OK (large/bold) */
+  --cobalt-dk:#1B4FBF;  /* white text OK */
+
+  /* Section colors */
+  --c-games:var(--cobalt);
+  --c-jokes:var(--sunny);
+  --c-outdoors:var(--lime);
+  --c-hobbies:var(--tomato);
+  --c-scouts:var(--teal);
+  --c-features:var(--orange);
+  --c-quizzes:var(--sky);
+
+  /* Type */
+  --f-display:'Ultra', 'Rockwell Extra Bold', 'Rockwell', Georgia, serif;
+  --f-sub:'Patua One', 'Rockwell', Georgia, serif;
+  --f-body:'Nunito', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --f-doodle:'Gochi Hand', 'Comic Sans MS', cursive;
+  --f-pixel:'Press Start 2P', monospace;
+
+  /* Shape */
+  --line:3px;
+  --radius:18px;
+  --radius-sm:12px;
+  --shadow:6px 6px 0 var(--ink);
+  --shadow-sm:3px 3px 0 var(--ink);
+  --slot-h:460px;       /* fixed widget height (all breakpoints) */
+  --gap:28px;
+  --container:1240px;
+  --ease-bounce:cubic-bezier(.34,1.56,.64,1);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:18px;line-height:1.5;
+  background-image:radial-gradient(rgba(30,30,42,.07) 1.2px, transparent 1.3px);background-size:22px 22px;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+button{font:inherit;color:inherit;cursor:pointer}
+h1,h2,h3,h4{margin:0;line-height:1.08}
+p{margin:0 0 .6em}
+:focus-visible{outline:4px solid var(--cobalt);outline-offset:3px;border-radius:6px}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.container{max-width:var(--container);margin:0 auto;padding:0 24px}
+@media (max-width:639px){ body{font-size:16px} .container{padding:0 16px} :root{--gap:22px} }
+
+/* ---------- Text styles ---------- */
+.display{font-family:var(--f-display);font-weight:400;letter-spacing:.2px}
+.sub{font-family:var(--f-sub);font-weight:400}
+.doodle{font-family:var(--f-doodle);font-weight:400}
+
+/* ---------- Buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:10px 20px;
+  font-family:var(--f-sub);font-size:19px;line-height:1;text-decoration:none;color:var(--ink);
+  background:var(--sunny);border:var(--line) solid var(--ink);border-radius:14px;box-shadow:var(--shadow-sm);
+  transition:transform .15s var(--ease-bounce), box-shadow .15s;user-select:none}
+.btn:hover{transform:translate(-1px,-2px) rotate(-1deg);box-shadow:5px 5px 0 var(--ink)}
+.btn:active{transform:translate(3px,3px);box-shadow:0 0 0 var(--ink)}
+.btn-tomato{background:var(--tomato)}
+.btn-orange{background:var(--orange)}
+.btn-teal{background:var(--teal)}
+.btn-lime{background:var(--lime)}
+.btn-sky{background:var(--sky)}
+.btn-white{background:var(--white)}
+.btn-cobalt{background:var(--cobalt);color:#fff}
+.btn-sm{min-height:40px;padding:7px 14px;font-size:16px;border-radius:12px}
+.btn-pill{border-radius:999px}
+
+/* Small chip buttons (topics, filters) */
+.chip{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:6px 14px;font-family:var(--f-sub);font-size:16px;
+  background:var(--white);border:2.5px solid var(--ink);border-radius:999px;box-shadow:2px 2px 0 var(--ink);text-decoration:none;
+  transition:transform .15s var(--ease-bounce)}
+.chip:hover{transform:translateY(-2px) rotate(-2deg)}
+.chip[aria-pressed="true"],.chip.is-active{background:var(--sunny)}
+
+/* ---------- Stickers & labels ---------- */
+.sticker{display:inline-block;font-family:var(--f-sub);font-size:15px;line-height:1;padding:6px 10px 5px;color:var(--ink);
+  background:var(--sunny);border:2.5px solid var(--ink);border-radius:10px;box-shadow:2px 2px 0 var(--ink);transform:rotate(-3deg);
+  text-decoration:none;white-space:nowrap}
+.sticker.round{border-radius:999px}
+.sticker.flag-new{background:var(--lime)}
+.sticker.flag-hot{background:var(--tomato)}
+.sticker.flag-seasonal{background:var(--orange)}
+.label-games{background:var(--c-games);color:#fff}
+.label-jokes{background:var(--c-jokes)}
+.label-outdoors{background:var(--c-outdoors)}
+.label-hobbies{background:var(--c-hobbies)}
+.label-scouts{background:var(--c-scouts)}
+.label-features{background:var(--c-features)}
+.label-quizzes{background:var(--c-quizzes)}
+
+/* Tape strip: add class "taped" to any positioned element */
+.taped::before{content:"";position:absolute;top:-14px;left:50%;width:96px;height:28px;margin-left:-48px;z-index:3;
+  background:var(--tape,rgba(255,200,61,.72));border-left:2px dashed rgba(30,30,42,.18);border-right:2px dashed rgba(30,30,42,.18);
+  transform:rotate(var(--tape-tilt,-4deg));box-shadow:0 1px 2px rgba(0,0,0,.08);pointer-events:none}
+
+/* ---------- Widget frame (every widget uses this) ---------- */
+.widget{position:relative;display:flex;flex-direction:column;height:var(--slot-h);background:var(--white);
+  border:var(--line) solid var(--ink);border-radius:var(--radius);box-shadow:var(--shadow);
+  transform:rotate(var(--tilt,0deg));transition:transform .25s var(--ease-bounce), box-shadow .25s;--accent:var(--sunny)}
+.widget:hover{transform:rotate(0deg) translateY(-4px);box-shadow:8px 10px 0 var(--ink)}
+.widget::before{content:"";position:absolute;top:-14px;left:50%;width:96px;height:28px;margin-left:-48px;z-index:3;
+  background:var(--tape,rgba(255,200,61,.72));border-left:2px dashed rgba(30,30,42,.18);border-right:2px dashed rgba(30,30,42,.18);
+  transform:rotate(var(--tape-tilt,-4deg));pointer-events:none}
+.widget-head{display:flex;align-items:center;gap:10px;padding:18px 18px 8px;border-bottom:var(--line) solid var(--ink);
+  background:var(--accent);border-radius:calc(var(--radius) - 3px) calc(var(--radius) - 3px) 0 0}
+.widget-icon{flex:0 0 auto;width:40px;height:40px;display:grid;place-items:center;font-size:24px;background:var(--white);
+  border:2.5px solid var(--ink);border-radius:50%;box-shadow:2px 2px 0 var(--ink)}
+.widget-title{font-family:var(--f-display);font-size:24px;line-height:1.05;font-weight:400}
+.widget-kicker{font-family:var(--f-doodle);font-size:18px;line-height:1;margin-left:auto;transform:rotate(-3deg)}
+.widget-body{position:relative;flex:1 1 auto;min-height:0;padding:14px 18px;overflow:hidden}
+.widget-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 18px 14px;border-top:2px dashed rgba(30,30,42,.25)}
+.more-link{font-family:var(--f-sub);font-size:17px;text-decoration:none;border-bottom:3px solid var(--accent);padding-bottom:1px}
+.more-link:hover{border-bottom-color:var(--ink)}
+.more-link::after{content:" →"}
+@media (max-width:639px){ .widget{transform:none} .widget-title{font-size:22px} }
+
+/* ---------- Ads (deliberately NOT sticker-styled) ---------- */
+.ad-slot{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+.ad-label{font-family:var(--f-body);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#6B6B78}
+.ad-box{display:grid;place-items:center;background:#E6E6EA repeating-linear-gradient(45deg,#E6E6EA 0 12px,#DDDDE2 12px 24px);
+  border:1px solid #BDBDC6;color:#6B6B78;font:600 13px/1.3 var(--f-body);text-align:center}
+.ad-728x90{width:728px;height:90px}
+.ad-320x50{width:320px;height:50px}
+.ad-300x250{width:300px;height:250px}
+.ad-300x600{width:300px;height:600px}
+
+/* ---------- Shared confetti (SL.confetti) ---------- */
+.sl-confetti{position:fixed;z-index:9999;pointer-events:none;font-size:22px;line-height:1;will-change:transform,opacity}
+.sl-toast{position:fixed;left:50%;bottom:24px;z-index:9998;transform:translateX(-50%) translateY(20px);opacity:0;
+  font-family:var(--f-sub);font-size:18px;padding:10px 18px;background:var(--white);border:3px solid var(--ink);border-radius:14px;
+  box-shadow:var(--shadow-sm);transition:all .3s var(--ease-bounce);pointer-events:none}
+.sl-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ---------- Motion controls ---------- */
+/* Paused by the user's toggle, or reduced-motion preference */
+html.motion-off *, html.motion-off *::before, html.motion-off *::after{
+  animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+}
