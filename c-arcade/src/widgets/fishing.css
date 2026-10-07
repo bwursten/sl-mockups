@@ -1,0 +1,134 @@
+/* ============================================================
+   Fishing widget (S) — Direction C: retro fishing mini-game
+   (pixel dusk lake, "CAST!" prompt, "ITEM GET!" catch card)
+   ============================================================ */
+.w-fishing .fs-body{display:flex;flex-direction:column;gap:8px;padding:10px 14px}
+.w-fishing .fs-scene{position:relative;flex:1 1 auto;min-height:0;border:3px solid #05040F;border-radius:var(--radius);overflow:hidden;background:var(--night);
+  box-shadow:0 0 0 2px var(--sky), 0 0 14px rgba(92,200,255,.35)}
+.w-fishing .fs-scene,.w-fishing .widget-body{overflow:clip}
+.w-fishing .fs-svg{position:absolute;inset:0;width:100%;height:100%;display:block;shape-rendering:crispEdges}
+/* CRT-ish scanlines over the scene */
+.w-fishing .fs-scene::after{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;
+  background:repeating-linear-gradient(0deg, rgba(0,0,0,.10) 0 1px, transparent 1px 3px)}
+
+/* scene art (pixel dusk) */
+.w-fishing .fs-sky{fill:var(--night)}
+.w-fishing .fs-band.b1{fill:var(--night-2)}
+.w-fishing .fs-band.b2{fill:var(--night-3)}
+.w-fishing .fs-band.b3{fill:var(--cobalt-dk)}
+.w-fishing .fs-band.b4{fill:var(--tomato-dk)}
+.w-fishing .fs-stars rect{fill:#fff}
+.w-fishing .fs-stars rect:nth-child(3n){fill:var(--teal)}
+.w-fishing .fs-stars rect:nth-child(4n){fill:var(--sunny)}
+.w-fishing .fs-sun circle{fill:var(--sunny)}
+.w-fishing .fs-sun{filter:drop-shadow(0 0 8px rgba(255,159,28,.8))}
+.w-fishing .fs-sun-gaps rect{fill:var(--tomato-dk)}
+.w-fishing .fs-sun-gaps rect:first-child{fill:var(--cobalt-dk)}
+.w-fishing .fs-cloud rect{fill:var(--night-3)}
+.w-fishing .fs-hill{fill:#0B3B2A}
+.w-fishing .fs-pines rect{fill:var(--green-dk)}
+.w-fishing .fs-pines .fs-trunk{fill:#05040F}
+.w-fishing .fs-water{fill:var(--cobalt-dk)}
+.w-fishing .fs-waterline{fill:var(--teal)}
+.w-fishing .fs-glint rect{fill:var(--orange)}
+.w-fishing .fs-waves rect{fill:var(--sky);opacity:.85}
+.w-fishing .fs-waves{animation:fs-drift 2.4s steps(4,end) infinite alternate}
+@keyframes fs-drift{from{transform:translateX(-4px)}to{transform:translateX(4px)}}
+.w-fishing .fs-pad rect{fill:var(--lime)}
+.w-fishing .fs-pad .fs-pad-cut{fill:var(--cobalt-dk)}
+.w-fishing .fs-cattails rect{fill:#9C5A2A}
+.w-fishing .fs-cattails .fs-reed{fill:var(--lime)}
+.w-fishing .fs-deck{fill:#C27A3A}
+.w-fishing .fs-deck2{fill:#9C5A2A}
+.w-fishing .fs-planks{stroke:#05040F;stroke-width:2;opacity:.6}
+.w-fishing .fs-post{fill:#5E3418}
+.w-fishing .fs-holder{fill:var(--night-3);stroke:#05040F;stroke-width:2}
+.w-fishing .fs-rod{shape-rendering:auto}
+.w-fishing .fs-rod-pole{stroke:#E6ECF5;stroke-width:5;stroke-linecap:square}
+.w-fishing .fs-rod-tip{stroke:var(--tomato);stroke-width:2.5;stroke-linecap:square}
+.w-fishing .fs-rod-grip{fill:var(--cobalt);stroke:#05040F;stroke-width:2.5}
+.w-fishing .fs-reel{fill:var(--sunny);stroke:#05040F;stroke-width:2.5}
+.w-fishing .fs-rod-guides{stroke:#05040F;stroke-width:2}
+.w-fishing .fs-line{fill:none;stroke:rgba(255,255,255,.85);stroke-width:1.4;shape-rendering:auto}
+.w-fishing .fs-bobber{shape-rendering:auto}
+.w-fishing .fs-bob-stick{stroke:#fff;stroke-width:2.5;stroke-linecap:square}
+.w-fishing .fs-bob-top{fill:var(--tomato);stroke:#05040F;stroke-width:2}
+.w-fishing .fs-bob-bot{fill:var(--white);stroke:#05040F;stroke-width:2}
+.w-fishing .is-floating .fs-bob-in{animation:fs-bob 1.1s steps(3,end) infinite alternate}
+.w-fishing .is-bite .fs-bob-in{animation:fs-dip .38s steps(2,end) infinite alternate}
+@keyframes fs-bob{from{transform:translateY(-1.5px)}to{transform:translateY(2px)}}
+@keyframes fs-dip{from{transform:translateY(2px)}to{transform:translateY(9px)}}
+.w-fishing .is-bite .fs-bob-in{transform:translateY(7px)}
+.w-fishing .fs-ripples ellipse{fill:none;stroke:var(--white);stroke-width:2;opacity:0;transform-box:fill-box;transform-origin:50% 50%}
+.w-fishing .is-bite .fs-ripples ellipse{animation:fs-ring 1s ease-out infinite}
+.w-fishing .is-bite .fs-ripples ellipse + ellipse{animation-delay:.5s}
+@keyframes fs-ring{from{opacity:1;transform:scale(.6)}to{opacity:0;transform:scale(2.4)}}
+.w-fishing .is-bite .fs-ripples ellipse{opacity:.8}
+
+/* blinking game prompt: "CAST!" / "!" over the bobber */
+.w-fishing .fs-prompt{position:absolute;z-index:4;left:62%;top:68%;transform:translate(-50%,-50%);pointer-events:none;
+  font-family:var(--f-pixel);font-size:14px;line-height:1;color:var(--sunny);white-space:nowrap;
+  text-shadow:3px 3px 0 #05040F, 0 0 10px rgba(255,230,0,.8);animation:fs-blink 1s steps(2,jump-none) infinite}
+.w-fishing .fs-prompt.is-bite{font-size:18px;color:var(--white);text-shadow:3px 3px 0 var(--tomato-dk), 0 0 10px rgba(255,255,255,.8);animation-duration:.4s}
+.w-fishing .fs-prompt[hidden]{display:none}
+@keyframes fs-blink{0%{opacity:1}100%{opacity:.2}}
+html.no-js .w-fishing .fs-prompt{display:none}
+
+/* caught card: "ITEM GET!" (hangs from the rod tip) */
+.w-fishing .fs-card{position:absolute;left:12px;top:86px;z-index:5;width:min(240px,calc(100% - 24px));display:flex;gap:8px;align-items:center;padding:16px 8px 8px;
+  text-decoration:none;color:var(--ink);background:var(--card);border:3px solid #05040F;border-radius:var(--radius);
+  box-shadow:0 0 0 3px var(--sunny), 0 0 18px rgba(255,230,0,.55), 5px 6px 0 #05040F;--hook-x:50%}
+.w-fishing .fs-card::before{content:"";position:absolute;left:var(--hook-x);top:-25px;height:22px;border-left:1.6px solid rgba(255,255,255,.9)}
+.w-fishing .fs-card::after{content:"";position:absolute;left:calc(var(--hook-x) - 5px);top:-8px;width:8px;height:10px;border:2.5px solid #fff;border-top:0;border-radius:0 0 3px 3px;background:none}
+.w-fishing .fs-card.is-swing{transform-origin:var(--hook-x) -25px;animation:fs-swing 2.2s ease-in-out infinite alternate}
+@keyframes fs-swing{from{transform:rotate(-2deg)}to{transform:rotate(2deg)}}
+.w-fishing a.fs-card:hover{background:var(--paper)}
+.w-fishing .fs-card img{flex:0 0 74px;width:74px;height:56px;object-fit:cover;border:2.5px solid #05040F;border-radius:2px}
+.w-fishing .fs-card-txt{display:flex;flex-direction:column;min-width:0}
+.w-fishing .fs-card-kick{position:absolute;right:8px;top:-12px;padding:5px 7px 4px;font-family:var(--f-pixel);font-size:9px;line-height:1;color:var(--ink);
+  background:var(--sunny);border:2px solid #05040F;border-radius:2px;box-shadow:var(--bevel);text-transform:uppercase;white-space:nowrap}
+.w-fishing .fs-card-t{font-family:var(--f-sub);font-weight:800;font-size:16px;line-height:1.15}
+.w-fishing a.fs-card .fs-card-t::after{content:" ▶";font-size:.7em;color:var(--cobalt)}
+.w-fishing .fs-card.is-fact,.w-fishing .fs-card.is-joke{flex-direction:column;align-items:flex-start;gap:3px}
+.w-fishing .fs-card-sub{font-family:var(--f-doodle);font-size:12px;line-height:1;color:var(--cobalt-dk);text-transform:uppercase}
+.w-fishing .fs-fact{font-size:14.5px;line-height:1.3;font-weight:700}
+.w-fishing .fs-jq{font-size:14.5px;line-height:1.3;font-weight:700}
+.w-fishing .fs-ja{font-family:var(--f-sub);font-weight:900;font-size:17px;line-height:1.15;color:var(--cobalt-dk)}
+.w-fishing .fs-by{font-size:11.5px;color:var(--ink-soft)}
+.w-fishing .fs-card-more{font-family:var(--f-sub);font-weight:800;font-size:14px;color:var(--ink);text-decoration:none;border-bottom:3px solid var(--sky)}
+.w-fishing .fs-card-more:hover{border-bottom-color:var(--ink)}
+.w-fishing .fs-static{top:auto;bottom:12px}
+html.js .w-fishing .fs-static{display:none}
+
+/* controls */
+.w-fishing .fs-controls{flex:0 0 auto;display:flex;align-items:center;gap:10px;min-height:50px}
+.w-fishing .fs-go{flex:0 0 auto;min-width:112px;padding:10px 14px;font-family:var(--f-pixel);font-weight:400;font-size:11px;line-height:1.2;text-transform:uppercase}
+.w-fishing .fs-go[aria-disabled="true"]{opacity:.7;cursor:wait}
+.w-fishing .fs-go.is-hot{background:var(--sunny);animation:fs-hot .4s steps(2,end) infinite alternate}
+@keyframes fs-hot{from{box-shadow:var(--bevel), 0 5px 0 var(--ink), 0 0 0 rgba(255,230,0,0)}to{box-shadow:var(--bevel), 0 5px 0 var(--ink), 0 0 18px rgba(255,230,0,.9)}}
+.w-fishing .fs-status{margin:0;font-family:var(--f-sub);font-weight:700;font-size:15px;line-height:1.2;color:var(--ink);min-width:0}
+html.no-js .w-fishing .fs-go{display:none}
+.w-fishing .fs-foot-doodle{font-family:var(--f-doodle);font-size:13px;color:var(--ink-soft);text-transform:uppercase;white-space:nowrap}
+
+/* jumping fish egg */
+.w-fishing .fs-ripple-btn{position:absolute;z-index:2;left:76%;top:calc(100% - 34px);width:64px;height:30px;margin:-15px 0 0 -32px;padding:0;background:none;border:0;border-radius:50%;cursor:pointer}
+.w-fishing .fs-ripple-btn:focus-visible{outline:3px solid var(--sunny);outline-offset:2px}
+.w-fishing .fs-ring{position:absolute;left:50%;top:50%;width:30px;height:9px;margin:-4.5px 0 0 -15px;border:2px solid var(--white);border-radius:50%;opacity:0}
+.w-fishing .fs-ripple-btn.is-rippling .fs-ring{animation:fs-ring2 .9s ease-out infinite}
+.w-fishing .fs-ripple-btn.is-rippling .fs-ring + .fs-ring{animation-delay:.45s}
+@keyframes fs-ring2{from{opacity:1;transform:scale(.5)}to{opacity:0;transform:scale(2.2)}}
+.w-fishing .fs-layer{position:absolute;inset:0;z-index:4;pointer-events:none;overflow:hidden}
+.w-fishing .fs-fish{position:absolute;left:0;top:0;z-index:5;width:58px;height:36px;padding:0;margin:0;background:none;border:0;cursor:pointer;touch-action:manipulation}
+.w-fishing .fs-fish svg{display:block;width:100%;height:100%;overflow:visible;pointer-events:none;filter:drop-shadow(0 0 4px rgba(60,240,110,.7))}
+.w-fishing .fs-fish:focus-visible{outline:3px solid var(--sunny);outline-offset:3px;border-radius:4px}
+.w-fishing .fs-drop{position:absolute;left:0;top:0;width:6px;height:6px;background:var(--white);box-shadow:0 0 4px var(--teal)}
+.w-fishing .fs-splash{position:absolute;left:0;top:0;width:40px;height:12px;margin:-6px 0 0 -20px;border:2.5px solid var(--white);border-radius:50%}
+.w-fishing .fs-got{position:absolute;left:0;top:0;z-index:6;font-family:var(--f-pixel);font-size:10px;line-height:1;white-space:nowrap;color:var(--ink);background:var(--sunny);border:2px solid #05040F;
+  border-radius:2px;padding:5px 6px 4px;box-shadow:var(--bevel), 0 0 12px rgba(255,230,0,.7);text-transform:uppercase}
+.w-fishing .fs-tally{position:absolute;left:8px;top:8px;z-index:4;margin:0;font-family:var(--f-pixel);font-size:9px;line-height:1;padding:6px 8px 5px;color:var(--lime);background:#05040F;
+  border:2px solid var(--lime);border-radius:2px;box-shadow:0 0 8px rgba(60,240,110,.6);text-transform:uppercase}
+
+@media (max-width:639px){
+  .w-fishing .fs-go{min-width:104px;padding:10px 12px}
+  .w-fishing .fs-status{font-size:14.5px}
+}

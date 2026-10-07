@@ -1,0 +1,72 @@
+/* ============================================================
+   Widget: poll (Today's Poll) — Direction C: choose-your-team / versus screen
+   ============================================================ */
+.w-poll .pl-body{display:flex;flex-direction:column;gap:8px;padding:12px 16px 10px}
+.w-poll .pl-form{margin:0}
+.w-poll .pl-set{border:0;margin:0;padding:0;min-width:0}
+.w-poll .pl-q{float:left;width:100%;padding:0 0 11px;font-family:var(--f-display);font-weight:900;font-size:20px;line-height:1.15;color:var(--ink)}
+.w-poll .pl-opts{position:relative;clear:both;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:var(--pl-row,100px);gap:10px}
+
+/* team tiles */
+.w-poll .pl-opt{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;width:100%;min-height:48px;margin:0;padding:8px 8px 9px;
+  font-family:var(--f-sub);font-weight:800;font-size:15px;line-height:1.1;color:var(--ink);text-align:center;
+  background:var(--card);border:3px solid var(--ink);border-radius:3px;overflow:hidden;
+  box-shadow:inset 0 5px 0 var(--c,var(--sunny)), inset -3px -3px 0 rgba(0,0,0,.08), 0 4px 0 var(--ink);
+  transition:transform .08s, box-shadow .12s, background-color .12s}
+.w-poll .pl-opt:hover{background:var(--paper);transform:translateY(-2px);
+  box-shadow:inset 0 5px 0 var(--c,var(--sunny)), 0 0 0 3px var(--c,var(--sunny)), 0 6px 0 var(--ink)}
+.w-poll .pl-opt:active{transform:translateY(4px);box-shadow:inset 0 5px 0 var(--c,var(--sunny)), 0 0 0 var(--ink)}
+.w-poll .pl-emoji{position:relative;z-index:1;flex:0 0 auto;width:38px;height:38px;display:grid;place-items:center;font-size:21px;line-height:1;
+  background:var(--c,var(--sunny));border:2.5px solid var(--ink);border-radius:2px;box-shadow:inset -3px -3px 0 rgba(0,0,0,.15), inset 3px 3px 0 rgba(255,255,255,.45)}
+.w-poll .pl-label{position:relative;z-index:1;min-width:0;max-width:100%}
+
+/* health / XP bars (shown after voting) */
+.w-poll .pl-meter{display:none;align-items:center;gap:6px;width:100%}
+.w-poll .pl-track{position:relative;flex:1 1 auto;height:13px;background:var(--night);border:2px solid var(--ink);overflow:hidden}
+.w-poll .pl-bar{position:absolute;top:0;bottom:0;left:0;width:0;background:var(--c,var(--sunny));transition:width 1s steps(10,end)}
+.w-poll .pl-track::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 calc(10% - 2px),var(--night) calc(10% - 2px) 10%)}
+.w-poll .pl-pct{flex:0 0 auto;min-width:4ch;text-align:right;font-family:var(--f-pixel);font-size:10px;line-height:1;color:var(--ink)}
+
+/* VS badge */
+.w-poll .pl-vs{position:absolute;left:50%;top:50%;z-index:2;width:42px;height:42px;margin:-21px 0 0 -21px;display:grid;place-items:center;pointer-events:none;
+  font-family:var(--f-pixel);font-size:12px;line-height:1;color:var(--ink);background:var(--sunny);border:3px solid var(--ink);border-radius:2px;
+  box-shadow:var(--bevel), 0 0 0 3px var(--night), 0 0 16px rgba(255,230,0,.6);animation:pl-vs 1.4s steps(1,end) 3}
+@keyframes pl-vs{50%{background:var(--orange)}}
+
+.w-poll .pl-mine,.w-poll .pl-lead{position:absolute;top:8px;z-index:2;font-family:var(--f-pixel);font-size:8px;line-height:1;padding:4px 4px 3px;border-radius:1px}
+.w-poll .pl-mine{right:5px;color:var(--sunny);background:var(--ink)}
+.w-poll .pl-lead{left:5px;color:var(--ink);background:var(--sunny);border:1.5px solid var(--ink)}
+
+/* voted / results state */
+.w-poll .pl-voted .pl-vs{display:none}
+.w-poll .pl-voted .pl-meter{display:flex}
+.w-poll .pl-voted .pl-opt{cursor:default;gap:5px;padding-top:10px;background:var(--card)}
+.w-poll .pl-voted .pl-emoji{width:32px;height:32px;font-size:18px}
+.w-poll .pl-voted .pl-opt:hover{transform:none;box-shadow:inset 0 5px 0 var(--c,var(--sunny)), inset -3px -3px 0 rgba(0,0,0,.08), 0 4px 0 var(--ink)}
+.w-poll .pl-voted .pl-opt.is-mine,.w-poll .pl-voted .pl-opt.is-mine:hover{background:var(--paper);
+  box-shadow:inset 0 5px 0 var(--c,var(--sunny)), 0 0 0 3px var(--c,var(--sunny)), 0 4px 0 var(--ink)}
+.w-poll .pl-opt.pl-thunk{animation:pl-thunk .4s steps(4,end)}
+@keyframes pl-thunk{0%{transform:translateY(4px)}50%{transform:translateY(-5px) scale(1.04)}100%{transform:none}}
+
+.w-poll .pl-meta{margin:0;font-size:13.5px;font-weight:700;line-height:1.3;color:var(--ink-soft);text-align:center}
+.w-poll .pl-meta strong{color:var(--ink)}
+.w-poll .pl-press{display:block;margin-bottom:2px;font-family:var(--f-doodle);font-size:12px;font-weight:400;line-height:1;text-transform:uppercase;color:var(--ink);
+  animation:rf-pl-blink 1.1s steps(1,end) infinite}
+@keyframes rf-pl-blink{60%{opacity:.25}}
+.w-poll .pl-doodle{font-family:var(--f-doodle);font-size:13px;line-height:1;text-transform:uppercase;color:var(--tomato-dk)}
+
+/* narrow S (phone 343, small desktop ~310) */
+@media (max-width:639px){
+  .w-poll .pl-opt{font-size:14.5px}
+}
+/* small-desktop band (S ≈ 310px): keep the title on one line */
+@media (min-width:1024px) and (max-width:1199px){
+  .w-poll .widget-kicker{display:none}
+  .w-poll .widget-title{font-size:21px}
+  .w-poll .pl-q{font-size:18.5px;padding-bottom:9px}
+  .w-poll .pl-opt{font-size:14px;padding-left:5px;padding-right:5px}
+}
+@media (min-width:1200px){
+  .w-poll .pl-opts{--pl-row:112px}
+  .w-poll .pl-emoji{width:42px;height:42px;font-size:23px}
+}

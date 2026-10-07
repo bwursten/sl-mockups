@@ -1,0 +1,104 @@
+/* ============ Pinewood Derby mini-race — Direction C (racing game) ============ */
+.w-pinewood .widget-body{padding:8px 14px 10px;display:flex;flex-direction:column;gap:8px}
+.w-pinewood .widget-title{white-space:nowrap}
+.w-pinewood .pw-sprite{position:absolute;width:0;height:0;overflow:hidden}
+
+/* ---- the track: neon night circuit ---- */
+.w-pinewood .pw-trackwrap{position:relative;flex:0 0 122px;min-height:0;border:3px solid #05040F;border-radius:var(--radius);overflow:hidden;
+  background:var(--night);box-shadow:0 0 0 2px var(--sunny), 0 0 14px rgba(255,230,0,.35);
+  background-image:linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px),
+    radial-gradient(1.5px 1.5px at 18% 30%, rgba(255,255,255,.6) 50%, transparent 51%), radial-gradient(1.5px 1.5px at 70% 12%, rgba(0,229,255,.6) 50%, transparent 51%);
+  background-size:16px 16px,16px 16px,100% 100%,100% 100%}
+.w-pinewood .pw-trackwrap,.w-pinewood .widget-body{overflow:clip}
+.w-pinewood .pw-track{display:block;width:100%;height:100%}
+.w-pinewood .pw-legs rect{fill:var(--night-3);stroke:var(--teal);stroke-width:1.5}
+.w-pinewood .pw-floor{stroke:var(--teal);stroke-width:2;opacity:.7}
+.w-pinewood .pw-surface{fill:var(--night-2);stroke:var(--teal);stroke-width:2.5;stroke-linejoin:round;filter:drop-shadow(0 0 3px rgba(0,229,255,.8))}
+.w-pinewood .pw-lane{stroke-width:1.6;stroke-dasharray:5 4;opacity:.85}
+.w-pinewood .pw-lane[data-lane="0"]{stroke:var(--sunny)}
+.w-pinewood .pw-lane[data-lane="1"]{stroke:var(--teal)}
+.w-pinewood .pw-lane[data-lane="2"]{stroke:var(--lime);opacity:0}
+.w-pinewood .pw-leds rect{fill:var(--sunny);filter:drop-shadow(0 0 2px var(--sunny))}
+.w-pinewood .pw-leds rect:nth-child(even){fill:var(--teal);filter:drop-shadow(0 0 2px var(--teal))}
+.w-pinewood .pw-peg{fill:var(--tomato);stroke:#05040F;stroke-width:1.5}
+.w-pinewood .pw-pole{stroke:#fff;stroke-width:2.5}
+.w-pinewood .pw-svgtxt{font-family:var(--f-pixel);font-size:7px;fill:#fff}
+.w-pinewood .pw-fin-txt{fill:var(--sunny)}
+.w-pinewood .pw-car use{filter:drop-shadow(0 0 1.5px rgba(255,255,255,.9))}
+.w-pinewood .pw-you{opacity:0;transition:opacity .2s}
+.w-pinewood .pw-you path{fill:var(--sunny);stroke:#05040F;stroke-width:1.6;stroke-linejoin:miter}
+.w-pinewood .pw-you text{font-family:var(--f-pixel);font-size:6px;fill:var(--ink)}
+.w-pinewood .pw-car.is-mine .pw-you{opacity:1}
+
+/* start lights + 3-2-1-GO! */
+.w-pinewood .pw-lights-box{fill:#05040F;stroke:#fff;stroke-width:1.2;stroke-opacity:.5}
+.w-pinewood .pw-light{fill:#2A3170;stroke:#05040F;stroke-width:1.2}
+.w-pinewood .pw-lights[data-n="1"] .l1,
+.w-pinewood .pw-lights[data-n="2"] .l1,.w-pinewood .pw-lights[data-n="2"] .l2,
+.w-pinewood .pw-lights[data-n="3"] .pw-light{fill:var(--tomato);filter:drop-shadow(0 0 3px var(--tomato))}
+.w-pinewood .pw-lights[data-n="3"] .l3{fill:var(--sunny);filter:drop-shadow(0 0 3px var(--sunny))}
+.w-pinewood .pw-lights[data-n="4"] .pw-light{fill:var(--lime);filter:drop-shadow(0 0 4px var(--lime))}
+.w-pinewood .pw-count{font-family:var(--f-pixel);font-size:10px;fill:var(--sunny);filter:drop-shadow(0 0 3px rgba(255,230,0,.8));transition:opacity .2s}
+.w-pinewood .pw-count.is-big{font-size:20px}
+.w-pinewood .pw-count.is-go{fill:var(--lime);filter:drop-shadow(0 0 4px rgba(60,240,110,.9))}
+.w-pinewood .pw-count.is-off{opacity:0}
+
+/* results screen: podium + pixel trophies */
+.w-pinewood .pw-place{position:absolute;inset:0;z-index:2;display:flex;align-items:flex-end;justify-content:space-between;gap:8px;padding:8px 10px 0 12px;
+  background:rgba(18,22,51,.9);background-image:repeating-linear-gradient(0deg, rgba(255,255,255,.04) 0 2px, transparent 2px 4px)}
+.w-pinewood .pw-place[hidden]{display:none}
+.w-pinewood .pw-place-txt{align-self:center;display:flex;flex-direction:column;gap:6px;min-width:0}
+.w-pinewood .pw-place-s{font-family:var(--f-doodle);font-size:12px;line-height:1;color:#fff;text-transform:uppercase}
+.w-pinewood .pw-place-n{font-family:var(--f-pixel);font-size:22px;line-height:1;color:var(--sunny);text-transform:uppercase;text-shadow:3px 3px 0 var(--tomato-dk), 0 0 10px rgba(255,230,0,.6)}
+.w-pinewood .pw-place.p2 .pw-place-n{color:var(--teal);text-shadow:3px 3px 0 var(--cobalt-dk), 0 0 10px rgba(0,229,255,.6)}
+.w-pinewood .pw-place.p3 .pw-place-n{color:var(--orange);text-shadow:3px 3px 0 var(--tomato-dk), 0 0 10px rgba(255,159,28,.6)}
+.w-pinewood .pw-pod{flex:0 0 auto;display:flex;align-items:flex-end;gap:3px}
+.w-pinewood .pw-step{display:flex;flex-direction:column;align-items:center;width:56px}
+.w-pinewood .pw-tro{display:block;width:18px;height:20px;margin-bottom:1px;filter:drop-shadow(0 0 3px rgba(255,230,0,.6))}
+.w-pinewood .pw-tro svg,.w-pinewood .pw-pcar{display:block;width:100%;height:100%}
+.w-pinewood .pw-pcar{width:46px;height:23px;filter:drop-shadow(0 0 1.5px rgba(255,255,255,.9))}
+.w-pinewood .pw-blk{display:grid;place-items:center;width:100%;font-family:var(--f-pixel);font-size:9px;line-height:1;color:var(--ink);
+  border:2px solid #05040F;border-bottom:0;box-shadow:var(--bevel)}
+.w-pinewood .pw-step.s1 .pw-blk{height:40px;background:var(--sunny)}
+.w-pinewood .pw-step.s2 .pw-blk{height:28px;background:var(--teal)}
+.w-pinewood .pw-step.s3 .pw-blk{height:18px;background:var(--orange)}
+.w-pinewood .pw-step.is-mine .pw-pcar{filter:drop-shadow(0 0 4px var(--sunny)) drop-shadow(0 0 1px #fff)}
+.w-pinewood .pw-step.is-mine .pw-blk::after{content:"YOU";display:block;margin-top:3px;font-size:6px}
+.w-pinewood .pw-step.s3.is-mine .pw-blk{height:24px}
+.w-pinewood .pw-place:not([hidden]) .pw-step{animation:pw-rise .45s steps(5,end) both}
+.w-pinewood .pw-place:not([hidden]) .pw-step.s2{animation-delay:.12s}
+.w-pinewood .pw-place:not([hidden]) .pw-step.s1{animation-delay:.24s}
+@keyframes pw-rise{from{transform:translateY(60px)}to{transform:none}}
+
+/* car picker: character-select slots */
+.w-pinewood .pw-pick{flex:0 0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.w-pinewood .pw-pickbtn{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:66px;padding:5px 4px 4px;
+  font-family:var(--f-sub);font-weight:800;font-size:14.5px;line-height:1.05;color:var(--ink);background:var(--paper);
+  border:3px solid var(--ink);border-radius:var(--radius);box-shadow:inset -3px -3px 0 rgba(0,0,0,.1), 0 4px 0 var(--ink);transition:transform .08s, background-color .15s, box-shadow .15s}
+.w-pinewood .pw-pickbtn:hover{transform:translateY(-2px);background:var(--card)}
+.w-pinewood .pw-pickbtn:active{transform:translateY(4px);box-shadow:inset -3px -3px 0 rgba(0,0,0,.1), 0 0 0 var(--ink)}
+.w-pinewood .pw-pickbtn svg{width:64px;height:32px}
+.w-pinewood .pw-pickbtn[aria-pressed="true"]{background:var(--sunny);box-shadow:var(--bevel), 0 4px 0 var(--ink), 0 0 0 3px var(--night), 0 0 14px rgba(255,230,0,.7)}
+.w-pinewood .pw-pickbtn[aria-pressed="true"]::after{content:"P1";position:absolute;top:-9px;right:-7px;padding:4px 4px 3px;
+  font-family:var(--f-pixel);font-size:8px;line-height:1;color:var(--ink);background:var(--lime);border:2px solid var(--ink);border-radius:2px}
+.w-pinewood .pw-pick.is-nudge .pw-pickbtn{animation:pw-nudge .4s steps(4,end)}
+@keyframes pw-nudge{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+
+/* race button + result */
+.w-pinewood .pw-go{flex:0 0 54px;display:flex;align-items:center;gap:10px;min-height:0}
+.w-pinewood .pw-race{flex:0 0 auto;min-width:104px;padding:8px 14px;font-family:var(--f-display);font-weight:900;font-size:17px;white-space:nowrap}
+.w-pinewood .pw-race[aria-disabled="true"]{filter:saturate(.5);cursor:progress}
+.w-pinewood .pw-result{margin:0;flex:1 1 auto;min-width:0;font-family:var(--f-sub);font-weight:700;font-size:15px;line-height:1.15;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+
+/* article links */
+.w-pinewood .pw-links{margin-top:auto;display:flex;gap:8px;flex-wrap:nowrap}
+.w-pinewood .pw-link{flex:1 1 0;min-width:0;display:flex;align-items:center;gap:7px;min-height:40px;padding:2px 8px 2px 3px;
+  font-family:var(--f-sub);font-weight:700;font-size:14px;line-height:1.05;text-decoration:none;color:var(--ink);
+  background:var(--paper-2);border:2px solid var(--ink);border-radius:var(--radius-sm);box-shadow:0 3px 0 var(--ink);transition:transform .08s}
+.w-pinewood .pw-link:hover{transform:translateY(-2px);background:var(--card)}
+.w-pinewood .pw-link img{flex:0 0 auto;width:42px;height:30px;object-fit:cover;border-radius:2px;border:1.5px solid var(--ink)}
+
+.no-js .w-pinewood .pw-pick,.no-js .w-pinewood .pw-go,.no-js .w-pinewood .pw-lights,.no-js .w-pinewood .pw-count{display:none}
+
+.w-pinewood .pw-trackwrap.has-place .pw-vroom{opacity:0}

@@ -1,0 +1,142 @@
+/* ============ Idea Machine (Boredom Buster) — Direction C: "IDEA-O-MATIC 3000" retro robot console ============ */
+.w-ideamachine .widget-body{padding:10px 14px 12px;display:flex;flex-direction:column;
+  background:var(--card) radial-gradient(var(--paper-2) 1.5px, transparent 2px) 0 0/16px 16px}
+.w-ideamachine .im-sprite{position:absolute;width:0;height:0;overflow:hidden}
+.w-ideamachine .widget-foot{flex-wrap:wrap;row-gap:4px}
+
+.w-ideamachine .im-stage{flex:1 1 auto;display:flex;flex-direction:column;align-items:center;justify-content:space-between;min-height:0}
+.w-ideamachine .im-machine{position:relative;width:300px;height:225px;flex:0 0 auto}
+.w-ideamachine .im-shaker{position:absolute;inset:0;transform-origin:50% 92%}
+.w-ideamachine .im-art{position:absolute;left:0;top:0;width:300px;height:225px;overflow:visible}
+.w-ideamachine .im-gear-pop{transform-box:view-box}
+
+/* Pixel screens (LCD look, scanlines) */
+.w-ideamachine .im-win{position:absolute;top:86px;width:50px;height:58px;overflow:hidden;
+  background:#D8FBEE;border:3px solid #05040F;border-radius:2px;
+  box-shadow:inset 0 0 0 2px rgba(0,229,255,.35), inset 0 0 12px rgba(0,135,154,.35);transition:background-color .2s steps(2)}
+.w-ideamachine .im-win::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(0deg, rgba(18,16,43,.09) 0 1px, transparent 1px 3px)}
+.w-ideamachine .im-strip{position:absolute;left:0;right:0;top:0}
+.w-ideamachine .im-cell{display:flex;align-items:center;justify-content:center;height:52px}
+.w-ideamachine .im-cell svg{width:38px;height:38px;display:block}
+.w-ideamachine .im-win.is-spinning{background:#BFF3E3}
+.w-ideamachine .im-win.is-spinning .im-cell{animation:im-glitch .12s steps(2,end) infinite}
+@keyframes im-glitch{0%{transform:translate(-2px,0)}50%{transform:translate(2px,-1px)}100%{transform:translate(0,1px)}}
+.w-ideamachine .im-win.is-land{animation:im-land .26s steps(3,end)}
+@keyframes im-land{0%{background:#fff}100%{background:#D8FBEE}}
+.w-ideamachine .im-win.is-match{background:var(--sunny);box-shadow:inset 0 0 0 2px #fff, 0 0 12px rgba(255,230,0,.8)}
+
+/* Idea bulb on the antenna */
+.w-ideamachine .im-rays{opacity:0;transition:opacity .3s steps(3)}
+.w-ideamachine .im-bulb{transition:fill .3s steps(3)}
+.w-ideamachine .im-machine.is-lit .im-rays{opacity:1}
+.w-ideamachine .im-machine.is-lit .im-bulb{fill:var(--sunny)}
+.w-ideamachine .im-eye{transition:transform .2s steps(2)}
+.w-ideamachine .im-machine.is-lit .im-eye,.w-ideamachine .im-machine.is-happy .im-eye{transform:scaleY(.4);transform-box:fill-box;transform-origin:50% 100%}
+
+/* Status LEDs: slow idle blink, quick blink while thinking */
+.w-ideamachine .im-led{animation:im-led 2.4s steps(1,end) infinite}
+.w-ideamachine .im-led-2{animation-delay:.8s}
+.w-ideamachine .im-led-3{animation-delay:1.6s}
+.w-ideamachine .im-machine.is-shaking .im-led{animation-duration:.45s}
+@keyframes im-led{0%,60%{opacity:1}61%,100%{opacity:.25}}
+
+/* Rumble while cranking (CSS animation auto-killed under reduced motion) */
+.w-ideamachine .im-machine.is-shaking .im-shaker{animation:im-shake .16s steps(2,end) infinite}
+@keyframes im-shake{0%{transform:translate(0,0)}25%{transform:translate(-2px,1px)}50%{transform:translate(2px,0)}75%{transform:translate(0,-1px)}100%{transform:translate(0,0)}}
+
+/* Pixel puffs + pixel ring */
+.w-ideamachine .im-puffs{position:absolute;inset:0;pointer-events:none;overflow:visible}
+.w-ideamachine .im-puff{position:absolute;left:200px;top:6px;width:14px;height:14px;background:#fff;
+  border:2.5px solid var(--ink);box-shadow:3px 3px 0 rgba(18,16,43,.18);opacity:0}
+.w-ideamachine .im-ring{position:absolute;left:194px;top:-2px;width:28px;height:16px;border:4px solid var(--teal);
+  box-shadow:0 0 0 2px var(--ink), inset 0 0 0 2px var(--ink);opacity:0}
+
+/* Printout from the slot */
+.w-ideamachine .im-ticket{position:absolute;left:177px;top:173px;width:38px;height:0;overflow:hidden;z-index:2;
+  background:#fff repeating-linear-gradient(0deg, transparent 0 5px, rgba(18,16,43,.12) 5px 6px);
+  border:2.5px solid var(--ink);border-top:0;opacity:0;display:flex;align-items:flex-end;justify-content:center}
+.w-ideamachine .im-ticket span{font-family:var(--f-doodle);font-weight:700;font-size:10px;line-height:1;padding-bottom:5px;white-space:nowrap}
+
+.w-ideamachine .im-happy{position:absolute;left:50%;top:-8px;margin:0;transform:translateX(-50%);white-space:nowrap;text-align:center;
+  font-size:13px;line-height:1;padding:5px 8px 4px;color:var(--ink);background:var(--sunny);border:2.5px solid var(--ink);
+  box-shadow:3px 3px 0 var(--ink);opacity:0;pointer-events:none}
+.w-ideamachine .im-machine.is-happy .im-happy{opacity:1;animation:im-blink .3s steps(2,end) infinite}
+@keyframes im-blink{50%{background:var(--lime)}}
+
+/* Crank grab area + hint */
+.w-ideamachine .im-crank-hit{position:absolute;left:218px;top:66px;width:82px;height:100px;cursor:grab;touch-action:none;border-radius:40px;z-index:3}
+.w-ideamachine .im-crank-hit:active{cursor:grabbing}
+.w-ideamachine .im-hint{position:absolute;right:-8px;top:42px;font-size:12px;line-height:1;padding:4px 5px 3px;color:#fff;background:var(--ink);
+  pointer-events:none;transition:opacity .4s;animation:im-hint 1s steps(1,end) infinite}
+.w-ideamachine .im-hint::after{content:"";position:absolute;left:50%;top:100%;margin-left:-4px;border:4px solid transparent;border-top-color:var(--ink)}
+@keyframes im-hint{50%{color:var(--sunny)}}
+.w-ideamachine .im-machine.was-cranked .im-hint{opacity:0;animation:none}
+
+/* Controls */
+.w-ideamachine .im-controls{display:flex;align-items:center;justify-content:center;gap:14px;width:100%}
+.w-ideamachine .im-crank-btn{min-height:52px;padding:10px 20px;font-family:var(--f-display);font-weight:900;font-size:21px;letter-spacing:.2px;white-space:nowrap}
+.w-ideamachine .im-crank-btn[aria-disabled="true"]{filter:saturate(.5) brightness(.95);cursor:progress;transform:translateY(5px);box-shadow:var(--bevel), 0 0 0 var(--ink)}
+.w-ideamachine .im-or{font-size:12px;line-height:1.25;color:var(--ink-soft)}
+
+/* Result card: "IDEA GET!" item panel */
+.w-ideamachine .im-card{position:absolute;inset:8px 10px 10px;z-index:5;display:flex;flex-direction:column;gap:7px;padding:12px 12px 12px;
+  background:var(--card);border:4px solid var(--ink);border-radius:4px;
+  box-shadow:inset 0 0 0 3px var(--paper-2), 0 0 0 3px var(--sunny), 6px 6px 0 3px rgba(5,4,15,.85)}
+.w-ideamachine .im-card[hidden]{display:none}
+.w-ideamachine .im-card-flag{position:absolute;left:-7px;top:12px;z-index:2;font-family:var(--f-pixel);font-size:11px;line-height:1;padding:7px 9px 6px;
+  color:var(--ink);background:var(--sunny);border:3px solid var(--ink);box-shadow:var(--bevel), 3px 3px 0 var(--ink);text-transform:uppercase}
+.w-ideamachine .im-card-close{position:absolute;right:6px;top:6px;z-index:2;width:44px;height:44px;display:grid;place-items:center;padding:0;
+  font-size:18px;font-weight:900;color:var(--ink);background:var(--card);border:3px solid var(--ink);border-radius:3px;
+  box-shadow:var(--bevel), 0 3px 0 var(--ink);transform:scale(.86);transition:transform .08s}
+.w-ideamachine .im-card-close:hover{background:var(--paper-2)}
+.w-ideamachine .im-card-close:active{transform:scale(.86) translateY(3px);box-shadow:var(--bevel)}
+.w-ideamachine .im-card-img{position:relative;flex:0 0 auto;height:128px;border:3px solid var(--ink);border-radius:2px;overflow:hidden;background:var(--paper-2)}
+.w-ideamachine .im-card-img img{width:100%;height:100%;object-fit:cover}
+/* pixel sparkle on the picture */
+.w-ideamachine .im-spark{position:absolute;right:16px;bottom:16px;width:4px;height:4px;background:#fff;opacity:0;
+  box-shadow:0 -8px #fff,0 -4px #fff,0 4px #fff,0 8px #fff,-8px 0 #fff,-4px 0 #fff,4px 0 #fff,8px 0 #fff, 0 0 0 1px rgba(18,16,43,.25)}
+.w-ideamachine .im-card.is-new .im-spark{animation:im-spark .9s steps(4,end) .35s 2}
+@keyframes im-spark{0%{opacity:0;transform:scale(.4)}40%{opacity:1;transform:scale(1.2)}100%{opacity:0;transform:scale(.6)}}
+.w-ideamachine .im-card-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.w-ideamachine .im-type,.w-ideamachine .im-time{display:inline-flex;align-items:center;gap:5px;min-height:28px;padding:2px 9px 2px 5px;
+  font-family:var(--f-sub);font-weight:800;font-size:14px;line-height:1;color:var(--ink);border:2.5px solid var(--ink);border-radius:3px;
+  background:var(--paper);box-shadow:inset -2px -2px 0 rgba(0,0,0,.1)}
+.w-ideamachine .im-type svg{width:22px;height:22px}
+.w-ideamachine .im-time{background:var(--sky);padding-left:7px}
+.w-ideamachine .im-clock{position:relative;width:12px;height:12px;border:2px solid var(--ink);background:#fff}
+.w-ideamachine .im-clock::before{content:"";position:absolute;left:3px;top:1px;width:2px;height:4px;background:var(--ink);box-shadow:2px 2px 0 var(--ink)}
+.w-ideamachine .im-card-title{flex:0 0 auto;font-family:var(--f-display);font-weight:900;font-size:19px;line-height:1.15;color:var(--ink);
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.w-ideamachine .im-card-title:focus{outline:none}
+.w-ideamachine .im-card-title:focus-visible{outline:3px solid var(--cobalt);outline-offset:2px}
+.w-ideamachine .im-card-actions{margin-top:auto;display:flex;gap:10px;flex-wrap:wrap;padding-bottom:4px}
+.w-ideamachine .im-card-actions .btn{min-height:44px;flex:1 1 auto}
+
+/* No-JS fallback */
+.w-ideamachine .im-fallback{display:none}
+.no-js .w-ideamachine .im-stage{display:none}
+.no-js .w-ideamachine .im-fallback{display:block}
+.w-ideamachine .im-fallback-lead{font-size:16px;margin:0 0 8px}
+.w-ideamachine .im-fallback ul{margin:0;padding-left:20px;font-weight:700;font-size:16px;line-height:1.35}
+.w-ideamachine .im-fallback li{margin-bottom:8px}
+.w-ideamachine .widget-title{white-space:nowrap}
+.w-ideamachine .widget-kicker{white-space:nowrap;min-width:0}
+
+/* roomy desktop S (~385px): a bit bigger */
+@media (min-width:1200px){
+  .w-ideamachine .im-machine{transform:scale(1.1);margin:12px 0 14px}
+}
+/* narrow S (~310px desktop band, 343px phone): keep the console inside the panel */
+@media (min-width:1024px) and (max-width:1199px){
+  .w-ideamachine .widget-kicker{display:none}
+  .w-ideamachine .im-machine{transform:scale(.9);margin:-11px 0 -11px}
+  .w-ideamachine .im-or{display:none}
+  .w-ideamachine .im-card-title{font-size:17.5px}
+  .w-ideamachine .im-card-img{height:104px}
+  .w-ideamachine .im-card-actions{flex-wrap:nowrap;gap:8px}
+  .w-ideamachine .im-card-actions .btn{padding:7px 8px;font-size:15px}
+}
+@media (max-width:379px){
+  .w-ideamachine .im-hint{right:-2px}
+}

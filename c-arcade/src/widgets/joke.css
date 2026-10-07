@@ -1,0 +1,134 @@
+/* ============================================================
+   Widget: joke (Joke of the Day) — Direction C: RPG dialogue box
+   ============================================================ */
+.w-joke .jk-body{display:flex;flex-direction:column;gap:7px;padding:10px 16px 8px}
+.w-joke .jk-sprite{position:absolute;width:0;height:0;overflow:hidden}
+
+/* ---- Dialogue box ---- */
+.w-joke .jk-stage{position:relative;flex:1 1 auto;min-height:0;display:flex;padding-top:6px}
+.w-joke .jk-card{position:relative;flex:1 1 auto;min-height:0;display:flex;flex-direction:column;
+  padding:12px 12px 5px;background:var(--card);border:4px solid var(--ink);border-radius:4px;
+  box-shadow:inset 0 0 0 2px #fff, inset 0 0 0 5px var(--cobalt), 4px 4px 0 var(--ink);transform-origin:50% 50%}
+.w-joke .jk-tag{position:absolute;top:-13px;left:10px;z-index:2;font-family:var(--f-doodle);font-size:12px;line-height:1;letter-spacing:.02em;
+  text-transform:uppercase;padding:5px 8px 4px;color:var(--sunny);background:var(--ink);border:2px solid var(--ink);border-radius:2px;
+  box-shadow:0 0 0 2px var(--sunny);white-space:nowrap}
+.w-joke .jk-lines{flex:1 1 auto;min-height:0;overflow:hidden;font-size:var(--jk-fs,16px);line-height:1.3;font-weight:700;color:var(--ink)}
+.w-joke .jk-lines p{margin:0 0 .22em}
+/* speaker name-tags */
+.w-joke .jk-lines b{display:inline-block;margin-right:2px;padding:2px 4px 1px;font-family:var(--f-doodle);font-weight:400;font-size:.7em;line-height:1;
+  letter-spacing:.02em;vertical-align:.12em;color:#fff;background:var(--cobalt);border-radius:2px;box-shadow:0 2px 0 var(--ink)}
+.w-joke .jk-lines b.jk-s1{background:var(--green-dk)}
+.w-joke .jk-credit{flex:0 0 auto;margin:2px 22px 0 0;font-size:12px;line-height:1.2;color:var(--ink-soft)}
+.w-joke .jk-credit a{color:inherit;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:2px}
+.w-joke .jk-credit a:hover{color:var(--ink);text-decoration-style:solid}
+/* blinking "next" arrow */
+.w-joke .jk-next{position:absolute;right:11px;bottom:6px;font-size:13px;line-height:1;color:var(--cobalt);animation:jk-next .9s steps(1,end) infinite}
+@keyframes jk-next{0%{transform:translateY(0);opacity:1}50%{transform:translateY(3px);opacity:.35}}
+
+/* swap: CRT collapse → expand, then lines "type" in */
+.w-joke .jk-card.jk-out{animation:jk-out .2s steps(3,end) forwards}
+.w-joke .jk-card.jk-in{animation:jk-in .3s steps(4,end)}
+@keyframes jk-out{to{transform:scale(1,.04);filter:brightness(1.6)}}
+@keyframes jk-in{0%{transform:scale(1,.04);filter:brightness(1.6)}100%{transform:none;filter:none}}
+.w-joke .jk-card.jk-typing .jk-lines p{animation:jk-type .42s steps(12,end) both;animation-delay:calc(.25s + var(--i,0) * .38s)}
+@keyframes jk-type{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+
+/* ---- Topic buttons (beveled level select) ---- */
+.w-joke .jk-find{flex:0 0 auto;display:flex;flex-direction:column;gap:3px}
+.w-joke .jk-find-lbl{font-family:var(--f-doodle);font-size:11px;line-height:1;text-transform:uppercase;color:var(--ink-soft);padding-left:1px}
+.w-joke .jk-find-lbl::before{content:"▶ ";color:var(--cobalt)}
+.w-joke .jk-topics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px 6px;padding-bottom:3px}
+.w-joke .jk-topic{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;min-height:44px;padding:3px 4px;
+  font-family:var(--f-sub);font-weight:800;font-size:13.5px;line-height:1.05;color:var(--ink);text-decoration:none;text-align:center;
+  background:var(--paper);border:2.5px solid var(--ink);border-radius:3px;box-shadow:inset -3px -3px 0 rgba(0,0,0,.1), inset 3px 3px 0 #fff, 0 3px 0 var(--ink);
+  transition:transform .08s, background-color .1s;cursor:pointer}
+.w-joke .jk-topic:hover{background:#fff}
+.w-joke .jk-topic:active{transform:translateY(3px);box-shadow:inset -3px -3px 0 rgba(0,0,0,.1), 0 0 0 var(--ink)}
+.w-joke .jk-topic[aria-pressed="true"]{background:var(--sunny);transform:translateY(2px);
+  box-shadow:inset -3px -3px 0 rgba(0,0,0,.15), inset 3px 3px 0 rgba(255,255,255,.5), 0 1px 0 var(--ink)}
+.w-joke .jk-ti{font-size:17px;line-height:1}
+.w-joke .jk-tl{white-space:nowrap}
+
+/* ---- Laugh-o-Meter: segmented power meter + pixel-face buttons ---- */
+.w-joke .jk-meter{position:relative;flex:0 0 auto;display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-rows:auto auto;column-gap:8px;row-gap:4px;align-items:center}
+html.no-js .w-joke .jk-meter{display:none}
+.w-joke .jk-meter-lbl{grid-row:1 / 3;font-family:var(--f-doodle);font-size:11px;line-height:1.15;text-transform:uppercase;color:var(--ink);text-align:center}
+.w-joke .jk-track{position:relative;grid-column:2;height:12px;overflow:hidden;background:var(--night);border:2.5px solid var(--ink);border-radius:2px}
+.w-joke .jk-fill{position:absolute;top:0;bottom:0;left:0;width:var(--fill,0%);
+  background:linear-gradient(90deg,var(--lime),var(--sunny) 45%,var(--orange) 72%,var(--tomato));
+  background-size:var(--fill-bg,100%) 100%;transition:width .5s steps(5,end)}
+.w-joke .jk-track::after{content:"";position:absolute;inset:0;
+  background:repeating-linear-gradient(90deg,transparent 0 calc(10% - 2px),var(--night) calc(10% - 2px) 10%)}
+.w-joke .jk-faces{position:relative;grid-column:2;display:flex;gap:6px;padding-bottom:3px}
+.w-joke .jk-face{position:relative;flex:1 1 0;min-width:0;height:44px;padding:0;display:grid;place-items:center;
+  background:var(--paper);border:2.5px solid var(--ink);border-radius:3px;
+  box-shadow:inset -3px -3px 0 rgba(0,0,0,.1), inset 3px 3px 0 #fff, 0 3px 0 var(--ink);transition:transform .08s, background-color .1s}
+.w-joke .jk-face svg{width:26px;height:26px;display:block}
+.w-joke .jk-face:hover{background:#fff}
+.w-joke .jk-face:hover svg{transform:translateY(-2px)}
+.w-joke .jk-face:active{transform:translateY(3px);box-shadow:0 0 0 var(--ink)}
+.w-joke .jk-face[aria-pressed="true"]{background:var(--cobalt);transform:translateY(2px);
+  box-shadow:inset -3px -3px 0 rgba(0,0,0,.25), inset 3px 3px 0 rgba(255,255,255,.3), 0 1px 0 var(--ink), 0 0 12px rgba(61,90,254,.55)}
+.w-joke .jk-face.jk-pop{animation:jk-pop .4s steps(4,end)}
+.w-joke .jk-face.jk-nope{animation:jk-nope .32s steps(4,end)}
+@keyframes jk-pop{0%{transform:translateY(2px)}40%{transform:translateY(-6px) scale(1.12)}100%{transform:translateY(2px)}}
+@keyframes jk-nope{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.w-joke .jk-bubble{position:absolute;bottom:100%;z-index:3;margin-bottom:7px;transform:translateX(-50%);pointer-events:none;white-space:nowrap;
+  font-family:var(--f-doodle);font-size:12px;line-height:1;text-transform:uppercase;padding:6px 8px 5px;color:var(--sunny);background:var(--ink);
+  border-radius:2px;box-shadow:0 0 0 2px var(--sunny);animation:jk-bubble 1.3s steps(8,end) forwards}
+.w-joke .jk-bubble::after{content:"";position:absolute;left:50%;top:100%;margin-left:-5px;border:5px solid transparent;border-top-color:var(--ink)}
+@keyframes jk-bubble{0%{opacity:0;transform:translate(-50%,6px)}15%{opacity:1;transform:translate(-50%,0)}75%{opacity:1;transform:translate(-50%,-4px)}100%{opacity:0;transform:translate(-50%,-14px)}}
+html.motion-off .w-joke .jk-bubble{animation:none;opacity:1}
+
+/* ---- Footer ---- */
+.w-joke .jk-send{font-family:var(--f-sub);font-weight:800;font-size:15px;color:var(--ink);text-decoration:none;border-bottom:3px dashed var(--cobalt);padding-bottom:1px;white-space:nowrap}
+.w-joke .jk-send:hover{border-bottom-style:solid}
+
+/* ---- Widget egg: 5 groans = glitchy pixel meltdown, then it boings back ---- */
+.w-joke.jk-melting{animation:jk-melt 2.7s steps(3,end) both;transform-origin:50% 100%;z-index:6}
+.w-joke.jk-melting .jk-faces,.w-joke.jk-melting .jk-topics{pointer-events:none}
+.w-joke.jk-melting::after{content:"";position:absolute;inset:0;z-index:4;pointer-events:none;border-radius:inherit;
+  background:repeating-conic-gradient(var(--sunny) 0 25%, transparent 0 50%) 0 0/16px 16px;
+  animation:jk-dissolve 2.7s steps(1,end) both}
+@keyframes jk-melt{
+  0%{transform:none}
+  6%{transform:translateX(-7px) skewX(6deg);box-shadow:-6px 0 0 var(--teal), 6px 0 0 var(--orange)}
+  10%{transform:translateX(6px) skewX(-5deg);box-shadow:6px 0 0 var(--teal), -6px 0 0 var(--orange)}
+  16%{transform:scale(1.03,.86)}
+  28%{transform:scale(1.08,.6)}
+  42%{transform:scale(1.15,.28)}
+  60%{transform:scale(1.2,.14)}
+  70%{transform:scale(.9,1.14)}
+  80%{transform:scale(1.06,.94)}
+  90%{transform:scale(.98,1.02)}
+  100%{transform:none}}
+@keyframes jk-dissolve{0%,4%{opacity:0}8%{opacity:.35;background-position:8px 0}14%{opacity:.6;background-position:0 8px}22%,58%{opacity:.85;background-position:8px 8px}
+  64%{opacity:.4;background-position:0 0}70%,100%{opacity:0}}
+.jk-puddle{position:absolute;z-index:5;height:30px;pointer-events:none;background:var(--sunny);
+  box-shadow:inset 0 -6px 0 rgba(201,61,10,.35);
+  clip-path:polygon(0 100%,0 66%,4% 66%,4% 33%,12% 33%,12% 0,88% 0,88% 33%,96% 33%,96% 66%,100% 66%,100% 100%);
+  transform:scale(0,.2);transform-origin:50% 100%;animation:jk-puddle 2.7s steps(10,end) forwards}
+@keyframes jk-puddle{0%,22%{transform:scale(0,.2);opacity:1}45%{transform:scale(1.05,1.1)}62%{transform:scale(1,1)}74%{transform:scale(.3,.5);opacity:1}82%,100%{transform:scale(0,0);opacity:0}}
+
+@media (max-width:639px){
+  .w-joke .jk-body{padding:14px 14px 10px}
+}
+
+/* narrow S slots (e.g. 3-col desktop at ~1024px, where S ≈ 307px) */
+.w-joke .jk-body,.w-joke .widget-foot{container-type:inline-size}
+@container (max-width:290px){
+  .w-joke .jk-topic{font-size:11.5px;padding:3px 1px}
+  .w-joke .jk-faces{gap:4px}
+  .w-joke .jk-meter{column-gap:6px}
+  .w-joke .jk-lines b{font-size:.68em}
+}
+@container (max-width:280px){
+  .w-joke .jk-send{font-size:13.5px}
+  .w-joke .widget-foot .more-link{font-size:15px}
+}
+
+/* small-desktop band (3 cols at 1024–1199px → S ≈ 310px): keep the title on one line */
+@media (min-width:1024px) and (max-width:1199px){
+  .w-joke .widget-kicker{display:none}
+  .w-joke .widget-title{font-size:21px}
+}
