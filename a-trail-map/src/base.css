@@ -74,7 +74,7 @@
 }
 
 *,*::before,*::after{box-sizing:border-box}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;overflow-x:clip}
 body{margin:0;background-color:var(--paper);background-image:var(--topo);background-size:600px 600px;color:var(--ink);
   font-family:var(--f-body);font-size:18px;line-height:1.5;overflow-x:hidden}
 img{max-width:100%;display:block}

@@ -58,7 +58,7 @@
 }
 
 *,*::before,*::after{box-sizing:border-box}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;overflow-x:clip}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:18px;line-height:1.5;
   background-image:radial-gradient(rgba(30,30,42,.07) 1.2px, transparent 1.3px);background-size:22px 22px;overflow-x:hidden}
 img{max-width:100%;display:block}
