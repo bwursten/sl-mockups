@@ -1,10 +1,9 @@
 /* ============================================================
    Widget: joke (Joke of the Day) — Direction A: Trail Map / Field Guide
-   Joke card = top-bound ranger field notebook page (lined, pencil tucked
-   in the spiral); topic chips = trail-marker arrow signs with painted
+   Joke card = top-bound ranger field notebook page (lined, spiral bound); topic chips = trail-marker arrow signs with painted
    blazes; Laugh-o-Meter = trail-difficulty rating (easiest → double black).
    ============================================================ */
-.w-joke .jk-body{display:flex;flex-direction:column;gap:5px;padding:10px 16px 9px}
+.w-joke .jk-body{display:flex;flex-direction:column;gap:9px;padding:10px 16px 10px}
 
 /* ---- Field notebook page ---- */
 .w-joke .jk-stage{position:relative;flex:1 1 auto;min-height:0;display:flex;perspective:900px;padding-top:5px}
@@ -22,8 +21,6 @@
 .w-joke .jk-card::after{content:"";position:absolute;left:10px;right:8px;top:-8px;height:12px;z-index:2;pointer-events:none;
   background:repeating-linear-gradient(90deg,transparent 0 3px,var(--ink) 3px 6.5px,transparent 6.5px 16px);
   -webkit-mask:linear-gradient(#000,#000);border-radius:3px}
-.w-joke .jk-pencil{position:absolute;left:28px;top:-2px;z-index:3;width:96px;height:16px;pointer-events:none;
-  filter:drop-shadow(0 2px 0 rgba(31,42,34,.35))}
 .w-joke .jk-tag{position:absolute;top:-10px;right:8px;z-index:3;font-family:var(--f-display);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;
   line-height:1;padding:5px 7px 4px;color:var(--tomato-dk);background:rgba(255,253,246,.96);border:3px double currentColor;border-radius:5px;
   transform:rotate(-4deg);white-space:nowrap}
@@ -43,8 +40,7 @@
 .w-joke .jk-card.jk-out,.w-joke .jk-card.jk-in{transform-origin:50% 0}
 
 /* ---- Topic chips = trail-marker arrow signs ---- */
-.w-joke .jk-find{flex:0 0 auto;display:flex;flex-direction:column;gap:3px}
-.w-joke .jk-find-lbl{font-family:var(--f-doodle);font-weight:700;font-size:14.5px;line-height:1;padding-left:2px;color:var(--ink-soft)}
+.w-joke .jk-find{flex:0 0 auto;margin-top:4px}
 .w-joke .jk-topics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px 8px}
 .w-joke .jk-topic{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;min-height:44px;
   padding:3px 3px 3px 10px;font-family:var(--f-sub);font-weight:700;font-size:14px;letter-spacing:-.1px;line-height:1.05;color:var(--ink);text-decoration:none;text-align:center;
@@ -100,8 +96,7 @@ html.no-js .w-joke .jk-meter{display:none}
 html.motion-off .w-joke .jk-bubble{animation:none;opacity:1}
 
 /* ---- Footer ---- */
-.w-joke .jk-send{font-family:var(--f-sub);font-weight:700;font-size:15.5px;text-decoration:none;border-bottom:3px dotted var(--teal);padding-bottom:1px;white-space:nowrap}
-.w-joke .jk-send:hover{border-bottom-style:solid}
+.w-joke .widget-foot .more-link{white-space:nowrap}
 
 /* ---- Widget egg: 5 groans = meltdown (into a sunny mud puddle) ---- */
 .w-joke.jk-melting{animation:jk-melt 2.7s cubic-bezier(.45,.05,.4,1) both;transform-origin:50% 100%;z-index:6}
@@ -140,12 +135,23 @@ html.motion-off .w-joke .jk-bubble{animation:none;opacity:1}
   .w-joke .jk-meter-lbl br{display:none}
 }
 @container (max-width:280px){
-  .w-joke .jk-send{font-size:14px}
-  .w-joke .widget-foot .more-link{font-size:15.5px}
+  .w-joke .widget-foot .more-link{font-size:15px}
 }
 
 /* small-desktop band (3 cols at 1024–1199px → S ≈ 310px): keep the title on one line */
 @media (min-width:1024px) and (max-width:1199px){
   .w-joke .widget-kicker{display:none}
   .w-joke .widget-title{font-size:21px}
+}
+
+/* tablet / phone: "ha ha ha!" kicker + title share one header line */
+.w-joke .widget-title,.w-joke .widget-kicker{white-space:nowrap}
+@media (max-width:1023px){
+  .w-joke .widget-head{gap:8px}
+  .w-joke .widget-title{font-size:21px}
+  .w-joke .widget-kicker{font-size:15px}
+}
+@media (max-width:639px){
+  .w-joke .widget-head{padding-left:14px;padding-right:14px}
+  .w-joke .widget-kicker{font-size:14.5px}
 }

@@ -31,7 +31,7 @@
     function headerBottom(){ return K.topInset(); }
     function findPerch(exclude){
       var hb = headerBottom(), vh = K.vh();
-      var list = SL.$$('.hero-card, .widget').filter(function(el){
+      var list = SL.$$('.hero-card, .widget, .sf-card, .sf-lead').filter(function(el){
         if (el === exclude) return false;
         var r = el.getBoundingClientRect();
         if (r.width < 140 || r.top < hb + 30 || r.top > vh - 90) return false;

@@ -1,62 +1,113 @@
 #!/usr/bin/env python3
-"""Assemble src/ modules into ../index.html.
+"""Assemble src/ modules into the mockup pages.
 
-Order:
-  CSS: base.css, shell.css, widgets/*.css, eggs/*.css
+Homepage  -> ../index.html
   HTML: shell.html with <!--WIDGET:id--> replaced by widgets/id.html
-  JS:  core.js, shell.js, widgets/*.js, eggs/*.js
-Run:  python3 src/build.py   (from b-sticker-bomb/)
+Section fronts -> ../<slug>.html for every folder src/pages/<slug>/
+  HTML: shell.html's header + footer, with everything inside
+        <main id="main" ...> ... </main> replaced by src/pages/<slug>/page.html
+        (page.html may also use <!--WIDGET:id--> placeholders)
+  Optional: src/pages/<slug>/meta.txt  -> first line = <title>, second = description
+
+Every page gets  <body data-page="home|<slug>">  so shell/egg JS can tell
+which page it is on (e.g., the hiker trail runs on the homepage only).
+
+CSS order: base.css, shell.css, widgets/*.css, eggs/*.css, sections/*.css, pages/<slug>/*.css
+JS  order: core.js, shell.js, widgets/*.js, eggs/*.js, sections/*.js, pages/<slug>/*.js
+Run:  python3 src/build.py   (from a-trail-map/)
 """
-import os, re, glob, sys
+import os, re, glob
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 
+
 def read(p):
     try:
-        with open(p, encoding='utf-8') as f: return f.read()
+        with open(p, encoding='utf-8') as f:
+            return f.read()
     except FileNotFoundError:
         return ''
 
-css = [read(os.path.join(HERE, 'base.css')), read(os.path.join(HERE, 'shell.css'))]
-css += [read(p) for p in sorted(glob.glob(os.path.join(HERE, 'widgets', '*.css')))]
-css += [read(p) for p in sorted(glob.glob(os.path.join(HERE, 'eggs', '*.css')))]
 
-js = [read(os.path.join(HERE, 'core.js')), read(os.path.join(HERE, 'shell.js'))]
-js += [read(p) for p in sorted(glob.glob(os.path.join(HERE, 'widgets', '*.js')))]
-js += [read(p) for p in sorted(glob.glob(os.path.join(HERE, 'eggs', '*.js')))]
+def files(pattern):
+    return [read(p) for p in sorted(glob.glob(os.path.join(HERE, pattern)))]
 
-shell = read(os.path.join(HERE, 'shell.html')) or '<main><p>shell.html missing</p></main>'
+
+BASE_CSS = [read(os.path.join(HERE, 'base.css')), read(os.path.join(HERE, 'shell.css'))] \
+    + files('widgets/*.css') + files('eggs/*.css') + files('sections/*.css')
+BASE_JS = [read(os.path.join(HERE, 'core.js')), read(os.path.join(HERE, 'shell.js'))] \
+    + files('widgets/*.js') + files('eggs/*.js') + files('sections/*.js')
+
 missing = []
-def sub(m):
-    wid = m.group(1)
-    frag = read(os.path.join(HERE, 'widgets', wid + '.html'))
-    if not frag:
-        missing.append(wid)
-        return ('<section class="widget slot-%s" data-widget="%s"><div class="widget-head"><h3 class="widget-title">%s</h3></div>'
-                '<div class="widget-body">(widget not built yet)</div></section>') % ('S', wid, wid)
-    return frag
-shell = re.sub(r'<!--\s*WIDGET:([\w-]+)\s*-->', sub, shell)
 
-page = f"""<!DOCTYPE html>
+
+def widgets(html):
+    def sub(m):
+        wid = m.group(1)
+        frag = read(os.path.join(HERE, 'widgets', wid + '.html'))
+        if not frag:
+            missing.append(wid)
+            return ('<section class="widget slot-S" data-widget="%s"><div class="widget-head"><h3 class="widget-title">%s</h3></div>'
+                    '<div class="widget-body">(widget not built yet)</div></section>') % (wid, wid)
+        return frag
+    return re.sub(r'<!--\s*WIDGET:([\w-]+)\s*-->', sub, html)
+
+
+def page_html(body, slug, title, desc, css, js):
+    return f"""<!DOCTYPE html>
 <html lang="en" class="no-js">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Scout Life magazine — Homepage mockup (Trail Map / Field Guide)</title>
-<meta name="description" content="Scout Life homepage redesign mockup — Direction A: Trail Map / Field Guide">
+<title>{title}</title>
+<meta name="description" content="{desc}">
 <link rel="icon" href="assets/logo/favicon.jpg">
+<script>document.documentElement.className=document.documentElement.className.replace("no-js","js");</script>
 <style>
 {chr(10).join(css)}
 </style>
 </head>
-<body>
-{shell}
+<body data-page="{slug}">
+{body}
 <script>
 {chr(10).join(';' + j for j in js if j.strip())}
 </script>
 </body>
 </html>
 """
+
+
+shell = read(os.path.join(HERE, 'shell.html')) or '<main id="main"><p>shell.html missing</p></main>'
+out = []
+
+# ---- Homepage ----
+home = page_html(widgets(shell), 'home',
+                 'Scout Life magazine — Homepage mockup (Trail Map / Field Guide)',
+                 'Scout Life homepage redesign mockup — Direction A: Trail Map / Field Guide',
+                 BASE_CSS, BASE_JS)
 with open(os.path.join(ROOT, 'index.html'), 'w', encoding='utf-8') as f:
-    f.write(page)
-print('Built index.html', len(page)//1024, 'KB', '| missing widgets:', missing or 'none')
+    f.write(home)
+out.append(('index.html', len(home)))
+
+# ---- Section fronts ----
+m = re.search(r'(<main id="main"[^>]*>)(.*?)(</main>)', shell, re.S)
+for d in sorted(glob.glob(os.path.join(HERE, 'pages', '*'))):
+    if not os.path.isdir(d):
+        continue
+    slug = os.path.basename(d)
+    content = read(os.path.join(d, 'page.html'))
+    if not content:
+        continue
+    meta = (read(os.path.join(d, 'meta.txt')).strip().split('\n') + ['', ''])[:2]
+    title = meta[0] or f'Scout Life — {slug} (mockup)'
+    desc = meta[1] or 'Scout Life section front mockup — Direction A: Trail Map'
+    body = shell[:m.start()] + m.group(1) + '\n' + widgets(content) + '\n' + m.group(3) + shell[m.end():]
+    css = BASE_CSS + [read(p) for p in sorted(glob.glob(os.path.join(d, '*.css')))]
+    js = BASE_JS + [read(p) for p in sorted(glob.glob(os.path.join(d, '*.js')))]
+    html = page_html(body, slug, title, desc, css, js)
+    with open(os.path.join(ROOT, slug + '.html'), 'w', encoding='utf-8') as f:
+        f.write(html)
+    out.append((slug + '.html', len(html)))
+
+print('Built', ', '.join(f'{n} ({s // 1024} KB)' for n, s in out), '| missing widgets:', sorted(set(missing)) or 'none')

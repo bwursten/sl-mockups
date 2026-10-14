@@ -1,22 +1,19 @@
 /* ============================================================
    Widget: poll (Today's Poll) — Direction A: Trail Map / Field Guide
-   A wooden campfire register board: each choice is a nailed-on pine
+   A wooden board: each choice is a nailed-on pine
    plank; results draw a trail-progress line across each plank.
    ============================================================ */
 .w-poll .pl-body{display:flex;flex-direction:column;gap:8px;padding:12px 16px 10px}
 .w-poll .pl-form{margin:0}
 .w-poll .pl-set{border:0;margin:0;padding:0;min-width:0}
-.w-poll .pl-q{float:left;width:100%;padding:0 0 15px;font-family:var(--f-sub);font-weight:700;font-size:22px;line-height:1.1}
+.w-poll .pl-q{float:left;width:100%;padding:0 0 10px;font-family:var(--f-sub);font-weight:700;font-size:22px;line-height:1.1}
 
 /* the register board */
-.w-poll .pl-opts{position:relative;clear:both;display:flex;flex-direction:column;gap:6px;padding:12px 8px 8px;
+.w-poll .pl-opts{position:relative;clear:both;display:flex;flex-direction:column;gap:6px;padding:8px 8px 8px;
   background-color:var(--bark);
   background-image:repeating-linear-gradient(176deg,rgba(255,255,255,.06) 0 2px,transparent 2px 9px),
                    repeating-linear-gradient(183deg,rgba(0,0,0,.08) 0 1px,transparent 1px 13px);
   border:2.5px solid var(--ink);border-radius:10px;box-shadow:0 4px 0 var(--ink),inset 0 0 0 3px rgba(0,0,0,.12)}
-.w-poll .pl-plaque{position:absolute;top:-11px;left:50%;transform:translateX(-50%);z-index:2;white-space:nowrap;
-  font-family:var(--f-display);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;line-height:1;padding:4px 10px 3px;
-  color:var(--bark-dk);background:var(--sunny);border:2px solid var(--ink);border-radius:4px;box-shadow:0 2px 0 var(--ink)}
 
 /* planks */
 .w-poll .pl-opt{position:relative;display:flex;align-items:center;gap:10px;width:100%;min-height:46px;margin:0;padding:5px 18px 5px 20px;
@@ -59,12 +56,16 @@
 @media (min-width:1024px) and (max-width:1199px){
   .w-poll .widget-kicker{display:none}
   .w-poll .widget-title{font-size:21px}
-  .w-poll .pl-q{font-size:19.5px;padding-bottom:14px}
-  .w-poll .pl-opt{font-size:16.5px}
+  .w-poll .pl-q{font-size:19.5px;padding-bottom:9px}
+  .w-poll .pl-opt{font-size:15.5px;gap:7px;padding-left:18px;padding-right:16px}
+  .w-poll .pl-voted .pl-opt{padding-bottom:11px}
+  .w-poll .pl-emoji{font-size:19px}
+  .w-poll .pl-mine{font-size:9px;padding:2px 4px 1px}
+  .w-poll .pl-body{gap:6px}
 }
 @media (max-width:639px){
   .w-poll .pl-body{gap:6px;padding:11px 14px 9px}
-  .w-poll .pl-q{font-size:21px;padding-bottom:13px}
-  .w-poll .pl-opts{gap:5px;padding:11px 7px 7px}
+  .w-poll .pl-q{font-size:21px;padding-bottom:9px}
+  .w-poll .pl-opts{gap:5px;padding:7px 7px 7px}
   .w-poll .pl-opt{min-height:44px}
 }

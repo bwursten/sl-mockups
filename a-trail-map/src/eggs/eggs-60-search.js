@@ -166,7 +166,7 @@
       var vw = K.vw(), vh = K.vh(), steps = vw < 640 ? 6 : 8;
       var a = {x:-40, y:vh * 0.85}, b = {x:vw + 40, y:vh * 0.25};
       var ang = Math.atan2(b.y - a.y, b.x - a.x), nx = -Math.sin(ang), ny = Math.cos(ang);
-      var cards = SL.$$('.hero-card, .widget').filter(function(el){ return K.inView(el.getBoundingClientRect(), 0); });
+      var cards = SL.$$('.hero-card, .widget, .sf-card, .sf-lead').filter(function(el){ return K.inView(el.getBoundingClientRect(), 0); });
       var timers = [], anims = [];
       onEnd(function(){ timers.forEach(clearTimeout); anims.forEach(function(x){ try { x.cancel(); } catch(e){} }); });
       for (var i = 1; i <= steps; i++){

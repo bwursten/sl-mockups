@@ -1,5 +1,5 @@
 /* ============================================================
-   Widget: quiz (Quiz Teaser) — Direction A: Trail Map / Field Guide
+   Widget: quiz (Quiz) — Direction A: Trail Map / Field Guide
    Ranger flash card: field-guide photo with photo corners, answers as
    arrow signs on a trail signpost, CORRECT/NOPE as passport stamps.
    ============================================================ */
@@ -20,7 +20,6 @@
   padding:4px 7px 3px;color:#fff;background:var(--forest);border:2px solid var(--ink);border-radius:5px;
   box-shadow:inset 0 0 0 1.5px var(--forest),inset 0 0 0 2.8px rgba(255,198,41,.85);white-space:nowrap}
 .w-quiz .qz-qwrap{flex:1 1 auto;min-width:0}
-.w-quiz .qz-from{margin:0 0 3px;font-family:var(--f-doodle);font-weight:700;font-size:15px;line-height:1.1;color:var(--teal-dk)}
 .w-quiz .qz-q{font-family:var(--f-sub);font-weight:700;font-size:20px;line-height:1.12}
 
 /* answers = arrow signs on a signpost (2 × 2) */

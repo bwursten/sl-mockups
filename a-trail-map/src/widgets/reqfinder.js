@@ -120,7 +120,7 @@
         rankSel = SL.$('#rf-rank', root), reqSel = SL.$('#rf-req', root), l3 = SL.$('.rf-l3', root),
         s1 = SL.$('.rf-s1', root), s2 = SL.$('.rf-s2', root), s3 = SL.$('.rf-s3', root),
         board = SL.$('.rf-board', root), status = SL.$('.rf-status', root),
-        trail = SL.$('.rf-trail', root), emptyHTML = board.innerHTML;
+        emptyHTML = board.innerHTML;
     var prog = null, rank = null;
 
     function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
@@ -129,8 +129,6 @@
 
     function setStep(n){            // n = number of completed steps (0–3)
       [s1, s2, s3].forEach(function(s, i){ s.classList.toggle('is-done', i < n); s.classList.toggle('is-on', i === n); });
-      trail.style.setProperty('--pn', String(n / 3));
-      trail.classList.toggle('is-there', n === 3);
     }
     function empty(msg){
       board.innerHTML = emptyHTML;

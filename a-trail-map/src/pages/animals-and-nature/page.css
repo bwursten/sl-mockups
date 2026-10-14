@@ -1,0 +1,4 @@
+/* Animals and Nature (default layout) — page tweaks only.
+   The spider sits left-of-center in the banner photo, so the hero uses
+   .sf-hero-right on desktop and keeps the spider in frame when stacked. */
+body[data-page="animals-and-nature"] .an-hero{--sf-focus:30% 40%}

@@ -1,5 +1,5 @@
 /* ============================================================
-   Widget: quiz (Quiz Teaser) — owner: Agent A
+   Widget: quiz (Quiz) — owner: Agent A
    One real question from Scout Life's "How Much Do You Know About the
    Multisport Merit Badge?" quiz. Instant Correct!/Nope! feedback.
    ============================================================ */

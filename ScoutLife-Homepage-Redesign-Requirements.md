@@ -1,15 +1,17 @@
 # Scout Life Homepage Redesign — Requirements & Plan
 
-**Project:** scoutlife.org homepage redesign
+**Project:** scoutlife.org homepage redesign (phase 1 of a full-site redesign)
 **Owner:** Bryan Wursten
-**Version:** 1.1 (draft for approval)
-**Date:** October 5, 2026
-**Status:** Awaiting approval. Mockups begin after sign-off.
+**Version:** 1.3
+**Date:** October 7, 2026
+**Status:** Homepage mockups built for all three directions (§16). Next: choose a direction, then mock up section fronts, posts and pages, then build (§18).
 
 | Version | Changes |
 |---|---|
 | 1.0 | First draft from discovery Q&A |
 | 1.1 | Contests removed from top menu; YouTube-only social; logo and Maileagle assets added; Boredom Buster redesigned to avoid casino cues; Easter eggs refocused on mini interactions, animations and games; mockups to use real images and links |
+| 1.2 | Full-site redesign confirmed; platform decided (WordPress block theme + custom blocks plugin); added §18 Build and integration plan; mockup status updated with the three built directions and the next mockups needed (section fronts, posts, pages); §1.3, §14, §15 and §17 updated |
+| 1.3 | Polls: Woobox to be replaced by a custom Poll block with live results (new §7.4); §7.3, §14, §15, §17 and §18 updated |
 
 ---
 
@@ -37,10 +39,11 @@ Ad performance is not a success metric for this project, but the redesign must n
 
 ### 1.3 Out of scope
 
-- Article pages, section fronts and subdomains (jokes, fishing, fiction, eagleprojects, headsup). These get links from the homepage but are not being redesigned now.
+- Subdomains (jokes, fishing, fiction, eagleprojects, headsup). They get links from the homepage but aren't part of this redesign. They could adopt the new theme later (§18.12).
 - Changing the content mix or editorial strategy.
 - User accounts or logins.
-- Choosing the final build platform (requirements are platform-agnostic, with WordPress notes).
+
+**Scope note (v1.2):** The homepage is phase 1 of a **full-site redesign** of scoutlife.org. Section fronts, posts (articles), pages, search and 404 will get the same design system. They need their own mockups (§16.5) and are part of the build plan (§18). This document's detailed requirements (§4–§13) cover the homepage; the other templates will be specified when their mockups are made.
 
 ---
 
@@ -346,7 +349,7 @@ These keep today's homepage content visible in the new widget format.
 
 | Widget | Mini-play | Links to |
 |---|---|---|
-| **Poll** | Vote on today's poll; animated results bar. Anonymous, one vote per browser. | Polls page |
+| **Poll** | Vote on the current poll; animated live results. Anonymous, one vote per browser. Custom block (see §7.4). | Polls page |
 | **Quiz Teaser** | Answer one question from a featured quiz; get instant "Correct!" / "Nope!" feedback. | Full quiz, Quizzes section |
 | **Pinewood Derby** | Pick 1 of 3 cars and watch a 3-second race down the track. | Pinewood Derby HQ |
 | **Fishing** | "Cast a line" and reel in a random fishing article, fish fact or fish joke. | fishing.scoutlife.org |
@@ -358,6 +361,33 @@ These keep today's homepage content visible in the new widget format.
 | **Section Shelf** (generic) | A shelf of 3–4 latest articles from any chosen section in that section's color (e.g., Fun Stuff to Do, How To Do It, Scouting Around, Outdoors & Gear, Animals and Nature). | Section front |
 
 **Note:** "This Month's Issue" and "Subscriber Services" move into the Subscription promo (§10).
+
+### 7.4 Poll block (custom, replaces Woobox)
+
+Polls currently run on **Woobox**. They'll be replaced by a custom Poll block in the `scoutlife-blocks` plugin (§18), so polls match the site design, avoid third-party cookies and school-filter problems, and keep kids' data in-house.
+
+**Editor setup**
+- Polls are their own content type in WordPress. Each poll has a **question** and **2–6 answers**, each answer with an optional small image or icon.
+- **No start/end dates.** The homepage Poll widget shows the **most recently published poll** automatically. Editors can also pick a specific poll in the block settings.
+- Editors can see each poll's vote totals on its edit screen. **No spreadsheet export.**
+- **No results image in the poll itself.** Bryan creates the results graphic separately and adds it to the poll gallery on the Polls page by hand, as today.
+
+**Voting and results**
+- **Results are live.** After voting, the widget shows animated percentage bars for every answer (the mockup behavior), with the kid's own choice marked.
+- **Anonymous:** a vote adds 1 to that answer's count. No names, emails, IP addresses or other identifiers are stored.
+- **One vote per browser:** the browser remembers the vote so the widget shows the results on return visits. A determined kid could vote again on another device; that's acceptable for a fun poll.
+- **Basic spam protection:** a light check against automated vote-stuffing (e.g., a hidden honeypot field and simple rate limiting that keeps no identifiers).
+- **Works with page caching:** vote counts are fetched fresh, so results stay accurate even when the page itself is cached.
+- **Works without JavaScript:** voting falls back to a plain form that submits and returns to the page.
+
+**Where polls appear**
+- **Homepage:** the Poll widget (slot size S; design from the chosen direction).
+- **Polls page (/polls/):** the current poll at the top (same block), followed by the existing hand-made gallery of past results images.
+- **Elsewhere:** the block can be placed in posts or section fronts if wanted.
+
+**Tracking:** each vote fires the standard `widget_interact` event (§13).
+
+**Effort:** small for a custom block, roughly 2–4 days of build plus testing; the front-end design already exists in the mockups.
 
 ---
 
@@ -531,13 +561,14 @@ A simple dashboard showing widget engagement and click-through per widget/slot w
 
 ## 14. CMS and editorial operations
 
-Platform-agnostic. If staying on WordPress, these map to a custom theme with a Homepage settings screen (or blocks/ACF).
+Built as a WordPress block theme with custom blocks (§18). The homepage is a regular page made of blocks: editors add, remove and reorder widget blocks inside locked widget-zone layouts, and each block has its own settings panel.
 
 | Area | Editors can… |
 |---|---|
 | Hero | Pick 5 items, set crop focus and flag, schedule start/end, keep a backup list |
 | Widget zones | Turn widgets on/off, assign to slots, reorder, choose S/W size, set dates |
-| Widget content | Edit titles, intro lines, link lists, item pools (Arcade games, Boredom Buster projects, Gear cards, Seasonal picks, Poll question, Quiz question) |
+| Widget content | Edit titles, intro lines, link lists, item pools (Arcade games, Boredom Buster projects, Gear cards, Seasonal picks, Quiz question) |
+| Polls | Create polls (question + 2–6 answers); the newest poll appears automatically, or pick one; view vote totals (§7.4) |
 | Video of the Week | Set URL, poster, title, description |
 | Subscription promo | Swap cover image, headline, button text |
 | Mega menus | Choose featured articles per section |
@@ -556,14 +587,20 @@ Platform-agnostic. If staying on WordPress, these map to a custom theme with a H
 | 3 | Easter egg review and approval process (animations, mini-games). | Editorial | Build |
 | 4 | **Requirements taxonomy:** export of current terms and a plan/owner to finish tagging. | Editorial | Build |
 | 5 | **Joke feed/API** from jokes.scoutlife.org (Joke of the Day, by topic, ratings). | Dev | Build |
-| 6 | Poll system: keep the current polls plugin or replace? | Dev | Build |
+| 6 | **Poll system (resolved):** replace Woobox with a custom Poll block (§7.4). Remaining: decide whether to import any past Woobox polls (not required, since the results gallery is images). | Bryan | Build |
 | 7 | Ad ops: GAM ad unit names, final slot count, refresh policy, house-ad creative. | Ad ops | Build |
-| 8 | Platform decision (custom WordPress theme vs. headless). | Bryan / dev | Build |
+| 8 | **Choose the design direction** (A Trail Map, B Sticker-Bomb, C Arcade, or a blend). Blocks the section front / post / page mockups. | Bryan | Next mockups |
 | 9 | Launch timing (e.g., before a seasonal moment such as Pinewood Derby season or summer). | Bryan | Planning |
+| 10 | **Who runs scoutlife.org today** (IT, hosting provider or contractor), and their rules: code review, approved plugins, deployment process, staging access. | Bryan | Build start |
+| 11 | **Hosting platform** and whether it supports block themes and our build tooling (most do; managed hosts like WordPress VIP have their own review rules). | Hosting / IT | Build start |
+| 12 | **Plugin inventory:** which plugins run polls, joke ratings, ads, SEO, caching and forms today, and whether each works with a block theme. | Developer | Build start |
+| 13 | **Subdomains:** are jokes, fishing, fiction, eagleprojects and headsup separate WordPress sites or one multisite network? (Affects joke feed and future theme reuse.) | Hosting / IT | Build |
+| 14 | **MH Magazine dependencies:** shortcodes, sidebar widgets, custom fields or image sizes that posts rely on and that must be replaced. | Developer | Build |
+| 15 | **WordPress developer** for milestone reviews, staging and deployment (§18.8). | Bryan | Build start |
 
 ---
 
-## 16. Mockup plan (Phase 2, after approval)
+## 16. Mockups
 
 ### 16.1 Deliverables
 
@@ -576,7 +613,14 @@ sl-mockups/
   c-arcade/index.html
 ```
 
-Each is a single self-contained responsive page you can open on desktop, tablet and phone.
+Each is a single self-contained responsive page you can open on desktop, tablet and phone. A landing page (`sl-mockups/index.html`) links to all options.
+
+**Status (October 7, 2026): all three built.**
+- **A: Trail Map / Field Guide** (Scout/camping theme): topo maps, wooden trail signs, patches, passport stamps, a trail that draws itself as you scroll, compass that follows the cursor.
+- **B: Sticker-Bomb Scrapbook:** tilted cards, tape, die-cut stickers, doodles.
+- **C: Arcade / Game UI:** player HUD with XP and levels (anonymous, browser-only, not a currency), "World" banners, level-select hero, neon game panels. Magenta from §3.2 was replaced with neon orange/cyan/yellow/green to stay gender-neutral.
+- All three share one modular source structure (`src/` with `base.css`, `core.js`, `shell.*`, `widgets/*`, `eggs/*` and `build.py`), which maps directly onto the block theme and blocks plugin (§18.4).
+- Mobile Safari fix (October 7): the phone hero swipe row used a percentage width that WebKit resolved in a loop. Cards now use viewport-based widths. All three were re-tested in WebKit at phone, tablet and desktop sizes.
 
 ### 16.2 What each prototype includes
 
@@ -601,6 +645,21 @@ Each is a single self-contained responsive page you can open on desktop, tablet 
 3. Revise the chosen direction.
 4. Optional: page-level specs / style guide for developers.
 
+### 16.5 Next mockups (full-site redesign)
+
+Once a direction is chosen, mock up the remaining templates in that direction, using the same modular source structure and real content. Each must work on desktop, tablet and phone (tested in Chromium **and** WebKit/Safari).
+
+| Template | What it needs to show |
+|---|---|
+| **Section front** (e.g., Outdoors & Gear, Hobbies & Projects, Games, Scouts) | Section header in the section color with subsection navigation; a featured story; a filterable/paginated grid of articles; one or two section-relevant widgets (e.g., Gear Guide on Outdoors, Arcade on Games); ad placements; how a subsection (e.g., Ask the Gear Guy) differs from a top-level section |
+| **Post / article** | Headline, dek, byline/date, featured image or video; readable body typography for ages 8–13 (long-form, step-by-step how-to, Q&A, gallery and quiz/embed variants); in-article ad placements; related articles; "what to do next" widgets; share/print options (if any); comments decision |
+| **Page** (e.g., Contact Us, Subscriber Services, About) | Simple, readable content layout with the shared header/footer; form styling |
+| **Search results** | Results list, filters (section, content type), no-results state (Maileagle allowed here), search-word Easter eggs |
+| **404** | Friendly "lost on the trail" style page with search and popular links; a small mini-game is optional |
+| **Archive / tag / author** | Can reuse the section front pattern |
+
+Also produce a short **style guide** from the chosen direction (colors, type scale, spacing, buttons, cards, labels, icons, motion rules) to become the block theme's design settings.
+
 ---
 
 ## 17. Decision log
@@ -610,7 +669,7 @@ Each is a single self-contained responsive page you can open on desktop, tablet 
 | Primary audience | Ages 8–13 |
 | Brand freedom | Logo stays recognizable but can be playful/animated |
 | Visual direction | Explore 3: Trail Map, Sticker-Bomb Scrapbook, Arcade |
-| Platform | Undecided; requirements platform-agnostic |
+| Platform | WordPress **block theme** with a companion custom-blocks plugin; full-site redesign (v1.2) |
 | Easter egg types | Secret codes, hidden critters, logo reactions, search secrets, footer surprises; ad-free zones rule |
 | Easter egg style | Mini interactions, animations and games; not links to hidden content or bonus jokes |
 | Motion | Lively but respectful (reduced-motion + pause toggle) |
@@ -636,4 +695,148 @@ Each is a single self-contained responsive page you can open on desktop, tablet 
 | Top menu | Contests removed (kept in footer and as a widget) |
 | Social | YouTube only |
 | Brand assets | Logo PNGs (10 colors) and Maileagle art provided in project folder |
+| Scope | Full-site redesign; homepage is phase 1. Section fronts, posts and pages to be mocked up next |
+| Mockups built | A Trail Map, B Sticker-Bomb, C Arcade (C without magenta, for gender neutrality) |
+| Build approach | Claude writes most code; a WordPress developer reviews at milestones and handles staging/deployment (§18.8) |
 | Mockup content | Real images and links whenever possible |
+| Polls | Replace Woobox with a custom Poll block; live results; newest poll shows automatically; no start/end dates, no spreadsheet export, no results image in the block (gallery images added manually) |
+
+---
+
+## 18. Build and integration plan (WordPress block theme)
+
+### 18.1 Approach
+
+The goal is a **full-site redesign**, so we'll replace the current MH Magazine theme instead of extending it. The build has two parts:
+
+1. **A custom block theme** (`scoutlife-theme`) that holds the design system and every page template: homepage, section fronts, posts, pages, search, archives and 404.
+2. **A companion plugin** (`scoutlife-blocks`) that holds the custom blocks: header pieces, homepage widgets, ad slots and Easter eggs. Keeping blocks in a plugin means they survive any future theme change and could be reused on the subdomains.
+
+The mockups aren't drop-in code. Their content is hard-coded and the pages are bundled into single files. But their design and interaction code (`base.css`, `core.js`, each widget's CSS/JS and the eggs) carries over largely unchanged. The main work is replacing hard-coded content with live WordPress data and editor settings.
+
+### 18.2 Why a block theme
+
+| Benefit | Why it matters for Scout Life |
+|---|---|
+| Design tokens in `theme.json` | The mockups' colors, fonts and spacing become the only choices in the editor, so content stays on-brand |
+| Homepage built from blocks | Editors add, remove and reorder widgets without a developer (§7.1, §14) |
+| Site Editor | Admins can adjust templates, header/footer and reusable layouts (patterns) without code |
+| Patterns | Widget zones and seasonal setups (e.g., a Halloween zone) are saved layouts that are quick to swap |
+| Future-proof | This is where WordPress is investing (font library, editing tools, performance) |
+| Reusable | The subdomains could adopt the same theme later for a consistent Scout Life family |
+
+### 18.3 Guardrails
+
+- **Custom blocks for complex UI.** WordPress's core Navigation block can't handle the mega menus, compass/HUD or Easter eggs, so those are custom blocks.
+- **Lock it down.** Lock templates and the fixed widget-slot layouts (template/block locking). Turn off custom colors, gradients and font sizes in `theme.json`. Limit Site Editor access to 1–2 admins. Everyday editors work only in posts, pages and homepage widget blocks.
+- **Allowed blocks.** Limit which blocks editors can insert where (e.g., only widget blocks inside widget zones).
+- **Check plugins.** Confirm every plugin we depend on (polls, joke ratings, ads, SEO, caching, forms) works with a block theme before committing (§15 #12).
+
+### 18.4 Code structure
+
+```
+scoutlife-theme/                 (block theme)
+  style.css, functions.php       theme header; enqueue core.js, fonts, settings
+  theme.json                     palette, fonts, type scale, spacing, layout, locks
+  templates/                     front-page, index, single, page, category,
+                                 archive, search, 404 (.html)
+  parts/                         header.html, footer.html
+  patterns/                      hero, widget zones, seasonal zones, section front layouts
+  assets/fonts/, assets/js/core.js, assets/css/
+
+scoutlife-blocks/                (plugin)
+  scoutlife-blocks.php           registration, settings page (Easter egg toggles)
+  src/blocks/<block>/            block.json, edit.js, render.php, view.js, style.css
+  includes/                      data helpers: REST endpoints, jokes feed fetcher
+                                 (cached), requirements endpoint, queries
+  package.json                   build with @wordpress/scripts
+```
+
+**From mockup to block:** `base.css` becomes `theme.json` plus theme CSS; `core.js` becomes a shared theme script; each `widgets/<id>.html` becomes the block's `render.php` (with live data); `<id>.css` and `<id>.js` become its `style.css` and `view.js` (loaded only on pages that use the block); `eggs/*` become an optional script controlled by the settings page; `shell.*` becomes the header/footer template parts and header blocks.
+
+**Custom blocks planned:**
+- **Site chrome:** site header (logo + eggs hooks), mega menu, search panel, subscribe button, player HUD (Direction C only), footer extras (campfire band).
+- **Homepage:** hero (5 post pickers), widget zone (enforces fixed S/W slots and ad cells), ad slot, Video of the Week, subscription promo.
+- **Widgets:** joke, requirements finder, idea machine, arcade, seasonal (config-driven skins), gear guide, poll, quiz teaser, pinewood derby, fishing, section shelf.
+- **Later, for post templates:** in-article ad slot, related articles, "what to do next" widget.
+
+### 18.5 Content and data sources
+
+| Piece | Source in WordPress |
+|---|---|
+| Hero | 5 post pickers in the hero block; images via WordPress for proper sizes (`srcset`) |
+| Section shelves, Gear Guide, Arcade, Fishing | Latest posts from a category/tag; editors can pin or override |
+| Idea Machine | Posts in project categories plus a "project type" tag (craft, science, outdoors, art, recipe, build) |
+| Jokes | jokes.scoutlife.org data feed (WordPress REST API), fetched server-side and cached about an hour. Ratings depend on the current star-rating plugin |
+| Requirements Finder | Existing Requirements taxonomy exposed as a small REST endpoint; results by term. Needs the tagging project (§15 #4) |
+| Poll | Custom Poll block and Poll content type in `scoutlife-blocks`, replacing Woobox (§7.4) |
+| Quiz teaser | Editor-entered question/answers (real quizzes are Riddle embeds) |
+| Video of the Week, subscribe promo, seasonal widget | Block settings fields |
+| Mega menus | WordPress menus plus a "featured posts" setting per section |
+| Search | Standard WordPress search (`?s=`), with search-word Easter eggs |
+| Posts and pages | Existing content. Classic-editor posts render inside the new templates; MH-specific shortcodes and widgets must be replaced (§15 #14) |
+
+### 18.6 Ads, analytics and privacy
+
+- **Ads:** replace placeholders with Google Ad Manager slots: size mapping per breakpoint, `tagForChildDirectedTreatment`, no personalized ads, lazy loading, reserved slot sizes (no layout shift), house-ad fallbacks. Coordinate with ad ops and whatever ad setup exists today (§15 #7).
+- **Analytics:** point `SL.track` at the existing Google Tag Manager `dataLayer`, with the events in §13. GA4 configured for a child-directed audience.
+- **Privacy:** no personal data; votes, ratings, XP and Easter egg progress stay in the visitor's browser only.
+
+### 18.7 Environments and workflow
+
+1. **Local:** a local WordPress site (the free Local app) with a copy of scoutlife.org content or a representative sample.
+2. **Git:** the theme and plugin live in a GitHub repository. Every change is a commit; milestones are tagged.
+3. **Staging:** a copy of the live site on the host for review, testing and editor training.
+4. **Production:** deployed by whoever runs the hosting, following their review rules.
+
+**Working loop:** Claude writes code in milestones → Bryan activates it in Local and reviews → Claude tests (code checks, Chromium + WebKit/Safari automated tests, and Claude in Chrome against the local site) and fixes → the WordPress developer reviews at milestones → deploy to staging.
+
+### 18.8 Roles
+
+| Role | Responsibilities |
+|---|---|
+| **Bryan (product owner)** | Decisions, approvals, Local setup, reviewing each milestone, coordinating with IT, editorial and ad ops |
+| **Claude** | Writing the theme, plugin and blocks; data hookups; automated tests; documentation (setup notes, editor guide, handoff) |
+| **WordPress developer** (part-time/contract or existing maintainer) | Code review at 2–3 milestones (security, performance, standards), staging setup, deployment, go-live and ongoing support. Likely days of time, not months |
+| **Hosting / IT** | Environments, access, deployment rules, backups, caching/CDN |
+| **Editorial** | Requirements tagging, project-type tags, widget content, Easter egg approval, homepage curation |
+| **Ad ops** | GAM ad units, size mapping, house ads, launch QA of ads |
+
+**What Claude can't do:** log in to the live or staging site, deploy to servers, handle production incidents, or test on physical devices. AI-written code for a public, kids-focused site needs a human WordPress review, especially for security, performance under real traffic and COPPA/ad setup.
+
+### 18.9 Phases and milestones
+
+| Phase | Work | Output |
+|---|---|---|
+| 0. Decisions & discovery | Choose direction; identify hosting/IT owner and rules; plugin inventory; MH Magazine dependencies; exports (Requirements taxonomy, menus, categories) | Answers to §15 #8, #10–#15 |
+| 1. Remaining mockups | Section front, post (variants), page, search, 404 in the chosen direction; style guide | Approved mockups (§16.5) |
+| 2. Foundations | Block theme scaffold; `theme.json` tokens; fonts; core script; header/footer parts; mega menu, search and subscribe blocks; editor locks | Theme installs in Local with new header/footer on all pages · **Dev review #1** |
+| 3. Homepage | Blocks plugin; hero, widget zone and ad slot blocks; all widget blocks with live data; Video/subscribe blocks; patterns | Working block-built homepage in Local |
+| 4. Templates | Section front, single post (all variants), page, search, archive and 404 templates; replace MH shortcodes/widgets; related content | Full site browsable in the new design · **Dev review #2** |
+| 5. Integrations & polish | GAM ads, GTM analytics, Easter eggs + settings, performance budget, accessibility audit, no-JS fallbacks | Feature-complete build |
+| 6. Staging & QA | Deploy to staging; real-device testing (iPhone/Safari, Android, school Chromebook); editor training; content checks | Launch sign-off · **Dev review #3** |
+| 7. Launch & monitor | Switch themes on production; watch Core Web Vitals, errors, ad delivery and §1.2 metrics; quick-fix window | Live site |
+
+### 18.10 Rough effort
+
+- **Calendar time:** roughly 10–16 weeks from direction choice to launch, mostly driven by review cycles, decisions and staging access rather than coding.
+- **WordPress developer:** roughly 5–10 days spread across the reviews, staging, deployment and launch.
+- **Not included:** Requirements taxonomy tagging (editorial project), ad ops setup and any subdomain work.
+
+These are planning estimates only and should be revisited after Phase 0.
+
+### 18.11 Testing and launch checklist
+
+- **Browsers/devices:** Chromium and WebKit automated tests at phone, tablet and desktop; real iPhone (Safari), Android (Chrome), iPad and a school Chromebook.
+- **Accessibility:** WCAG 2.2 AA audit (keyboard, screen reader, contrast, reduced motion, pause toggle).
+- **Performance:** Core Web Vitals budget (§11.2) on a mid-range phone; per-block asset loading; image sizes; caching.
+- **Content:** a sample of older posts in every format renders correctly; menus, categories and redirects (URLs should not change).
+- **Ads & analytics:** every slot fills or shows a house ad; child-directed flags on; events arrive in GA4.
+- **Editors:** an editor builds the homepage from scratch on staging; editor guide delivered.
+- **Rollback plan:** the previous theme stays installed so it can be switched back quickly if needed.
+
+### 18.12 Later (after launch)
+
+- Apply the theme to the subdomains (jokes, fishing, fiction, eagleprojects, headsup), especially if they're on one multisite network.
+- Add more seasonal skins (winter holidays, Pinewood Derby season, summer camp).
+- Revisit parked Easter egg ideas (§8.4) based on engagement data.

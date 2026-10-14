@@ -32,8 +32,13 @@
 
   ready(function(){
 
+    /* Which page are we on? build.py sets <body data-page="home|<slug>">.
+       Homepage-only behavior (hero swipe row, trail line) checks isHome. */
+    var PAGE = (document.body && document.body.getAttribute('data-page')) || 'home';
+    var isHome = PAGE === 'home';
+
     /* =========================================================
-       PAUSE ANIMATIONS (header #pause-anim + footer mirror)
+       PAUSE ANIMATIONS (footer button #pause-anim)
        ========================================================= */
     var pauseBtns = $$('#pause-anim, .sh-pause-mirror');
     function syncPause(){ pauseBtns.forEach(function(b){ b.setAttribute('aria-pressed', SL.paused ? 'true' : 'false'); }); }
@@ -279,6 +284,26 @@
     }
 
     /* =========================================================
+       CURRENT PAGE in the nav (section fronts): the mega-menu / drawer /
+       footer link to this page gets aria-current="page"; its nav tab
+       shows as active (aria-current="true" + .is-current).
+       On the homepage, the logos scroll to the top instead of reloading.
+       ========================================================= */
+    if (isHome){
+      $$('#site-logo, .sh-sticky-logo').forEach(function(a){ a.setAttribute('href', '#top'); });
+    } else {
+      var hereURL = new URL(PAGE + '.html', location.href).href.split('#')[0];
+      var isHere = function(a){ return a.href && a.href.split('#')[0] === hereURL; };
+      $$('.sh-mega a[href], .sh-acc a[href], .sh-foot-stickers a[href]').forEach(function(a){ if (isHere(a)) a.setAttribute('aria-current', 'page'); });
+      items.forEach(function(li){
+        if (!li._panel || !$$('a[href]', li._panel).some(isHere)) return;
+        li.classList.add('is-current');
+        if (li._btn) li._btn.setAttribute('aria-current', 'true');
+      });
+      $$('.sh-acc-sec').forEach(function(sec){ if ($$('a[href]', sec).some(isHere)) sec.classList.add('is-current'); });
+    }
+
+    /* =========================================================
        STICKY COMPACT BAR
        ========================================================= */
     var header = $('#site-header'), sticky = $('.sh-sticky');
@@ -436,14 +461,17 @@
     }
 
     /* =========================================================
-       TRAIL LINE — a dashed trail winds from the hero down to
-       the footer campfire (left gutter + switchbacks in the open
-       space between sections). Draws itself as you scroll; a
-       tiny hiker rides the tip. Fully drawn when motion is off.
-       Hidden on phones (CSS + no build).
+       TRAIL LINE — a dashed switchback trail from the hero down to
+       the footer campfire. It runs down one outer margin beside a
+       section, crosses the page in the open gap under that section,
+       then continues down the OPPOSITE margin (alternating). It only
+       uses the margins outside the content column and the gaps
+       between sections, so it never crosses cards, text or ads.
+       Draws itself as you scroll; a tiny hiker rides the tip. Fully
+       drawn when motion is off. Hidden on phones (CSS + no build).
        ========================================================= */
     var mainEl = $('#main');
-    if (mainEl && document.createElementNS){
+    if (isHome && mainEl && document.createElementNS){   // homepage only
       var NS = 'http://www.w3.org/2000/svg';
       var mk = function(tag, attrs, parent){
         var el = document.createElementNS(NS, tag);
@@ -451,34 +479,13 @@
         if (parent) parent.appendChild(el);
         return el;
       };
-      var trail = null;     // {svg, reveal, total, lens[], ys[], marks[], hiker, line}
+      var trail = null;     // {svg, reveal, line, total, lenAt, marks[], hiker, last, face}
       var tRaf = 0;
+      var f1 = function(n){ return String(Math.round(n * 10) / 10); };
 
       var relRect = function(el, base){
         var r = el.getBoundingClientRect();
         return {left:r.left - base.left, right:r.right - base.left, top:r.top - base.top, bottom:r.bottom - base.top, width:r.width, height:r.height};
-      };
-      var adRects = function(base){ return $$('.ad-slot', mainEl).map(function(a){ return relRect(a, base); }).filter(function(r){ return r.width > 0; }); };
-      var nearAd = function(x, y, ads, pad){
-        for (var i = 0; i < ads.length; i++){
-          var a = ads[i];
-          if (x > a.left - pad && x < a.right + pad && y > a.top - pad && y < a.bottom + pad) return true;
-        }
-        return false;
-      };
-
-      // Catmull-Rom → cubic Bézier path through points
-      var smoothPath = function(P){
-        var d = 'M' + P[0][0].toFixed(1) + ' ' + P[0][1].toFixed(1);
-        for (var i = 0; i < P.length - 1; i++){
-          var p0 = P[i - 1] || P[i], p1 = P[i], p2 = P[i + 1], p3 = P[i + 2] || p2;
-          // points flagged 'v' keep a vertical tangent so the curve never swings out of the gutter
-          var t1x = p1[2] === 'v' ? 0 : (p2[0] - p0[0]) / 6, t2x = p2[2] === 'v' ? 0 : (p3[0] - p1[0]) / 6;
-          var c1x = p1[0] + t1x, c1y = p1[1] + (p2[1] - p0[1]) / 6;
-          var c2x = p2[0] - t2x, c2y = p2[1] - (p3[1] - p1[1]) / 6;
-          d += 'C' + c1x.toFixed(1) + ' ' + c1y.toFixed(1) + ' ' + c2x.toFixed(1) + ' ' + c2y.toFixed(1) + ' ' + p2[0].toFixed(1) + ' ' + p2[1].toFixed(1);
-        }
-        return d;
       };
 
       var PIN = function(fill, glyph){
@@ -498,112 +505,159 @@
         var base = mainEl.getBoundingClientRect();
         var W = mainEl.clientWidth, H = mainEl.offsetHeight;
         var hero = $('.sh-hero', mainEl), heroGrid = $('.sh-hero-grid', mainEl), heroHead = $('.sh-hero-head', mainEl);
-        var zones = $$('.sh-zone', mainEl), band = $('.sh-band', mainEl);
         if (!hero || !heroGrid || !heroHead) return;
         var hr = relRect(hero, base), cs = getComputedStyle(hero);
         var cL = hr.left + parseFloat(cs.paddingLeft), cR = hr.right - parseFloat(cs.paddingRight), cW = cR - cL;
-        var xL = Math.max(10, cL / 2);
-        var amp = Math.min(7, Math.max(0, cL / 2 - 9));   // wiggle stays inside the gutter
-        var ads = adRects(base);
+        var gut = Math.min(cL, W - cR);
+        if (gut < 18) return;                                   // no outer margin to walk in
+        var X = [Math.max(10, cL / 2), Math.min(W - 10, W - (W - cR) / 2)];   // [left margin, right margin]
+        var amp = Math.min(7, Math.max(0, gut / 2 - 11));       // wiggle stays inside the margin
 
-        // open corridors between blocks (top, bottom, how far the switchback reaches, waypoint)
-        var cor = [];
-        var hh = relRect(heroHead, base);
-        var gridOf = function(z){ return $('.sh-grid', z); };
-        var z = zones.map(function(el){ return {head:relRect($('.sh-zone-head', el), base), grid:relRect(gridOf(el), base)}; });
-        var bandR = band ? relRect(band, base) : null;
-        var hg = relRect(heroGrid, base);
-        if (z[0]) cor.push({t:hg.bottom, b:z[0].head.top, reach:.46, mark:null});
-        if (z[0] && bandR) cor.push({t:z[0].grid.bottom, b:bandR.top, reach:.62, mark:{k:'lake', fill:'#3FA9F5', label:'Lake ahead!'}});
-        if (bandR && z[1]) cor.push({t:bandR.bottom, b:z[1].head.top, reach:.34, mark:null});
-        if (z[1] && z[2]) cor.push({t:z[1].grid.bottom, b:z[2].head.top, reach:.56, mark:{k:'view', fill:'#8DBF4A', label:'Halfway there'}});
-        var last = z[z.length - 1];
-        var endY = H - 52, endX = cL + cW * 0.5;
-
-        // points
-        var P = [], marks = [];
-        var startY = Math.max(30, hh.top - 20), startX = cL + Math.min(cW * 0.42, 420);
-        P.push([startX, startY]);
-        marks.push({x:startX, y:startY, k:'start', fill:'#FFC629', label:'Trailhead', side:1});
-        P.push([(xL + startX) / 2, startY + 4]);
-        P.push([xL + 22, startY + 14]);
-        P.push([xL + 2, startY + 34]);
-        P.push([xL, startY + 58, 'v']);
-        var y = startY + 58, flip = 1;
-        var runTo = function(yEnd){
-          var step = 150;
-          while (y + step < yEnd - 40){ y += step; flip = -flip; P.push([xL + amp * flip, y, 'v']); }
-        };
-        cor.forEach(function(c){
-          var h = c.b - c.t; if (h < 50) return;
-          runTo(c.t);
-          var yT = c.t + h * 0.12, yB = c.b - h * 0.12, yM = (yT + yB) / 2;
-          var far = cL + cW * c.reach;
-          while (far > cL + 120 && nearAd(far, yM, ads, 50)) far -= 40;
-          P.push([xL, yT, 'v']);
-          P.push([xL + (far - xL) * 0.55, yT + (yM - yT) * 0.45]);
-          P.push([far, yM]);
-          P.push([xL + (far - xL) * 0.55, yB - (yB - yM) * 0.45]);
-          P.push([xL, yB, 'v']);
-          y = yB;
-          if (c.mark) marks.push({x:far, y:yM, k:c.mark.k, fill:c.mark.fill, label:c.mark.label, side:1});
-        });
-        // last leg: down the gutter to below zone 3, then out to camp above the campfire
-        var lastBottom = last ? last.grid.bottom : H - 120;
-        runTo(lastBottom);
-        var ex = endX;
-        while (ex > cL + 120 && nearAd(ex, endY, ads, 40)) ex -= 40;
-        P.push([xL, lastBottom + 20, 'v']);
-        P.push([xL + (ex - xL) * 0.45, endY - 6]);
-        P.push([ex, endY]);
-        marks.push({x:ex, y:endY, k:'camp', fill:'#F26B21', label:'Camp', side:1});
+        // stacked blocks in page order: hero, zones and the feature band
+        var blocks = $$('.sh-hero, .sh-zone, .sh-band', mainEl).map(function(el){
+          var top = el, bot = el;
+          if (el === hero){ top = heroHead; bot = heroGrid; }
+          else if (el.classList.contains('sh-zone')){ top = $('.sh-zone-head', el) || el; bot = $('.sh-grid', el) || el; }
+          return {top:relRect(top, base).top, bottom:relRect(bot, base).bottom, band:el.classList.contains('sh-band')};
+        }).filter(function(b){ return b.bottom > b.top; });
+        // the open gaps between blocks (where the trail crosses the page)
+        var gaps = [];
+        for (var gi = 0; gi < blocks.length - 1; gi++){
+          var gt = blocks[gi].bottom, gb = blocks[gi + 1].top;
+          if (gb - gt >= 44) gaps.push({t:gt, b:gb, y:(gt + gb) / 2, intoBand:blocks[gi + 1].band});
+        }
+        var lakeGap = null, viewGap = null;
+        gaps.forEach(function(g){ if (g.intoBand && !lakeGap) lakeGap = g; });
+        gaps.forEach(function(g){ if (g !== lakeGap && (!viewGap || Math.abs(g.y - H / 2) < Math.abs(viewGap.y - H / 2))) viewGap = g; });
 
         var svg = mk('svg', {'class':'sh-trail', width:W, height:H, viewBox:'0 0 ' + W + ' ' + H, 'aria-hidden':'true', focusable:'false'});
         svg.style.width = W + 'px'; svg.style.height = H + 'px';
+        mainEl.insertBefore(svg, mainEl.firstChild);
+
+        // ---- path builder (tracks exact length so scroll can be mapped onto it) ----
+        var meas = mk('path', {fill:'none', stroke:'none'}, svg);
+        var d = '', cx = 0, cy = 0, len = 0, side = 1, flip = 1;
+        var add = function(seg, x, y){
+          meas.setAttribute('d', 'M' + f1(cx) + ' ' + f1(cy) + seg);
+          len += meas.getTotalLength();
+          d += seg; cx = x; cy = y;
+        };
+        var C = function(x1, y1, x2, y2, x, y){ add('C' + [x1, y1, x2, y2, x, y].map(f1).join(' '), x, y); };
+        var Q = function(x1, y1, x, y){ add('Q' + [x1, y1, x, y].map(f1).join(' '), x, y); };
+        var runDown = function(yEnd){                     // gentle S-bends down the current margin
+          var x0 = X[side], h = yEnd - cy;
+          if (h <= 1) return;
+          var n = Math.max(1, Math.round(h / 150)), step = h / n;
+          for (var i = 1; i <= n; i++){
+            flip = -flip;
+            var nx = i === n ? x0 : x0 + amp * flip, ny = cy + step;
+            C(cx, cy + step / 2, nx, ny - step / 2, nx, ny);
+          }
+        };
+        var runAcross = function(xEnd){                   // a softly rolling horizontal leg
+          var y0 = cy, dist = xEnd - cx, n = Math.max(1, Math.round(Math.abs(dist) / 170)), step = dist / n;
+          for (var i = 1; i <= n; i++){
+            var w = (i % 2 ? 7 : -7), nx = cx + step;
+            C(cx + step / 3, y0 + w, nx - step / 3, y0 + w, nx, y0);
+          }
+        };
+        var turn = function(r){                           // margin → heading across (or the reverse)
+          var dir = X[1 - side] > X[side] ? 1 : -1;
+          return dir * r;
+        };
+
+        // trailhead: above the hero signpost, heading right then down the right margin
+        var hh = relRect(heroHead, base);
+        var sy = Math.max(30, hh.top - 26), sx = cL + Math.min(cW * 0.42, 430);
+        d = 'M' + f1(sx) + ' ' + f1(sy); cx = sx; cy = sy;
+        var marks = [{x:sx, y:sy, at:0, k:'start', fill:'#FFC629', label:'Trailhead'}];
+        var r0 = 30;
+        runAcross(X[1] - r0);
+        Q(X[1], sy, X[1], sy + r0);
+        var A = [[sy - 140, 0], [sy + 120, len]];         // anchors: [scroll-target y, drawn length]
+
+        gaps.forEach(function(g){
+          var r = Math.max(14, Math.min(34, (g.b - g.t) / 2 - 10));
+          var from = X[side], to = X[1 - side], dir = to > from ? 1 : -1;
+          runDown(g.y - r);
+          var La = len;
+          Q(from, g.y, from + dir * r, g.y);
+          var Lh = len;
+          runAcross(to - dir * r);
+          var Lh2 = len;
+          Q(to, g.y, to, g.y + r);
+          side = 1 - side;
+          var Lb = len;
+          var S = Math.min(140, Math.max(40, (g.y - A[A.length - 1][0]) / 2.4));
+          A.push([g.y - S, La], [g.y + S, Lb]);
+          if (g === lakeGap || g === viewGap){
+            g.mark = {lo:Lh, hi:Lh2, x:cL + cW * (g === lakeGap ? 0.64 : 0.58), dir:dir};
+            marks.push(g === lakeGap ? {k:'lake', fill:'#3FA9F5', label:'Lake ahead!', g:g} : {k:'view', fill:'#8DBF4A', label:'Halfway there', g:g});
+          }
+        });
+
+        // last leg: down the margin below the final zone, then across to camp above the campfire
+        var endY = H - 52, ex = cL + cW * 0.5;
+        var rE = 30;
+        runDown(endY - rE);
+        var LaE = len;
+        Q(X[side], endY, X[side] + turn(rE), endY);
+        runAcross(ex);
+        var SE = Math.min(140, Math.max(40, (endY - A[A.length - 1][0]) / 2.4));
+        A.push([endY - SE, LaE], [endY + 60, len]);
+        marks.push({x:ex, y:endY, k:'camp', fill:'#F26B21', label:'Camp'});
+        meas.remove();
+
         var defs = mk('defs', {}, svg);
         var mask = mk('mask', {id:'sh-trail-mask', maskUnits:'userSpaceOnUse', x:0, y:0, width:W, height:H}, defs);
-        var d = smoothPath(P);
         var reveal = mk('path', {d:d, fill:'none', stroke:'#fff', 'stroke-width':26, 'stroke-linecap':'round', 'stroke-linejoin':'round'}, mask);
         var g = mk('g', {mask:'url(#sh-trail-mask)'}, svg);
         mk('path', {'class':'sh-trail-halo', d:d}, g);
         var line = mk('path', {'class':'sh-trail-line', d:d}, g);
-        mainEl.insertBefore(svg, mainEl.firstChild);
-
         var total = line.getTotalLength();
-        reveal.style.strokeDasharray = total + ' ' + (total + 50);
-        // sample y along the path (y only ever increases, so we can map scroll → length)
-        var lens = [], ys = [], maxY = -1e9;
-        for (var L = 0; L <= total; L += 8){
-          var pt = line.getPointAtLength(L); maxY = Math.max(maxY, pt.y);
-          lens.push(L); ys.push(maxY);
-        }
-        lens.push(total); ys.push(Math.max(maxY, line.getPointAtLength(total).y));
-        var lenAtY = function(yy){
-          var lo = 0, hi = ys.length - 1;
-          if (yy <= ys[0]) return 0;
-          if (yy >= ys[hi]) return total;
-          while (hi - lo > 1){ var mid = (lo + hi) >> 1; if (ys[mid] < yy) lo = mid; else hi = mid; }
-          return lens[lo];
+        A[A.length - 1][1] = total;
+        reveal.style.strokeDasharray = '0 ' + (total + 50);
+
+        // scroll target (y in #main) → drawn length, piecewise-linear between anchors
+        var lenAt = function(t){
+          if (t <= A[0][0]) return 0;
+          for (var i = 0; i < A.length - 1; i++){
+            var a = A[i], b = A[i + 1];
+            if (t < b[0]) return a[1] + (b[1] - a[1]) * Math.max(0, Math.min(1, (t - a[0]) / Math.max(1, b[0] - a[0])));
+          }
+          return total;
         };
+
+        // place crossing waypoints exactly on the path (x is monotonic along a crossing)
+        marks.forEach(function(m){
+          if (!m.g) return;
+          var mm = m.g.mark, lo = mm.lo, hi = mm.hi;
+          for (var it = 0; it < 22; it++){
+            var mid = (lo + hi) / 2, px = line.getPointAtLength(mid).x;
+            if ((px - mm.x) * mm.dir < 0) lo = mid; else hi = mid;
+          }
+          var pt = line.getPointAtLength(lo);
+          m.x = pt.x; m.y = pt.y; m.at = lo - 4;
+        });
+        marks[marks.length - 1].at = total - 4;
 
         // trail blazes along the way + waypoint pins
         var markEls = [];
         var gm = mk('g', {}, svg);
-        var pinLens = marks.map(function(m){ return lenAtY(m.y); });
         for (var bl = 220; bl < total - 80; bl += 300){
-          var bp = line.getPointAtLength(bl);
-          var close = pinLens.some(function(pl){ return Math.abs(pl - bl) < 90; });
+          var close = marks.some(function(m){ return Math.abs(m.at - bl) < 90; });
           if (close) continue;
-          var bg = mk('g', {'class':'sh-trail-mark', transform:'translate(' + bp.x.toFixed(1) + ' ' + bp.y.toFixed(1) + ')'}, gm);
+          var bp = line.getPointAtLength(bl);
+          var bg = mk('g', {'class':'sh-trail-mark', transform:'translate(' + f1(bp.x) + ' ' + f1(bp.y) + ')'}, gm);
           bg.innerHTML = '<g class="pop"><rect x="-5" y="-9" width="10" height="16" rx="1.5" fill="#FFC629" stroke="#1F2A22" stroke-width="2"/></g>';
           markEls.push({el:bg, at:bl});
         }
-        marks.forEach(function(m, i){
-          var mg = mk('g', {'class':'sh-trail-mark', transform:'translate(' + m.x.toFixed(1) + ' ' + m.y.toFixed(1) + ')'}, gm);
+        marks.forEach(function(m){
+          var mg = mk('g', {'class':'sh-trail-mark', transform:'translate(' + f1(m.x) + ' ' + f1(m.y) + ')'}, gm);
           mg.innerHTML = PIN(m.fill, GLYPH[m.k] || '');
           var tx = mk('text', {'class':'sh-trail-label', x:18, y:-14}, mg);
           tx.textContent = m.label;
-          markEls.push({el:mg, at:i === 0 ? 0 : pinLens[i] - 4});
+          markEls.push({el:mg, at:m.at});
         });
 
         // the hiker
@@ -617,7 +671,7 @@
           '<circle cx="11.5" cy="5" r="4" fill="#FFE0B8" stroke="#1F2A22" stroke-width="2"/>' +
           '<path d="M7 4h9" stroke="#1F2A22" stroke-width="2.4" stroke-linecap="round"/><path d="M8.5 3.5c0-3 6-3 6 0" fill="#FFC629" stroke="#1F2A22" stroke-width="1.8"/>' +
           '</g></g>';
-        trail = {svg:svg, reveal:reveal, line:line, total:total, lenAtY:lenAtY, marks:markEls, hiker:hk, last:-1};
+        trail = {svg:svg, reveal:reveal, line:line, total:total, lenAt:lenAt, marks:markEls, hiker:hk, last:-1, face:1};
         updateTrail();
       };
 
@@ -630,7 +684,7 @@
         else {
           var base = mainEl.getBoundingClientRect();
           var target = (window.innerHeight || 800) * 0.62 - base.top;
-          drawn = Math.max(0, Math.min(trail.total, trail.lenAtY(target)));
+          drawn = Math.max(0, Math.min(trail.total, trail.lenAt(target)));
         }
         if (Math.abs(drawn - trail.last) < 0.5) return;
         trail.last = drawn;
@@ -641,8 +695,9 @@
         trail.hiker.classList.toggle('off', !showHiker);
         if (showHiker){
           var p = trail.line.getPointAtLength(drawn), q = trail.line.getPointAtLength(Math.max(0, drawn - 6));
-          var face = (p.x - q.x) < -0.6 ? -1 : 1;
-          trail.hiker.setAttribute('transform', 'translate(' + p.x.toFixed(1) + ' ' + (p.y - 2).toFixed(1) + ') scale(' + face + ' 1)');
+          var dx = p.x - q.x;
+          if (Math.abs(dx) > 1.5) trail.face = dx < 0 ? -1 : 1;     // keep facing the way we last walked
+          trail.hiker.setAttribute('transform', 'translate(' + p.x.toFixed(1) + ' ' + (p.y - 2).toFixed(1) + ') scale(' + trail.face + ' 1)');
         }
       };
       var queueTrail = function(){ if (!tRaf) tRaf = requestAnimationFrame(updateTrail); };
@@ -669,6 +724,5 @@
      SECTION SHELVES — registered for analytics only
      ========================================================= */
   SL.widget('shelf-fun', function(){});
-  SL.widget('shelf-scouting', function(){});
-  SL.widget('shelf-outdoors', function(){});
+  SL.widget('shelf-essentials', function(){});
 })();

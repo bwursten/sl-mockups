@@ -18,7 +18,8 @@
   </div>
 
   <div class="container sh-head-top">
-    <a id="site-logo" class="sh-logo" href="#top">
+    <div class="sh-brand">
+    <a id="site-logo" class="sh-logo" href="index.html">
       <span class="sh-logo-sign"><img id="site-logo-img" src="assets/logo/logo-red.png" alt="Scout Life magazine home" width="900" height="190"></span>
     </a>
     <div class="sh-compass" aria-hidden="true">
@@ -36,15 +37,10 @@
         </g>
       </svg>
     </div>
-    <div class="sh-util">
-      <button id="pause-anim" class="sh-pause" type="button" aria-pressed="false">
-        <span class="sh-pause-ico" aria-hidden="true"><svg viewBox="0 0 20 20" width="18" height="18"><rect x="4" y="3" width="4" height="14" rx="1" fill="currentColor"/><rect x="12" y="3" width="4" height="14" rx="1" fill="currentColor"/></svg></span>
-        <span class="sh-pause-play" aria-hidden="true"><svg viewBox="0 0 20 20" width="18" height="18"><path d="M5 3l12 7-12 7z" fill="currentColor"/></svg></span>
-        <span class="sh-pause-txt">Pause animations</span>
-      </button>
-    </div>
+    </div><!-- /.sh-brand -->
     <div class="sh-actions">
-      <a class="sh-search-btn" href="#search-panel" aria-controls="search-panel" aria-expanded="false">
+      <!-- tablet/phone search (the nav row, with its own search button, is hidden below 1024px) -->
+      <a class="sh-search-btn sh-search-mobile" href="#search-panel" aria-controls="search-panel" aria-expanded="false">
         <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="10" cy="10" r="6.5" fill="none" stroke="currentColor" stroke-width="3"/><path d="M15 15l6 6" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/></svg>
         <span class="sh-search-txt">Search</span>
       </a>
@@ -64,7 +60,7 @@
     <ul class="container sh-nav-list">
 
       <li class="sh-nav-item" data-sec="games" style="--sec:var(--c-games);--sec-ink:#fff;--stitch:rgba(255,255,255,.7)">
-        <a class="sh-nav-link" href="https://scoutlife.org/games/">Games</a>
+        <a class="sh-nav-link" href="games.html">Games</a>
         <div class="sh-mega" id="mega-games">
           <div class="sh-mega-inner">
             <div class="sh-mega-head">
@@ -73,10 +69,10 @@
             </div>
             <div class="sh-mega-col">
               <ul class="sh-mega-links">
-                <li><a href="https://scoutlife.org/section/games/mobile-games/">Play Games <span aria-hidden="true">(Arcade)</span></a></li>
+                <li><a href="games.html">Play Games <span aria-hidden="true">(Arcade)</span></a></li>
                 <li><a href="https://scoutlife.org/section/quizzes/">Quizzes</a></li>
               </ul>
-              <a class="sh-mega-all" href="https://scoutlife.org/games/">All Games</a>
+              <a class="sh-mega-all" href="games.html">All Games</a>
             </div>
             <div class="sh-mega-feats">
               <a class="sh-mega-card" href="https://scoutlife.org/games/mobile-games/191713/gaga-brawl/">
@@ -112,14 +108,11 @@
               <a class="sh-mega-all" href="https://jokes.scoutlife.org/">All Jokes</a>
             </div>
             <div class="sh-mega-feats">
-              <div class="sh-mega-joke">
-                <span class="sticker label-jokes">Today’s Joke</span>
-                <p class="sh-joke-line"><b>WILLIAM:</b> What keys unlock a banana?</p>
-                <p class="sh-joke-line"><b>EMMA:</b> What?</p>
-                <p class="sh-joke-line"><b>WILLIAM:</b> Monkeys.</p>
-                <p class="sh-joke-by">Joke by William R., Katy, Texas</p>
-                <a class="sh-joke-more" href="https://jokes.scoutlife.org/">More jokes</a>
-              </div>
+              <a class="sh-mega-card" href="https://scoutlife.org/games/write-a-funny-caption/192217/write-a-funny-caption-for-this-photo-175/">
+                <span class="sh-mega-img"><img src="assets/img/menu-caption.jpg" alt="" width="400" height="225" loading="lazy"></span>
+                <span class="sticker label-jokes">Write a Funny Caption</span>
+                <span class="sh-mega-card-title">Write a Funny Caption for This Photo</span>
+              </a>
               <a class="sh-mega-card" href="https://scoutlife.org/features/23079/funny-halloween-jokes/">
                 <span class="sh-mega-img"><img src="assets/img/menu-halloween-jokes.jpg" alt="" width="400" height="225" loading="lazy"></span>
                 <span class="sticker flag-seasonal">Halloween</span>
@@ -143,7 +136,7 @@
                 <li><a href="https://scoutlife.org/section/outdoors/outdoorarticles/">Outdoors</a></li>
                 <li><a href="https://scoutlife.org/section/outdoors/guygear/">Gear Buying Guides</a></li>
                 <li><a href="https://scoutlife.org/section/outdoors/ask-the-gear-guy/">Ask the Gear Guy</a></li>
-                <li><a href="https://scoutlife.org/section/outdoors/animals-and-nature/">Animals and Nature</a></li>
+                <li><a href="animals-and-nature.html">Animals and Nature</a></li>
                 <li><a href="https://fishing.scoutlife.org/">Fishing</a></li>
               </ul>
               <a class="sh-mega-all" href="https://scoutlife.org/section/outdoors/">All Outdoors &amp; Gear</a>
@@ -177,7 +170,7 @@
                 <li><a href="https://scoutlife.org/section/hobbies-projects/projects/">How To Do It</a></li>
                 <li><a href="https://scoutlife.org/section/hobbies-projects/funstuff/">Fun Stuff to Do</a></li>
                 <li><a href="https://scoutlife.org/10under10/">10 Under 10 Crafts</a></li>
-                <li><a href="https://scoutlife.org/pinewood-derby/">Pinewood Derby HQ</a></li>
+                <li><a href="pinewood-derby.html">Pinewood Derby HQ</a></li>
                 <li><a href="https://headsup.scoutlife.org/">Heads Up</a></li>
                 <li><a href="https://fiction.scoutlife.org/">Fiction</a></li>
               </ul>
@@ -250,6 +243,12 @@
           </div>
         </div>
       </li>
+
+      <li class="sh-nav-search">
+        <a class="sh-search-btn sh-search-nav" href="#search-panel" aria-controls="search-panel" aria-expanded="false" aria-label="Search">
+          <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><circle cx="10" cy="10" r="6.5" fill="none" stroke="currentColor" stroke-width="3.2"/><path d="M15 15l6 6" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/></svg>
+        </a>
+      </li>
     </ul>
   </nav>
 </header>
@@ -285,11 +284,10 @@
 <!-- ================= COMPACT STICKY BAR ================= -->
 <div class="sh-sticky" aria-label="Quick navigation" role="navigation">
   <div class="container sh-sticky-inner">
-    <a class="sh-sticky-logo" href="#top"><img src="assets/logo/logo-red.png" alt="Scout Life magazine home" width="900" height="190"></a>
+    <a class="sh-sticky-logo" href="index.html"><img src="assets/logo/logo-red.png" alt="Scout Life magazine home" width="900" height="190"></a>
     <span class="sh-sticky-doodle doodle" aria-hidden="true">keep exploring, hiker!</span>
-    <button class="sh-icon-btn sh-sticky-search" type="button" aria-controls="search-panel" aria-expanded="false">
+    <button class="sh-icon-btn sh-sticky-search" type="button" aria-label="Search" aria-controls="search-panel" aria-expanded="false">
       <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="10" cy="10" r="6.5" fill="none" stroke="currentColor" stroke-width="3"/><path d="M15 15l6 6" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/></svg>
-      <span class="sr-only">Search</span>
     </button>
     <a class="sh-subscribe sh-subscribe-sm" href="https://subscribe.scoutlife.org/subscribe/sl?utm_source=scoutlife&amp;utm_medium=web&amp;utm_campaign=header"><span class="sh-sub-main">Subscribe!</span></a>
     <button class="sh-icon-btn sh-sticky-menu" type="button" aria-controls="sh-drawer" aria-expanded="false">
@@ -328,8 +326,8 @@
 <!-- ================= HERO ================= -->
 <section class="sh-hero container" aria-labelledby="hero-title">
   <div class="sh-zone-head sh-hero-head">
-    <h2 id="hero-title" class="sh-zone-title"><span class="sh-sign"><span class="sh-sign-board"><span class="sh-sign-txt">Today’s Top Picks</span><span class="sh-sign-mi" aria-hidden="true">→ 0.1 mi</span></span></span></h2>
-    <span class="sh-zone-note" aria-hidden="true">fresh this week!</span>
+    <h2 id="hero-title" class="sh-zone-title"><span class="sh-sign"><span class="sh-sign-board"><span class="sh-sign-txt">Start Your Adventure</span><span class="sh-sign-mi" aria-hidden="true">→ 0.1 mi</span></span></span></h2>
+    <span class="sh-zone-note" aria-hidden="true">what’s hot!</span>
   </div>
   <span class="sh-airplane-spot" data-egg-anchor="airplane" aria-hidden="true"></span>
 
@@ -338,12 +336,11 @@
       <span class="hc-photo">
         <img src="assets/img/hero-ghost.jpg" alt="" width="1200" height="675" fetchpriority="high">
         <span class="sticker label-hobbies hc-label">Hobbies &amp; Projects</span>
-        <span class="sticker round flag-seasonal hc-flag">Seasonal</span>
+        <span class="sticker round flag-seasonal hc-flag">Halloween</span>
       </span>
       <div class="hc-body">
         <h3 class="hc-title">How to Make a Ghost Decoration Using a Cardboard Tube</h3>
         <span class="hc-dek">Turn an empty cardboard tube into a friendly floating ghost. It’s a quick Halloween craft you can make this afternoon.</span>
-        <span class="hc-cta btn btn-tomato">Read it <span aria-hidden="true">→</span></span>
         <span class="hc-note" aria-hidden="true"><svg viewBox="0 0 40 40" width="36" height="36"><path d="M8 34h24l-3-9H11z" fill="#E9D8B4" stroke="#1F2A22" stroke-width="2.2" stroke-linejoin="round"/><path d="M14 25c0-9 2-17 6-19 4 2 6 10 6 19" fill="#FFFDF6" stroke="#1F2A22" stroke-width="2.2"/><circle cx="18" cy="15" r="1.6" fill="#1F2A22"/><circle cx="22.5" cy="15" r="1.6" fill="#1F2A22"/></svg>easy craft!<br>~30 min</span>
       </div>
     </a>
@@ -358,7 +355,6 @@
           <div class="hc-body">
             <span class="sticker label-features hc-label-sm">Features</span>
             <h3 class="hc-title-sm">Let’s Talk to the Author of ‘Diary of a Wimpy Kid’</h3>
-            <span class="hc-cta-sm">Read <span aria-hidden="true">→</span></span>
           </div>
         </a>
         <a class="hero-card hero-sm" href="https://scoutlife.org/outdoors/animals-and-nature/192183/creepy-but-cool-these-5-critters-are-more-helpful-than-scary/" style="--sec:var(--c-outdoors)">
@@ -366,7 +362,6 @@
           <div class="hc-body">
             <span class="sticker label-outdoors hc-label-sm">Animals &amp; Nature</span>
             <h3 class="hc-title-sm">Creepy But Cool: These 5 Critters Are More Helpful Than Scary</h3>
-            <span class="hc-cta-sm">Read <span aria-hidden="true">→</span></span>
           </div>
         </a>
         <a class="hero-card hero-sm" href="https://scoutlife.org/about-scouts/scouting-around/191944/use-the-compass-game-to-improve-your-navigation-skills/" style="--sec:var(--c-scouts)">
@@ -374,7 +369,6 @@
           <div class="hc-body">
             <span class="sticker label-scouts hc-label-sm">Scouting Around</span>
             <h3 class="hc-title-sm">Use the Compass Game to Improve Your Navigation Skills</h3>
-            <span class="hc-cta-sm">Read <span aria-hidden="true">→</span></span>
           </div>
         </a>
         <a class="hero-card hero-sm" href="https://scoutlife.org/games/mobile-games/178477/bike-blitz/" style="--sec:var(--c-games)">
@@ -382,7 +376,6 @@
           <div class="hc-body">
             <span class="sticker label-games hc-label-sm">Games</span>
             <h3 class="hc-title-sm">Bike Blitz</h3>
-            <span class="hc-cta-sm hc-play">Play <span aria-hidden="true">▶</span></span>
           </div>
         </a>
       </div>
@@ -403,7 +396,7 @@
 <section class="sh-zone container" id="zone-1" aria-labelledby="z1-title">
   <div class="sh-zone-head">
     <h2 id="z1-title" class="sh-zone-title"><span class="sh-sign"><span class="sh-sign-board"><span class="sh-sign-txt">Quick Fun</span><span class="sh-sign-mi" aria-hidden="true">→ 0.2 mi</span></span></span></h2>
-    <span class="sh-zone-note" aria-hidden="true">laugh, think, decide! ↓</span>
+    <span class="sh-zone-note" aria-hidden="true">laugh, learn, do! ↓</span>
   </div>
   <div class="sh-grid">
     <!--WIDGET:joke-->
@@ -424,8 +417,7 @@
     <div class="sh-video">
       <div class="sh-video-head">
         <span class="sh-video-ico" aria-hidden="true">🎬</span>
-        <div><span class="sh-video-kicker" aria-hidden="true">Ranger station</span>
-        <h2 class="sh-band-title">Video of the Week</h2></div>
+        <h2 class="sh-band-title">Video of the Week</h2>
       </div>
       <div class="sh-video-tv">
       <div class="sh-video-frame" data-yt="a4VIsgRbBLY">
@@ -443,7 +435,7 @@
     </div>
 
     <div class="sh-subpromo">
-      <p class="sh-register" aria-hidden="true">Trail register <b>sign up here!</b></p>
+      <p class="sh-register">Subscribe Today!</p>
       <div class="sh-cover-wrap">
         <a class="sh-cover" href="https://scoutlife.org/magazine/192223/inside-the-october-2026-issue/">
           <img src="assets/img/promo-cover.jpg" alt="Cover of the October 2026 issue of Scout Life" width="157" height="206" loading="lazy">
@@ -487,8 +479,8 @@
 <!-- ================= ZONE 3 (section shelves) ================= -->
 <section class="sh-zone container" id="zone-3" aria-labelledby="z3-title">
   <div class="sh-zone-head">
-    <h2 id="z3-title" class="sh-zone-title"><span class="sh-sign"><span class="sh-sign-board"><span class="sh-sign-txt">Read Something Awesome</span><span class="sh-sign-mi" aria-hidden="true">→ 0.8 mi</span></span></span></h2>
-    <span class="sh-zone-note" aria-hidden="true">fresh from every section</span>
+    <h2 id="z3-title" class="sh-zone-title"><span class="sh-sign"><span class="sh-sign-board"><span class="sh-sign-txt">Find Something Awesome</span><span class="sh-sign-mi" aria-hidden="true">→ 0.8 mi</span></span></span></h2>
+    <span class="sh-zone-note" aria-hidden="true">more to discover</span>
   </div>
   <div class="sh-grid">
 
@@ -521,48 +513,22 @@
     <!--WIDGET:pinewood-->
     <!--WIDGET:fishing-->
 
-    <section class="widget slot-W sh-shelf" data-widget="shelf-scouting" data-slot="z3-4" aria-labelledby="w-shelf-scouting-title"
-             style="--accent:var(--c-scouts)">
+    <section class="widget slot-W sh-shelf sh-shelf-essentials" data-widget="shelf-essentials" data-slot="z3-4" aria-labelledby="w-shelf-essentials-title"
+             style="--accent:var(--c-outdoors);--pin:var(--sky)">
       <header class="widget-head">
-        <span class="widget-icon" aria-hidden="true">⚜️</span>
-        <h2 class="widget-title" id="w-shelf-scouting-title">Scouting Around</h2>
-        <span class="widget-kicker">troop news!</span>
+        <span class="widget-icon" aria-hidden="true">🎒</span>
+        <h2 class="widget-title" id="w-shelf-essentials-title">Scout Essentials</h2>
+        <span class="widget-kicker">go outside!</span>
       </header>
       <div class="widget-body">
         <ul class="sh-shelf-list">
           <li><a class="sh-shelf-card" href="https://scoutlife.org/about-scouts/scouting-around/192163/scouts-go-the-extra-mile-with-the-multisport-merit-badge/">
             <span class="sh-shelf-img"><img src="assets/img/shelf-multisport.jpg" alt="" width="600" height="338" loading="lazy"></span>
-            <div class="sh-shelf-txt"><span class="sticker label-scouts sh-shelf-label">Merit Badges</span>
+            <div class="sh-shelf-txt"><span class="sticker label-scouts sh-shelf-label">Scouting Around</span>
             <h3 class="sh-shelf-title">Scouts Go the Extra Mile With the Multisport Merit Badge</h3></div></a></li>
-          <li><a class="sh-shelf-card" href="https://scoutlife.org/about-scouts/scouting-around/191970/creative-fundraisers/">
-            <span class="sh-shelf-img"><img src="assets/img/shelf-fundraiser.jpg" alt="" width="600" height="338" loading="lazy"></span>
-            <div class="sh-shelf-txt"><span class="sticker label-scouts sh-shelf-label">Troop Tips</span>
-            <h3 class="sh-shelf-title">Four Creative Fundraising Ideas for Scout Troops</h3></div></a></li>
-          <li><a class="sh-shelf-card" href="https://scoutlife.org/about-scouts/scouting-around/191793/how-to-sing-scout-vespers-with-lyrics-and-music/">
-            <span class="sh-shelf-img"><img src="assets/img/shelf-vespers.jpg" alt="" width="600" height="338" loading="lazy"></span>
-            <div class="sh-shelf-txt"><span class="sticker label-scouts sh-shelf-label">Traditions</span>
-            <h3 class="sh-shelf-title">How to Sing Scout Vespers With Lyrics and Music</h3></div></a></li>
-        </ul>
-      </div>
-      <footer class="widget-foot"><a class="more-link" href="https://scoutlife.org/section/about-scouts/scouting-around/">More Scouting Around</a></footer>
-    </section>
-
-    <section class="widget slot-W sh-shelf sh-shelf-outdoors" data-widget="shelf-outdoors" data-slot="z3-5" aria-labelledby="w-shelf-outdoors-title"
-             style="--accent:var(--c-outdoors);--pin:var(--sky)">
-      <header class="widget-head">
-        <span class="widget-icon" aria-hidden="true">🥾</span>
-        <h2 class="widget-title" id="w-shelf-outdoors-title">Outdoors &amp; Gear</h2>
-        <span class="widget-kicker">go outside!</span>
-      </header>
-      <div class="widget-body">
-        <ul class="sh-shelf-list">
-          <li><a class="sh-shelf-card" href="https://scoutlife.org/outdoors/ask-the-gear-guy/192248/how-do-i-prevent-blisters/">
-            <span class="sh-shelf-img"><img src="assets/img/shelf-blisters.jpg" alt="" width="600" height="338" loading="lazy"></span>
-            <div class="sh-shelf-txt"><span class="sticker label-outdoors sh-shelf-label">Ask the Gear Guy</span>
-            <h3 class="sh-shelf-title">How Do I Prevent Blisters?</h3></div></a></li>
           <li><a class="sh-shelf-card" href="https://scoutlife.org/outdoors/outdoorarticles/16727/create-an-emergency-pack-or-kit/">
             <span class="sh-shelf-img"><img src="assets/img/shelf-emergency.jpg" alt="" width="600" height="338" loading="lazy"></span>
-            <div class="sh-shelf-txt"><span class="sticker label-outdoors sh-shelf-label">Be Prepared</span>
+            <div class="sh-shelf-txt"><span class="sticker label-outdoors sh-shelf-label">Outdoors &amp; Gear</span>
             <h3 class="sh-shelf-title">Create an Emergency Pack or Kit</h3></div></a></li>
         </ul>
         <div class="sh-pond-wrap" aria-hidden="true">
@@ -575,13 +541,11 @@
           <svg class="sh-reeds rr" viewBox="0 0 50 80"><g fill="none" stroke="#2E7550" stroke-width="3" stroke-linecap="round"><path d="M10 80C10 58 8 40 4 26"/><path d="M22 80c0-24 2-40 8-56"/><path d="M36 80c0-16 3-28 10-38"/></g><g fill="#7A4E2D" stroke="#1F2A22" stroke-width="2"><rect x="0" y="12" width="8" height="18" rx="4" transform="rotate(-12 4 21)"/></g></svg>
         </div>
       </div>
-      <footer class="widget-foot"><a class="more-link" href="https://scoutlife.org/section/outdoors/">More Outdoors &amp; Gear</a></footer>
+      <footer class="widget-foot">
+        <a class="more-link" href="https://scoutlife.org/section/about-scouts/scouting-around/" style="--accent:var(--c-scouts)"><span class="sh-more-word">More </span>Scouting Around</a>
+        <a class="more-link" href="https://scoutlife.org/section/outdoors/"><span class="sh-more-word">More </span>Outdoors &amp; Gear</a>
+      </footer>
     </section>
-
-    <div class="ad-slot sh-ad sh-ad-z3" role="complementary" aria-label="Advertisement">
-      <span class="ad-label">Advertisement</span>
-      <div class="ad-box ad-300x250">300 × 250 ad</div>
-    </div>
   </div>
 </section>
 
@@ -602,7 +566,7 @@
       <nav class="sh-foot-col sh-foot-sections" aria-labelledby="ft-sections">
         <h2 class="sh-foot-h" id="ft-sections">Explore</h2>
         <ul class="sh-foot-stickers">
-          <li><a style="--sec:var(--c-games);--sec-ink:#fff;--stitch:rgba(255,255,255,.7)" href="https://scoutlife.org/games/">Games</a></li>
+          <li><a style="--sec:var(--c-games);--sec-ink:#fff;--stitch:rgba(255,255,255,.7)" href="games.html">Games</a></li>
           <li><a style="--sec:var(--c-jokes)" href="https://jokes.scoutlife.org/">Jokes</a></li>
           <li><a style="--sec:var(--c-outdoors)" href="https://scoutlife.org/section/outdoors/">Outdoors &amp; Gear</a></li>
           <li><a style="--sec:var(--c-hobbies)" href="https://scoutlife.org/section/hobbies-projects/">Hobbies &amp; Projects</a></li>
@@ -612,7 +576,7 @@
       </nav>
 
       <div class="sh-foot-col sh-foot-mag">
-        <h2 class="sh-foot-h">The Magazine</h2>
+        <h2 class="sh-foot-h">Scout Life Magazine</h2>
         <div class="sh-foot-mag-row">
           <a class="sh-foot-cover" href="https://scoutlife.org/magazine/192223/inside-the-october-2026-issue/"><img src="assets/img/promo-cover.jpg" alt="Cover of the October 2026 issue of Scout Life" width="157" height="206" loading="lazy"></a>
           <div>
@@ -623,28 +587,28 @@
             </ul>
           </div>
         </div>
+        <a class="sh-yt sh-foot-yt" href="https://youtube.com/channel/UCZW4mLoi5-4bruRFohr-_gw/?sub_confirmation=1">
+          <svg viewBox="0 0 48 34" width="44" height="31" aria-hidden="true"><rect x="1.5" y="1.5" width="45" height="31" rx="9" fill="#F26B21" stroke="#1F2A22" stroke-width="3"/><path d="M19 10l13 7-13 7z" fill="#fff" stroke="#1F2A22" stroke-width="2" stroke-linejoin="round"/></svg>
+          <span>Subscribe on YouTube</span>
+        </a>
       </div>
 
       <div class="sh-foot-col sh-foot-contact">
         <h2 class="sh-foot-h">Contact Us</h2>
         <ul class="sh-foot-links">
           <li><span class="sh-foot-k">Online:</span> <a href="https://scoutlife.org/contact-us/">scoutlife.org/contact-us</a></li>
-          <li><span class="sh-foot-k">Phone:</span> <a href="tel:+18665846589">(866) 584-6589</a></li>
           <li><span class="sh-foot-k">Mail:</span>
             <address>Scout Life Magazine<br>1325 W. Walnut Hill Lane<br>P.O. Box 152401<br>Irving, TX 75015-2401</address></li>
         </ul>
       </div>
 
       <div class="sh-foot-col sh-foot-social">
-        <h2 class="sh-foot-h">Watch Us</h2>
-        <a class="sh-yt" href="https://youtube.com/channel/UCZW4mLoi5-4bruRFohr-_gw/?sub_confirmation=1">
-          <svg viewBox="0 0 48 34" width="44" height="31" aria-hidden="true"><rect x="1.5" y="1.5" width="45" height="31" rx="9" fill="#F26B21" stroke="#1F2A22" stroke-width="3"/><path d="M19 10l13 7-13 7z" fill="#fff" stroke="#1F2A22" stroke-width="2" stroke-linejoin="round"/></svg>
-          <span>Subscribe on YouTube</span>
-        </a>
-        <a class="sh-join" href="https://beascout.org?utm_source=scoutlife&amp;utm_medium=web&amp;utm_campaign=footer">
-          <img src="assets/img/footer-scoutingamerica.png" alt="Scouting America" width="195" height="150" loading="lazy">
-          <span class="sh-join-txt"><b>Join Scouting!</b> Find out how you can get involved <span aria-hidden="true">→</span></span>
-        </a>
+        <h2 class="sh-foot-h" id="ft-join">Join Scouting!</h2>
+        <div class="sh-join" role="group" aria-labelledby="ft-join">
+          <img class="sh-join-logo" src="assets/img/footer-scoutingamerica.png" alt="Scouting America" width="195" height="150" loading="lazy">
+          <p class="sh-join-txt">Make friends and go on big adventures near you!</p>
+          <a class="btn btn-tomato sh-join-btn" href="https://beascout.org?utm_source=scoutlife&amp;utm_medium=web&amp;utm_campaign=footer">Find a Pack or Troop <span aria-hidden="true">→</span></a>
+        </div>
       </div>
     </div>
 
@@ -654,7 +618,7 @@
         <li><a href="https://give.scouting.org/a/support-scouting">Give</a></li>
         <li><a href="https://www.scouting.org/legal/privacy-policy/">Privacy Policy</a></li>
       </ul>
-      <button class="sh-pause-mirror" type="button" aria-pressed="false">Pause animations</button>
+      <button id="pause-anim" class="sh-pause-mirror" type="button" aria-pressed="false">Pause animations</button>
       <p class="sh-copy">© 2026 Boy Scouts of America. All rights reserved.</p>
     </div>
   </div>

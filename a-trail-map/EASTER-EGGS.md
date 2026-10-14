@@ -17,10 +17,10 @@ Open `index.html` in Chrome, Safari, Firefox or Edge. Analytics events print to 
 | Search secrets | Search: `pizza`, `pinewood`, `do a barrel roll`, `bigfoot`, `knot` | Same |
 | S'mores toaster | Footer campfire: hold "Hold to toast", let go at golden-brown | Same |
 | Constellations | Footer sky: click neighboring stars to draw the Big Dipper, Orion's Belt, Cassiopeia | Tap |
-| Paper airplane | Drag and throw the plane in the top-right of "Today's Top Picks" | Drag and flick |
+| Paper airplane | Drag and throw the plane in the top-right of "Start Your Adventure" | Drag and flick |
 | Compass (ambient) | The compass needle in the header follows your cursor | Swings gently |
-| Trail line (ambient) | The dotted trail draws itself down the page as you scroll, with a little hiker at the tip (desktop/tablet) | — |
-| Stone skipping | Flick across the pond on the Outdoors & Gear shelf | Swipe |
+| Trail line (ambient) | The dotted trail draws itself as you scroll, with a little hiker at the tip. It switchbacks: down one side, across the page under each section, then down the opposite side (desktop/tablet) | — |
+| Stone skipping | Flick across the pond in the Scout Essentials widget | Swipe |
 
 ## Widget eggs
 
@@ -31,12 +31,25 @@ Open `index.html` in Chrome, Safari, Firefox or Edge. Analytics events print to 
 | Arcade | Drag the joystick in a full circle (or ↑→↓← with it focused, or tap the swirl sticker): 10-second acorn-catch game |
 | Halloween HQ | Pumpkin: star eyes + triangle nose + zigzag mouth. Door: knock "shave and a haircut… two bits." Tap the sleeping bat |
 | Gear Guide | Try to go past the last card: the backpack bursts |
-| Cast a Line | Tap the fish when it leaps out of the water |
+| Fishing | Tap the fish when it leaps out of the water |
 
 ## Mockup notes
 
-- The **Pause animations** button (header and footer) and the device's reduced-motion setting both calm everything down.
+- The **Pause animations** button (footer) and the device's reduced-motion setting both calm everything down.
 - Ads are gray placeholder boxes at their real sizes.
 - Some details are mockup-only and need an editor's check before launch: Idea Machine time estimates, requirement-to-article mapping in the Requirements Finder, the poll question and fish facts.
 - Halloween countdown preview for another date: add `?sl-date=2026-10-31` to the URL.
 - Source modules are in `src/`. Rebuild with `python3 src/build.py`.
+
+## Section front eggs (Oct 2026)
+
+| Page | Egg | How to trigger |
+|---|---|---|
+| Games | High-score ghost | Click the letters of the big "GAMES" sign in order (G-A-M-E-S), or type "games". Catch the pixel ghost for confetti. Esc dismisses. |
+| Games | Controller combo / Bonus Level | Press ▲ ▲ ▼ ▼ on the big cabinet's buttons (or arrow keys / joystick). "✕ Exit bonus" or Esc to leave. |
+| Games | Trail Runner | Not hidden: a playable 30-second runner next to the cabinet (Space/↑/tap or JUMP). Best score is kept in this browser only. |
+| Pinewood Derby | Honk & vroom | Tap the car on the workbench 5 times: it honks, revs and does a lap around the screen. |
+| Pinewood Derby | Slow-mo finish | Hold Space (or the "Hold for slow-mo" button) during a race for a photo finish. |
+
+**Logo on section pages:** one click does a color pop and then goes home after a moment. Keep tapping quickly to stay on the page and use the logo eggs (color pop, Maileagle flyby, rainbow, SOS).
+The hiker trail runs on the homepage only. All other site-wide eggs (codes, critters, search words, campfire, constellations) work on every page.

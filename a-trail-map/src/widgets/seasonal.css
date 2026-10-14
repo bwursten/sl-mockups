@@ -232,7 +232,6 @@ html.no-js .w-seasonal .ss-opt-row{display:none}
 .w-seasonal .ss-bat.is-flying{pointer-events:none;transition:none}
 .w-seasonal .ss-bat.is-flip .ss-bat-fly{transform:scaleX(-1)}
 
-.w-seasonal .ss-foot-doodle{font-family:var(--f-doodle);font-size:16px;color:var(--ink-soft)}
 
 /* ---------- Medium (tablet W) ---------- */
 @container ssw (max-width: 760px){
@@ -266,14 +265,15 @@ html.no-js .w-seasonal .ss-opt-row{display:none}
   .w-seasonal .ss-short{display:inline}
   .w-seasonal .ss-bat{top:70px;right:10px}
 
-  .w-seasonal .ss-carver{grid-template-columns:auto auto;gap:8px;padding:4px 6px;justify-content:space-between}
+  .w-seasonal .ss-carver{grid-template-columns:auto auto;gap:8px;padding:2px 6px;justify-content:space-between}
+  .w-seasonal .ss-opts{gap:2px}
   .w-seasonal .ss-pk{width:100px}
   .w-seasonal .ss-stump{width:78px;height:20px;margin-top:-13px;margin-bottom:4px}
   .w-seasonal .ss-stump::before{top:-6px;height:12px}
   .w-seasonal .ss-real{font-size:13px}
   .w-seasonal .ss-opt-row{grid-template-columns:repeat(4,38px);gap:0 4px}
   .w-seasonal .ss-opt{width:38px;height:38px;padding:3px;border-width:2.5px}
-  .w-seasonal .ss-opt-lbl{font-size:15px}
+  .w-seasonal .ss-opt-lbl{font-size:15px;line-height:1}
   .w-seasonal .ss-carve-status{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;min-height:0;margin:0}
   .w-seasonal .ss-carver > .ss-hint{left:2px;top:2px}
   .w-seasonal .ss-hint svg{width:32px;height:27px}
@@ -302,6 +302,5 @@ html.no-js .w-seasonal .ss-opt-row{display:none}
   .w-seasonal .ss-again{min-height:32px;font-size:14px;margin-top:4px}
   .w-seasonal .ss-cat{width:58px;margin-left:-29px}
   .w-seasonal .ss-yowl{left:56px;font-size:13px}
-  .w-seasonal .ss-foot-doodle{display:none}
   .w-seasonal .widget-kicker{display:none}
 }

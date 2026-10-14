@@ -83,7 +83,8 @@ html.js .w-fishing .fs-static{display:none}
 @keyframes fs-hot{from{transform:translateY(0) scale(1)}to{transform:translateY(-2px) scale(1.06)}}
 .w-fishing .fs-status{margin:0;font-family:var(--f-doodle);font-weight:700;font-size:16px;line-height:1.1;color:var(--ink);min-width:0}
 html.no-js .w-fishing .fs-go{display:none}
-.w-fishing .fs-foot-doodle{font-family:var(--f-doodle);font-size:16px;color:var(--cobalt-dk);white-space:nowrap}
+.w-fishing .fs-foot-doodle{min-width:0;overflow:hidden;text-overflow:clip;font-family:var(--f-doodle);font-size:16px;color:var(--cobalt-dk);white-space:nowrap}
+.w-fishing .widget-foot .more-link{flex:0 0 auto;white-space:nowrap}
 
 /* jumping fish egg */
 .w-fishing .fs-ripple-btn{position:absolute;z-index:2;left:76%;top:calc(100% - 34px);width:64px;height:30px;margin:-15px 0 0 -32px;padding:0;background:none;border:0;border-radius:50%;cursor:pointer}

@@ -3,19 +3,9 @@
    ============================================================ */
 .w-reqfinder .rf-body{display:flex;flex-direction:column;gap:10px;padding:12px 16px}
 
-/* ---- Trail progress (header): dotted trail, boot hikes to camp ---- */
-.w-reqfinder .rf-kick{transform:none}
-.w-reqfinder .rf-trail{--pn:0;position:relative;display:block;width:150px;height:24px}
-.w-reqfinder .rf-trail::before{content:"";position:absolute;left:4px;right:22px;top:50%;height:4px;margin-top:-2px;
-  background:radial-gradient(circle,var(--ink) 1.6px,transparent 1.9px) 0 50%/8px 4px repeat-x}
-.w-reqfinder .rf-trail-fill{position:absolute;left:4px;top:50%;height:6px;margin-top:-3px;width:calc(124px * var(--pn));
-  background:var(--sunny);border:1.5px solid var(--ink);border-radius:3px;transition:width .6s var(--ease-bounce)}
-.w-reqfinder .rf-trail-fill:empty{min-width:0}
-.w-reqfinder .rf-boot{position:absolute;top:50%;left:calc(4px + 124px * var(--pn));font-size:17px;line-height:1;
-  transform:translate(-50%,-62%);transition:left .6s var(--ease-bounce)}
-.w-reqfinder .rf-camp{position:absolute;right:0;top:50%;font-size:18px;line-height:1;transform:translateY(-58%)}
-.w-reqfinder .rf-trail.is-there .rf-camp{animation:rf-hop .55s var(--ease-bounce) 2}
-@keyframes rf-hop{0%,100%{transform:translateY(-58%)}50%{transform:translateY(-95%)}}
+/* ---- Header: deep forest band, white title, handwritten helper note ---- */
+.w-reqfinder .widget-title{color:#fff}
+.w-reqfinder .rf-kick{color:var(--card);font-size:18px;white-space:nowrap}
 
 /* ---- Steps = trailhead markers / round patches ---- */
 .w-reqfinder .rf-form{flex:0 0 auto;margin:0}
@@ -129,12 +119,10 @@ html.no-js .w-reqfinder .rf-go{display:inline-flex;min-height:54px}
 .w-reqfinder .rf-bubble::before{content:"";position:absolute;top:-10px;left:50%;margin-left:-8px;border:8px solid transparent;border-top:0;border-bottom:10px solid var(--ink)}
 .w-reqfinder .is-fall .rf-cards{flex:1 1 auto}
 
-/* footer */
-.w-reqfinder .rf-foot-doodle{font-family:var(--f-doodle);font-weight:700;font-size:15px;line-height:1;color:var(--ink-soft)}
 
 /* ---- Phone: stacked steps, scrolling sticker row ---- */
 @media (max-width:639px){
-  .w-reqfinder .rf-kick,.w-reqfinder .rf-foot-doodle{display:none}
+  .w-reqfinder .rf-kick{display:none}
   .w-reqfinder .rf-body{gap:8px;padding:10px 14px}
   .w-reqfinder .rf-steps{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px 10px}
   html.no-js .w-reqfinder .rf-steps{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}

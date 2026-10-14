@@ -130,11 +130,21 @@
 
     /* ---------- click (tap / Enter) → color pop + flyby counter ---------- */
     var lastPressLong = false;
+    /* Section fronts: the logo is still the way home. A single click/Enter does a color
+       pop and then goes to the homepage; a second tap within HOME_WAIT keeps you here
+       playing (color pop, 5-tap flyby, 10-tap rainbow). On the homepage it never navigates. */
+    var onHome = ((document.body && document.body.getAttribute('data-page')) || 'home') === 'home';
+    var HOME_WAIT = 700, homeT = 0;
+    function goHome(){ window.location.href = logo.getAttribute('href') || 'index.html'; }
+    logo.addEventListener('pointerdown', function(){ clearTimeout(homeT); });
     logo.addEventListener('click', function(e){
+      if (!onHome && (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button === 1)) return;  // open in new tab still works
       e.preventDefault();
+      clearTimeout(homeT);
       if (suppressClick){ suppressClick = false; return; }
       if (lastPressLong){ lastPressLong = false; return; }  // long presses are Morse dashes, not taps
       tap();
+      if (!onHome && streak === 1) homeT = setTimeout(goHome, HOME_WAIT);
     });
 
     /* ---------- Space = Morse key when the logo is focused ---------- */

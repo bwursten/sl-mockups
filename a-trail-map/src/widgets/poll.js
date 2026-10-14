@@ -1,10 +1,10 @@
 /* ============================================================
    Widget: poll (Today's Poll) — owner: Agent A
-   Anonymous, one vote per browser (SL.store). Mockup: fake baseline counts.
+   Mockup: one vote per page load (nothing is saved, so reloading resets
+   the poll). Fake baseline counts drive the percentages; no totals shown.
    ============================================================ */
 (function(){
   'use strict';
-  var POLL_ID = 'poll:2026-10-campfire-snack';
   var BASE = {smores:1342, hotdogs:788, bananaboats:409, popcorn:517};
 
   SL.widget('poll', function(root){
@@ -37,13 +37,10 @@
           })(t0);
         }, 120 + i * 110);
       });
-      meta.innerHTML = '<strong>Thanks for voting!</strong> ' + total.toLocaleString() + ' Scouts have voted.';
+      meta.innerHTML = '<strong>Thanks for voting!</strong>';
       var sr = document.createElement('span'); sr.className = 'sr-only'; sr.textContent = ' Results: ' + summary.join(', ') + '.';
       meta.appendChild(sr);
     }
-
-    var saved = SL.store.get(POLL_ID, null);
-    if (saved && BASE[saved]) showResults(saved, false);
 
     form.addEventListener('submit', function(e){ e.preventDefault(); });
     opts.forEach(function(b){
@@ -51,7 +48,6 @@
         e.preventDefault();
         if (form.classList.contains('pl-voted')){ return; }
         var k = b.value;
-        SL.store.set(POLL_ID, k);
         SL.trackInteract('poll', 'vote:' + k);
         if (SL.motionOK()){ b.classList.add('pl-thunk'); setTimeout(function(){ b.classList.remove('pl-thunk'); }, 460);
           SL.confettiAt(b, {count:12, shapes:[SL.$('.pl-emoji', b).textContent, '★', '●'], spread:80}); }
